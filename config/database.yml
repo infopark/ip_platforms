@@ -1,0 +1,14 @@
+local_db: &local_db
+  adapter:  mysql
+  username: rails
+  password: rails
+  encoding: utf8
+  socket:   /var/run/mysqld/mysqld.sock
+
+development:
+  database: rails
+  <<: *local_db
+
+production:
+  database: rails
+  <<: *local_db
