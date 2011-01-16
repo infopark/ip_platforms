@@ -1,4 +1,15 @@
+*.swp
+.DS_Store
 .bundle
-db/*.sqlite3
+config/database.yml
+config/environment_local.rb
+config/license.xml
+config/local/*
+coverage
+db/schema.rb
 log/*.log
+log/*.log
+public/javascripts/all.js
+public/stylesheets/all.css
+tmp/*
 tmp/**/*
