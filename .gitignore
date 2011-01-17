@@ -3,11 +3,9 @@
 .bundle
 config/database.yml
 config/environment_local.rb
-config/license.xml
 config/local/*
 coverage
 db/schema.rb
-log/*.log
 log/*.log
 public/javascripts/all.js
 public/stylesheets/all.css
