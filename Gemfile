@@ -6,4 +6,6 @@ gem('capistrano')
 
 group :development, :test do
   gem('annotate')
+  gem "rspec", "2.4.0"
+  gem "rspec-rails", "2.4.1"
 end
