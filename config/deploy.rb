@@ -18,8 +18,8 @@ ssh_options[:compression]   = false
 ssh_options[:encryption]    = 'aes256-cbc'
 
 before 'deploy:setup',        'config:setup'
-after  'deploy:update_code',  'deploy:additional_symlinks'
-#                              'deploy:compress_assets',
+after  'deploy:update_code',  'deploy:additional_symlinks',
+                              'deploy:compress_assets'
 after  'deploy',              'deploy:cleanup'
 
 ### Use Phusion Passenger
