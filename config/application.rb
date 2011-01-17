@@ -6,6 +6,7 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module IpPlatforms
   class Application < Rails::Application
+    config.action_view.javascript_expansions[:defaults] = %w(jquery rails)
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
   end
