@@ -78,3 +78,6 @@ namespace :config do
   end
 
 end
+
+require 'bundler/capistrano'
+require 'config/boot'
