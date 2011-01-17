@@ -6,7 +6,7 @@ require 'capistrano/ext/multistage'
 # Basic configuration data / defaults
 set :scm, 'git'
 set :application, 'ip_platforms'
-set :repository, "git@git.infopark:#{application}.git"
+set :repository, "git@192.168.193.80:#{application}.git"
 set :branch, 'master'
 
 set :deploy_via, :copy
@@ -18,9 +18,8 @@ ssh_options[:compression]   = false
 ssh_options[:encryption]    = 'aes256-cbc'
 
 before 'deploy:setup',        'config:setup'
-after  'deploy:update_code',  'deploy:additional_symlinks',
-                              'deploy:compress_assets',
-                              'deploy:remove_cached_views'
+after  'deploy:update_code',  'deploy:additional_symlinks'
+#                              'deploy:compress_assets',
 after  'deploy',              'deploy:cleanup'
 
 ### Use Phusion Passenger
