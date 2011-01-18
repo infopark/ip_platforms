@@ -17,6 +17,9 @@
     <th>Town</th>
     <th>Country</th>
     <th>Action</th>
+    <% if is_admin? %>
+      <th>Admin</th>
+    <% end %>
   </tr>
 
 <% @members.each do |member| %>
@@ -27,15 +30,23 @@
     <td><%= member.town %></td>
     <td><%= member.country %></td>
     <td style="white-space: nowrap;">
-      <% if is_admin? %>
-        <%= link_to 'Edit', edit_member_path(member) %>
-        <%= link_to 'Password', edit_password_path(member) %>
-        <%= link_to 'Delete', member,
-        :confirm => 'Are you sure?', :method => :delete %>
-      <% end %>
       <% if member != @current_user &&
         !is_friend?(member) && !is_pending_friend?(member)%>
         <%= link_to 'Friend request', add_rcd_path(member) %>
+      <% end %>
+    </td>
+    <td style="white-space: nowrap;">
+
+      <% if is_admin? %>
+        <%= link_to 'Edit', edit_member_path(member) %>
+        | <%= link_to 'Password', edit_password_path(member) %>
+        | <%= link_to 'Delete', member,
+          :confirm => 'Are you sure?', :method => :delete %>
+        <% if member != @current_user %>
+          &nbsp;
+          <%= link_to (member.admin? ? 'Revoke Admin' : 'Make admin'),
+                      toggle_admin_path(member), :confirm => 'Are you sure?' %>
+        <% end %>
       <% end %>
     </td>
   </tr>

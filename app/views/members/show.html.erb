@@ -117,7 +117,7 @@
 
 <% end %>
 
-<% if is_admin? %>
+<% if is_my_profile? || is_admin? %>
 <%= link_to 'Edit', edit_member_path(@member) %> |
 <% end %>
 

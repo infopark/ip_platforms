@@ -7,6 +7,7 @@ IpPlatforms::Application.routes.draw do
   match('/accept_rcd/:id' => 'members#accept_rcd', :as => :accept_rcd)
   match('/decline_rcd/:id' => 'members#decline_rcd', :as => :decline_rcd)
   match('/revoke_rcd/:id' => 'members#revoke_rcd', :as => :revoke_rcd)
+  match('/toggle_admin/:id' => 'members#toggle_admin', :as => :toggle_admin)
   match('/members/:id/edit_password' => 'members#edit_password',
         :as => :edit_password)
   resource(:login_session, :only => [:create, :destroy, :new])

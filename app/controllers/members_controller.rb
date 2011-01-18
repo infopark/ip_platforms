@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   append_before_filter :require_current_user, :except => :index
   append_before_filter :require_current_user_is_admin,
-                        :only => [:edit, :new, :create, :update, :destroy]
+                        :only => [:destroy, :toggle_admin]
 
   def index
     @q = params[:q]
@@ -40,6 +40,7 @@ class MembersController < ApplicationController
 
   def edit
     @member = Member.find(params[:id])
+    check_permissions || false
   end
 
   def create
@@ -58,6 +59,7 @@ class MembersController < ApplicationController
 
   def update
     @member = Member.find(params[:id])
+    check_permissions || false
 
     respond_to do |format|
       if @member.update_attributes(params[:member])
@@ -72,6 +74,7 @@ class MembersController < ApplicationController
 
   def destroy
     @member = Member.find(params[:id])
+    check_permissions || false
     @member.destroy
 
     respond_to do |format|
@@ -102,6 +105,14 @@ class MembersController < ApplicationController
     flash.now[:error] = "Password edit failed: #{e}"
   end
 
+  def toggle_admin
+    @member = Member.find(params[:id])
+    @member.admin = !@member.admin
+    @member.save!
+    flash[:notice] = "#{@member} is now #{"NOT" if !@member.admin} an admin"
+    redirect_to(members_path)
+  end
+
   def defriend
     begin
       @current_user.defriend(params[:id])
@@ -129,7 +140,7 @@ class MembersController < ApplicationController
     rescue => e
       flash[:error] = "Could not send friend request (#{e})"
     end
-    redirect_to(@current_user)
+    redirect_to(members_path)
   end
 
   def decline_rcd
@@ -150,6 +161,16 @@ class MembersController < ApplicationController
       flash[:error] = "Could not revoke friend my request (#{e})"
     end
     redirect_to(@current_user)
+  end
+
+  private
+
+  def check_permissions
+    if @member != @current_user and !is_admin?
+      flash[:error] = 'You only can change yourself!'
+      redirect_to(home_path)
+      return false
+    end
   end
 
 
