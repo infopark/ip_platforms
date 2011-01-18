@@ -80,24 +80,12 @@ class ConferencesController < ApplicationController
     @series = @current_user.series
     respond_to do |format|
       category_ids = params[:conference][:category_ids]
-      old_categories = @conference.categories.dup
       if not category_ids.present? or category_ids == [""]
-        if old_categories.any?
-          @notify_creator = true
-        end
         category_ids = []
       end
       @conference.categories = Category.find(category_ids)
       if @conference.update_attributes(params[:conference])
         format.html do
-          if @notify_creator
-            notification = Notification.new
-            notification.member = @conference.creator
-            notification.content = <<-EOS
-              You're conference "#{@conference.name}" has been removed from "#{old_categories.map(&:name).join(',')}"
-            EOS
-            notification.save!
-          end
           redirect_to(@conference, :notice => 'Conference was successfully updated.')
         end
         format.xml  { head :ok }

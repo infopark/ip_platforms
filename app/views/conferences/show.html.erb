@@ -1,11 +1,11 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Series:</b>
-  <% if @conference.serie %>
+<% if @conference.serie %>
+  <p>
+    <b>Series:</b>
     <%= @conference.serie.name %>
-  <% end %>
-</p>
+  </p>
+<% end %>
 
 <p>
   <b>Name:</b>
