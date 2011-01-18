@@ -92,12 +92,8 @@
     <ul>
       <% @current_user.friends.each do |friend| %>
         <li>
-          <%= link_to friend.username, invite_conference_path(@conference, :friend_id => friend.id) %>
-            <% if @current_user == friend %>
-              (You)
-            <% else %>
-              (<%= friend.fullname %>, eMail: <%= friend.email %>)
-            <% end %>
+          <%= link_to friend.username, invite_conference_path(@conference, :friend_id => friend.id), :confirm => "Are you sure you wannt to invite this member?" %>
+          (<%= friend.fullname %>, eMail: <%= friend.email %>)
         </li>
       <% end %>
     </ul>
@@ -109,10 +105,10 @@
 <% end %>
 
 <% if @conference.participants.include?(@current_user) %>
-  <%= link_to 'Sign out', signout_conference_path(@conference) %> |
+  <%= link_to 'Revoke', signout_conference_path(@conference), :confirm => "Are you sure you wannt to revoke?" %> |
 <% else %>
   <% unless @conference.creator == @current_user %>
-    <%= link_to 'Sign up', signup_conference_path(@conference) %> |
+    <%= link_to 'Sign up', signup_conference_path(@conference), :confirm =>  "Are you sure you wannt to sign up?" %> |
   <% end %>
 <% end %>
 

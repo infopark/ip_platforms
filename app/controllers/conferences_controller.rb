@@ -109,7 +109,7 @@ class ConferencesController < ApplicationController
           flash[:notice] = "User #{friend.username} has been invited to this conference!"
           notification = Notification.new(
             :content => "Invited to <a href='#{conference_path(@conference)}'>#{@conference.name}</a>" \
-              " by <a href='#{profile_path(@current_user)}'>#{@current_user.fullname}</a>"
+              " by <a href='#{member_path(@current_user)}'>#{@current_user.fullname}</a>"
           )
           notification.member = friend
           notification.save!
