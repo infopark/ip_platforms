@@ -1,5 +1,10 @@
 class Member < ActiveRecord::Base
 
+  include BaseRecord
+  include GpsLocation
+
+  acts_as_mappable
+
   set_locking_column(:version)
 
   has_and_belongs_to_many(:friend_requests, :class_name => 'Member',
@@ -11,8 +16,6 @@ class Member < ActiveRecord::Base
   has_many(:calendars)
   has_many(:conferences, :foreign_key => :creator_id)
   has_many(:notifications)
-
-  attr_accessor(:gps)
 
   attr_accessible(:username)
   attr_accessible(:fullname)
@@ -27,9 +30,6 @@ class Member < ActiveRecord::Base
   validates(:email, :length => { :maximum => 250 })
   validates(:town, :length => { :maximum => 100 })
   validates(:country, :length => { :maximum => 100 })
-  validates(:gps, :format => {
-    :with => %r{\d+(\.\d+)? ?[NnSs] ?,? ?\d+(\.\d+)? ?[EeWw]},
-  }, :allow_nil => true)
 
   def self.reset_or_create_default_admin!
     admin = Member.find_or_create_by_username('admin')

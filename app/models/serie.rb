@@ -1,5 +1,7 @@
 class Serie < ActiveRecord::Base
 
+  include BaseRecord
+
   set_locking_column(:version)
 
   has_and_belongs_to_many(:contacts, :class_name => 'Member')

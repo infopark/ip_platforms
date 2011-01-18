@@ -1,5 +1,10 @@
 class Conference < ActiveRecord::Base
 
+  include BaseRecord
+  include GpsLocation
+
+  acts_as_mappable
+
   set_locking_column(:version)
 
   belongs_to(:creator, :class_name => 'Member')
@@ -7,8 +12,6 @@ class Conference < ActiveRecord::Base
   has_and_belongs_to_many(:calendars)
   has_and_belongs_to_many(:categories)
   has_and_belongs_to_many(:participants, :class_name => 'Member')
-
-  attr_accessor(:gps)
 
   attr_accessible(:accomodation)
   attr_accessible(:description)
@@ -20,7 +23,6 @@ class Conference < ActiveRecord::Base
   attr_accessible(:venue)
   attr_accessible(:serie_id)
   attr_accessible(:creator_id)
-  attr_accessible(:gps)
 
   attr_readonly(:creator_id)
 
@@ -32,13 +34,19 @@ class Conference < ActiveRecord::Base
   validates(:name, :presence => true, :length => { :maximum => 100 })
   validates(:startdate, :presence => true)
   validates(:venue, :length => { :maximum => 2000 })
-  validates(:gps, :format => {
-    :with => %r{\d+(\.\d+)? ?[NnSs] ?,? ?\d+(\.\d+)? ?[EeWw]},
-  })
 
-  validate(:validate_startdate_before_enddate)
+  validate(:validate_enddate_before_startdate)
 
-  def validate_startdate_before_enddate
+  before_validation(:set_enddate_if_blank_before_validation)
+
+  def validate_enddate_before_startdate
+    if startdate && enddate && startdate > enddate
+      errors.add(:enddate, :must_not_be_earlier_than_startdate)
+    end
+  end
+
+  def set_enddate_if_blank_before_validation
+    enddate = startdate if enddate.blank?
   end
 
 end

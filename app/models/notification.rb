@@ -1,5 +1,7 @@
 class Notification < ActiveRecord::Base
 
+  include BaseRecord
+
   belongs_to(:member)
 
   attr_accessible(:member_id)

@@ -1,5 +1,7 @@
 class Category < ActiveRecord::Base
 
+  include BaseRecord
+
   set_locking_column(:version)
 
   belongs_to(:parent, :class_name => 'Category')
