@@ -7,7 +7,7 @@ class HomeController < ApplicationController
     @conferences_next_week = Conference.where(:startdate => Date.today + 1.week)
     @conferences_next_10 = Conference.where("startdate >= ?", Date.today).
                                             order('startdate ASC').limit(10)
-    @categories_first_10 = Category.limit(10)
+    @categories_first = Category.limit(15)
   end
 
 end
