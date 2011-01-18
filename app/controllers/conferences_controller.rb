@@ -6,14 +6,22 @@ class ConferencesController < ApplicationController
   # GET /conferences
   # GET /conferences.xml
   def index
+    @qq = params[:qq]
     @q = params[:q]
-    @categories = params[:categories]
-    @start_at = params[:start_at]
-    @end_at = params[:end_at]
+    @category_ids = params[:category_ids]
+    @start_at = (params[:start_at].to_date rescue nil) || Date.today
+    @end_at = params[:end_at].to_date rescue nil
+    if @end_at && @end_at < @start_at
+      @end_at = @start_at
+    end
     @location = params[:location]
-    @conferences = Conference.search(@q, @categories, @start_at, @end_at,
-        @current_user, @location)
-
+    @conferences =
+      if params[:submit] == 'Extended Search'
+        Conference.extended_search(@qq, @current_user)
+      else
+        Conference.search(@q, @category_ids, @start_at, @end_at,
+          @current_user, @location)
+      end
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @conferences }

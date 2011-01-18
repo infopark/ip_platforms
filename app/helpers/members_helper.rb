@@ -22,7 +22,7 @@ module MembersHelper
       end
       if @current_user.has_gps_data?
         [5, 10, 20, 50, 100, 200, 500, 1000, 2000, 5000].each do |distance|
-          ["only members who live <#{distance}km away", distance]
+          options << ["only members who live <#{distance}km away", distance]
         end
       end
     end

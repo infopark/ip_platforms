@@ -1,5 +1,98 @@
 <h2>Welcome to the Infopark CaP Conference System</h2>
 
 <% if logged_in? %>
-<h3>See <%= link_to 'your profile', member_path(@current_user) %></h3>
+<h3>You are logged in.
+See <%= link_to 'your profile', member_path(@current_user) %> for
+more information</h3>
 <% end %>
+
+<div class="box">
+  <h3>Currently running conferences</h3>
+  <% if @conferences_current.blank? %>
+    No conferences are currently running
+  <% else %>
+    <ul>
+      <% @conferences_current.each do |c| %>
+        <li>
+          <%= l(c.startdate, :format => :long) %> -
+          <%= l(c.enddate, :format => :long) %>:
+          <strong><%= link_to c.name, c %></strong>
+          (<%= c.venue %>)
+          <% unless c.serie.blank? %>
+            | <%= c.serie.name %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcl box">
+      <h3>Conferences starting the next day</h3>
+      <% if @conferences_next_day.blank? %>
+        No conferences are going to start tomorrow
+      <% else %>
+        <ul>
+          <% @conferences_next_day.each do |c| %>
+            <li><%= l(c.startdate, :format => :long) %>:
+                <strong><%= link_to c.name, c %></strong></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="c50r">
+    <div class="subcr box">
+      <h3>Conferences starting next week</h3>
+      <% if @conferences_next_week.blank? %>
+        No conferences are going to start next week
+      <% else %>
+        <ul>
+          <% @conferences_next_week.each do |c| %>
+            <li><%= l(c.startdate, :format => :long) %>:
+                <strong><%= link_to c.name, c %></strong></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcl box">
+      <h3>Next 10 conferences</h3>
+      <% if @conferences_next_10.blank? %>
+        No conferences are upcoming
+      <% else %>
+        <ul>
+          <% @conferences_next_10.each do |c| %>
+            <li><%= l(c.startdate, :format => :long) %>:
+                <strong><%= link_to c.name, c %></strong></li>
+          <% end %>
+        </ul>
+      <% end %>
+      [<%= link_to 'Show all ...', conferences_path %>]
+    </div>
+  </div>
+
+  <div class="c50r">
+    <div class="subcr box">
+      <h3>First 10 conference categories</h3>
+      <% if @categories_first_10.blank? %>
+        No categories
+      <% else %>
+        <ul>
+          <% @categories_first_10.each do |c| %>
+            <li><strong><%= link_to c.name,
+              conferences_path(:category_ids => [c.id]) %></strong></li>
+          <% end %>
+        </ul>
+      <% end %>
+      [<%= link_to 'Show all ...', categories_path %>]
+    </div>
+  </div>
+</div>

@@ -49,12 +49,60 @@ class Conference < ActiveRecord::Base
     enddate = startdate if enddate.blank?
   end
 
-  def self.search(q, categories, start_at, end_at, member, location)
-    r = Conference
-    if c = text_filter_conditions(q, :name, :description)
+  def self.search(q, category_ids, start_at, end_at, member, location)
+    r = self
+    if c = multiword_text_filter_conditions(q, :name, :description)
       r = r.where(c)
     end
+    if start_at
+      r = r.where(['enddate >= ?', start_at])
+    else
+      r = r.where(['enddate >= ?', Date.today])
+    end
+    if end_at
+      r = r.where(['startdate <= ?', end_at])
+    end
+    if member && member.has_gps_data?
+      location = location.to_s.to_i
+      if 50 <= location && location <= 5000
+        r = r.where(["SQRT(POW(ABS(?-lat),2)+POW(ABS(?-lng),2)) < ?",
+            member.lat, member.lng, location.to_f/100])
+      end
+    end
+    unless category_ids.blank?
+      s = category_ids.map {|i| (i.to_i rescue 0)}.join(',')
+      r = r.where("id IN (SELECT conference_id FROM categories_conferences " \
+          "WHERE category_id IN (#{s}))")
+    end
     r.all
+  end
+
+  def self.extended_search(qq, member)
+    q = []
+    category_ids = []
+    start_at = nil
+    end_at = nil
+    location = nil
+    qq.to_s.split(/\s+/).each do |s|
+      case s
+      when /\Afrom:(.*)/
+        start_at = ($1.to_date rescue nil)
+      when /\Auntil:(.*)/
+        end_at = ($1.to_date rescue nil)
+      when 'opt:withsub'
+        # ignore
+      when 'reg:country'
+        # ignore
+      when /\Areg:(.*)/
+        location = $1.to_i
+      when /\Acat:(.*)/
+        category_ids << Category.find_by_name($1)
+      else
+        q << s
+      end
+    end
+    search(q.join(' '), category_ids.compact.map(&:id),
+        start_at, end_at, member, location)
   end
 
 end

@@ -135,16 +135,16 @@ class Member < ActiveRecord::Base
   def self.search(q, state, member, location)
     r = self
     unless q.blank?
-      if state == 'noFriends' || friends.empty?
+      if member.nil? || state == 'noFriends' || member.friends.empty?
         r = r.where(['username LIKE ?', "%#{q}%"])
       else
-        s = friends.map(&:id).join(',')
+        s = member.friends.map(&:id).join(',')
         r = r.where(["(username LIKE ? OR fullname LIKE ? AND id IN (#{s}))",
             "%#{q}%", "%#{q}%"])
       end
     end
     if member
-      case state
+      case state.to_s
       when 'noFriends'
         unless member.friends.empty?
           r = r.where("id NOT IN (#{member.friends.map(&:id).join(',')})")
@@ -155,7 +155,7 @@ class Member < ActiveRecord::Base
           r = r.where("id NOT IN (#{s})")
         end
       end
-      case location
+      case location.to_s
       when 'myTown'
         unless member.town.blank?
           r = r.where(:town => member.town)
@@ -165,7 +165,7 @@ class Member < ActiveRecord::Base
           r = r.where(:country => member.country)
         end
       when '5', '10', '20', '50', '100', '200', '500', '1000', '2000', '5000'
-        unless member.has_gps_data?
+        if member.has_gps_data?
           r = r.where(["SQRT(POW(ABS(?-lat),2)+POW(ABS(?-lng),2)) < ?",
               member.lat, member.lng, location.to_f/100])
         end

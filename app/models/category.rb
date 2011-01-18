@@ -14,14 +14,16 @@ class Category < ActiveRecord::Base
   attr_accessible(:parent_id)
   attr_accessible(:name)
 
-  validates(:name, :presence => true, :length => { :maximum => 50 })
+  validates(:name, :presence => true, :length => { :maximum => 50 },
+      :format => { :with => /\A[-\w\d_]+\Z/ })
   validate :validate_parent_not_cyclic
 
   private
 
   def validate_parent_not_cyclic
     if ancestor_of?(parent)
-      errors.add('parent', "relationship cannot be cyclic or deeper than #{MAX_TREE_DEPTH}")
+      errors.add('parent',
+          "relationship cannot be cyclic or deeper than #{MAX_TREE_DEPTH}")
     end
   end
 
@@ -30,4 +32,5 @@ class Category < ActiveRecord::Base
     return true if max_recursion < 1
     other == self || ancestor_of?(other.parent, max_recursion - 1)
   end
+
 end

@@ -288,33 +288,33 @@
   "parent" : {}
 },
 {
-  "name" : "Computer Science",
+  "name" : "ComputerScience",
   "subcategories" : [],
   "parent" : {}
 },
 {
-  "name" : "Synthetic Biology",
+  "name" : "SyntheticBiology",
   "subcategories" : [],
   "parent" : {
-    "name" : "Life Science"
+    "name" : "LifeScience"
   }
 },
 {
   "name" : "Oncology",
   "subcategories" : [],
   "parent" : {
-    "name" : "Life Science"
+    "name" : "LifeScience"
   }
 },
 {
-  "name" : "Media Research",
+  "name" : "MediaResearch",
   "subcategories" : [],
   "parent" : {}
 },
 {
-  "name" : "Life Science",
+  "name" : "LifeScience",
   "subcategories" : [{
-    "name" : "Synthetic Biology"
+    "name" : "SyntheticBiology"
   },
   {
     "name" : "Oncology"
@@ -324,10 +324,10 @@
 {
   "name" : "Technology",
   "subcategories" : [{
-    "name" : "IT Security"
+    "name" : "IT-Security"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   }],
   "parent" : {}
 },
@@ -342,14 +342,14 @@
   "parent" : {}
 },
 {
-  "name" : "IT Security",
+  "name" : "IT-Security",
   "subcategories" : [],
   "parent" : {
     "name" : "Technology"
   }
 },
 {
-  "name" : "Mobile Platforms",
+  "name" : "MobilePlatforms",
   "subcategories" : [],
   "parent" : {
     "name" : "Technology"
@@ -385,10 +385,10 @@
     "name" : "Technology"
   },
   {
-    "name" : "IT Security"
+    "name" : "IT-Security"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   },
   {
     "name" : "Design"
@@ -414,10 +414,10 @@
     "name" : "Technology"
   },
   {
-    "name" : "IT Security"
+    "name" : "IT-Security"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   },
   {
     "name" : "Design"
@@ -443,10 +443,10 @@
     "name" : "Technology"
   },
   {
-    "name" : "IT Security"
+    "name" : "IT-Security"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   },
   {
     "name" : "Design"
@@ -470,7 +470,7 @@
     "name" : "Technology"
   },
   {
-    "name" : "IT Security"
+    "name" : "IT-Security"
   }],
   "description" : "The Black Hat Conference is a computer security conference that brings together a variety of people interested in information security. Representatives of federal agencies and corporations attend along with hackers. The Briefings take place regularly in Las Vegas, Barcelona (previously Amsterdam) and Tokyo. An event dedicated to the Federal Agencies is organized in Washington, D.C..",
   "location" : "2799 Jefferson Davis Hwy, Arlington, VA 22202, United States",
@@ -491,7 +491,7 @@
     "name" : "Technology"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   }],
   "description" : "The droidcon conference deals with „Android“, the platform for mobile devices which is being developed by the Open Handset Alliance under the guidance of Google. droidcon is developer- driven and independent from interests of hardware and software vendors.",
   "location" : "Takustraße 39, 14195 Berlin, Germany",
@@ -512,7 +512,7 @@
     "name" : "Technology"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   },
   {
     "name" : "Design"
@@ -536,7 +536,7 @@
     "name" : "Technology"
   },
   {
-    "name" : "Mobile Platforms"
+    "name" : "MobilePlatforms"
   }],
   "description" : "The Mobile World Congress is the mobile industry's \"must attend\" event with more than 49,000 visitors in 2010. An integral part of Congress, the conference agenda will feature speakers representing the leaders of the world's most innovative companies, both from within our industry and from the growing number of adjacent market sectors joining our expanding mobile ecosystem. In 2011, our conference agenda will showcase dynamic speakers from a broad range of companies, and will feature in-depth sessions covering the industry's key growth areas.",
   "location" : "Av. Reina Maria Cristina, s/n, 08004 Barcelona, Spain",
@@ -802,7 +802,7 @@
   "startdate" : "20110127",
   "enddate" : "20110128",
   "categories" : [{
-    "name" : "Life Science"
+    "name" : "LifeScience"
   },
   {
     "name" : "Oncology"
@@ -825,7 +825,7 @@
   "startdate" : "20120127",
   "enddate" : "20120128",
   "categories" : [{
-    "name" : "Life Science"
+    "name" : "LifeScience"
   },
   {
     "name" : "Oncology"
@@ -845,10 +845,10 @@
   "startdate" : "20111002",
   "enddate" : "20111007",
   "categories" : [{
-    "name" : "Life Science"
+    "name" : "LifeScience"
   },
   {
-    "name" : "Synthetic Biology"
+    "name" : "SyntheticBiology"
   }],
   "description" : "This conference will focus on the advancement of synthetic biology, especially its application in the field of antibiotic production in filamentous fungi and actinomycete bacteria, including the implementation and modification of complex biosynthesis pathway modules in existing and new production hosts. Antibiotics production is regulated by complex networks and involves intricate multi-step biosynthetic machineries, as well as major reorganization of primary metabolic fluxes to redirect cellular metabolic resources towards their biosynthesis. The urgent need for new antibiotics caused by the accelerating emergence of multi-drug resistant pathogens worldwide has led to a strong interest in the research community for decidedly novel approaches, collectively referred to as Synthetic Biology. ",
   "location" : "Sant Feliu, Spain",
@@ -865,10 +865,10 @@
   "startdate" : "20110615",
   "enddate" : "20110617",
   "categories" : [{
-    "name" : "Life Science"
+    "name" : "LifeScience"
   },
   {
-    "name" : "Synthetic Biology"
+    "name" : "SyntheticBiology"
   }],
   "description" : "The SBx.0 international conference series is the preeminent meeting in the field of Synthetic Biology. Started in 2004 with SB1.0 at MIT, the conference was envisioned as an event that would bring together the then-nascent community of biological engineers who were utilizing DNA to build biological systems and bringing engineering principles to bear on biological problems.",
   "location" : "Stanford University, Stanford, California USA",
@@ -885,7 +885,7 @@
   "startdate" : "20110121",
   "enddate" : "20110123",
   "categories" : [{
-    "name" : "Computer Science"
+    "name" : "ComputerScience"
   }],
   "description" : "International Conference on Advanced Computing & Communication Technologies promises to address current state of the technology and the outcome of the ongoing research in the area of advance computing and communication. ACCT11 would offer a forum to the academicians, researchers and students to interact with experts in the area and to learn the recent knowledge in advance computing. It invites papers original & unpublished work from individuals active in the broad theme of the conference.",
   "location" : "Rohtak, India",
@@ -902,7 +902,7 @@
   "startdate" : "20110121",
   "enddate" : "20110123",
   "categories" : [{
-    "name" : "Computer Science"
+    "name" : "ComputerScience"
   }],
   "description" : "The aim objective of ICCAE 2011 is to provide a platform for researchers, engineers, academicians as well as industrial professionals from all over the world to present their research results and development activities in Computer and Automation Engineering. This conference provides opportunities for the delegates to exchange new ideas and application experiences face to face, to establish business or research relations and to find global partners for future collaboration.",
   "location" : "Chongqing, Chongqing, China",
@@ -919,7 +919,7 @@
   "startdate" : "20110226",
   "enddate" : "20110228",
   "categories" : [{
-    "name" : "Computer Science"
+    "name" : "ComputerScience"
   }],
   "description" : "The aim objective of ICMLC 2011 is to provide a platform for researchers, engineers, academicians as well as industrial professionals from all over the world to present their research results and development activities in Machine Learning and Computing. This conference provides opportunities for the delegates to exchange new ideas and application experiences face to face, to establish business or research relations and to find global partners for future collaboration.",
   "location" : "Singapore, Singapore",
@@ -936,7 +936,7 @@
   "startdate" : "20110628",
   "enddate" : "20110630",
   "categories" : [{
-    "name" : "Media Research"
+    "name" : "MediaResearch"
   }],
   "description" : "The International Conference on Communication, Film and Media Sciences aims to bring together academic scientists, leading engineers, industry researchers and scholar students to exchange and share their experiences and research results about all aspects of Communication, Film and Media Sciences, and discuss the practical challenges encountered and the solutions adopted.",
   "location" : "Paris, France",
@@ -953,7 +953,7 @@
   "startdate" : "20110512",
   "enddate" : "20110513",
   "categories" : [{
-    "name" : "Media Research"
+    "name" : "MediaResearch"
   }],
   "description" : "For readers in Europe, on May 12 and 13, the Spanish Foundation for Science and Technology (FECYT) will be hosting in Madrid the Media For Science Forum 2010. The event is intended for science journalists, media officers, science communicators, and scientists and is co-organized by the European Union Science Journalists Association. Registration is free. Following the Forum, a report featuring conclusions about the state of science journalism and public engagement will be released with recommendations aimed at enhanced cooperation among journalists, science communicators, scientists, policymakers, and the public.",
   "location" : "Madrid, Spain",
@@ -970,7 +970,7 @@
   "startdate" : "20110928",
   "enddate" : "20111001",
   "categories" : [{
-    "name" : "Media Research"
+    "name" : "MediaResearch"
   }],
   "description" : "Following the success of Media Art History 05 Re:fresh in Banff, Media Art History 07 Re:place in Berlin and Media Art History 09 Re:live in Melbourne, Media Art History 11 Rewire will host three days of keynotes, panels and poster sessions.\nMedia Art History 2011 - Rewire will increase the voltage and ignite key debates within the internationally distributed network of histories, which takes account of the questions surrounding documentation and methodologies, materiality, and agency. Rewire aims to up the current to illuminate the British contribution to media art, and by looking at our industrial heritage and contribution to the history of computing technologies themselves, we will open the discussion to how these contributions are manifested internationally. Considering the International scope of the histories of media art, science and technology, Rewire is also listed as part of the \"McLuhan in Europe\" programme, and will take place concurrently with The Asia Triennial in Manchester and Abandon Normal Devices, the North West's festival of new cinema and digital culture which returns to Liverpool in September 2011.The reviewers especially welcome proposals for presentations that\nresonate thematically with these events.",
   "location" : "Liverpool, UK",
