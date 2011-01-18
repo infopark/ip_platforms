@@ -1,5 +1,7 @@
 class MembersController < ApplicationController
-  # TODO: Only show page für andere members, other requires login
+  append_before_filter :require_current_user
+  append_before_filter :require_current_user_is_admin,
+                        :except => 'edit_password'
 
   def index
     @members = Member.all
@@ -79,15 +81,12 @@ class MembersController < ApplicationController
     end
     if request.post?
       raise 'password is blank' if params[:new_password].blank?
-      if params[:new_password] != params[:new_password_confirm]
-        raise 'password does not match confirmation'
+      if !is_admin? && !Member.authenticate(@current_user.username,
+                                            params[:old_password])
+        raise 'Old password does not match'
       end
-      if is_admin?
-        @member.password=params[:new_password]
-        @member.save!
-      else
-        @member.change_password!(params[:old_password], params[:new_password])
-      end
+      @member.change_password!(params[:new_password],
+                               params[:new_password_confirm])
       flash[:notice] = 'Password edit successful'
       if @member == @current_user
         redirect_to(profile_path)

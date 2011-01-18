@@ -37,6 +37,12 @@ class ApplicationController < ActionController::Base
     false
   end
 
+  def require_current_user_is_admin
+    return true if is_admin?
+    raise 'You need administrative privileges for this page'
+    false
+  end
+
   def logged_in?
     !@current_user.blank?
   end
