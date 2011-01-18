@@ -81,12 +81,12 @@ more information</h3>
 
   <div class="c50r">
     <div class="subcr box">
-      <h3>First 10 conference categories</h3>
-      <% if @categories_first_10.blank? %>
+      <h3>First 15 conference categories</h3>
+      <% if @categories_first.blank? %>
         No categories
       <% else %>
         <ul>
-          <% @categories_first_10.each do |c| %>
+          <% @categories_first.each do |c| %>
             <li><strong><%= link_to c.name,
               conferences_path(:category_ids => [c.id]) %></strong></li>
           <% end %>
