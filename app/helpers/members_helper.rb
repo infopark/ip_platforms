@@ -45,6 +45,7 @@ module MembersHelper
   def show_details?(user=@user)
     return false if !logged_in?
     return true if user && is_my_profile?
+    return true if is_admin?
     is_friend?(user)
   end
 
