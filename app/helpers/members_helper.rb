@@ -29,23 +29,4 @@ module MembersHelper
     select_tag(:location, options_for_select(options, selected_location))
   end
 
-  def is_my_profile?
-    @member == @current_user
-  end
-
-  def is_friend?(user)
-    @current_user.friends.exists?(user)
-  end
-
-  def is_pending_friend?(user)
-    @current_user.friend_requests_received.exists?(user) ||
-    user.friend_requests_received.exists?(@current_user)
-  end
-
-  def show_details?(user=@user)
-    return false if !logged_in?
-    return true if user && is_my_profile?
-    is_friend?(user)
-  end
-
 end

@@ -16,7 +16,9 @@
     <th>Email</th>
     <th>Town</th>
     <th>Country</th>
-    <th>Action</th>
+    <% if logged_in? %>
+      <th>Action</th>
+    <% end %>
     <% if is_admin? %>
       <th>Admin</th>
     <% end %>
@@ -30,7 +32,7 @@
     <td><%= member.town %></td>
     <td><%= member.country %></td>
     <td style="white-space: nowrap;">
-      <% if member != @current_user &&
+      <% if logged_in? && member != @current_user &&
         !is_friend?(member) && !is_pending_friend?(member)%>
         <%= link_to 'Friend request', add_rcd_path(member) %>
       <% end %>

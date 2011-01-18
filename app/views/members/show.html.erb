@@ -55,7 +55,7 @@
       <% else %>
         <ul>
           <% @friends.each do |f| %>
-            <li><%= link_to f.fullname, member_path(f) %>
+            <li><%= link_to "#{f.fullname} (#{f})", member_path(f) %>
                 <%= link_to 'Defriend', defriend_path(f) %></li>
           <% end %>
         </ul>
