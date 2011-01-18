@@ -1,14 +1,75 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>IpPlatforms</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title><%= page_title %></title>
+
+<%= stylesheet_link_tag :all, :cache => :default_styles %>
+<%= stylesheet_link_tag 'yaml/css/ip_platforms.css',
+    'yaml/css/patches/patch_ip_platforms.css',
+    'yaml/css/screen/ip_platforms_custom.css',
+    :media => nil, :cache => true %>
+<%= javascript_include_tag :defaults %>
+<%= csrf_meta_tag %>
 </head>
-<body>
 
-<%= yield %>
+<body class="hideboth">
+<!-- skip link navigation -->
+<ul id="skiplinks">
+  <li><a class="skip" href="#nav">Skip to navigation (Press Enter).</a></li>
+  <li><a class="skip" href="#col3">Skip to main content (Press Enter).</a></li>
+</ul>
 
+<div class="page_margins">
+  <div class="page">
+    <div id="header" role="banner">
+      <div id="topnav" role="contentinfo">
+        <span><a href="#">Login</a></span>
+      </div>
+      <%= image_tag 'iplogo.png', :class => :float_right,
+          :width => 40, :height => 40 %>
+      <h1><%= page_title %></h1>
+      <span>Supercool CaP System, <em>powered by Infopark</em></span>
+    </div>
+    <!-- begin: main navigation #nav -->
+    <div id="nav"  role="navigation">
+      <div class="hlist">
+        <ul>
+          <li><%= link_to 'Home', :home %></li>
+          <li><%= link_to 'My CaP', :controller => :home,
+                                    :action => :profile %></li>
+          <li><%= link_to 'Conferences', :calendars %></li>
+          <li><%= link_to 'Conference Series', :series %></li>
+          <li><%= link_to 'Categories', :categories %></li>
+          <li><%= link_to 'Calendars', :calendars %></li>
+          <li><%= link_to 'Users', :members %></li>
+        </ul>
+      </div>
+    </div>
+    <!-- end: main navigation -->
+    <!-- begin: main content area #main -->
+    <div id="main">
+      <!-- begin: #col3 static column -->
+      <div id="col3" role="main">
+        <div id="col3_content" class="clearfix">
+          <p><%= yield %></p>
+        </div>
+        <div id="ie_clearing">&nbsp;</div>
+        <!-- End: IE Column Clearing -->
+      </div>
+      <!-- end: #col3 -->
+    </div>
+    <!-- end: #main -->
+    <!-- begin: #footer -->
+    <div id="footer" role="contentinfo">
+      Copyright (c) 2011 Infopark AG <br />
+      Powered by Ruby on Rails,
+      Layout based on <a href="http://www.yaml.de/">YAML</a>
+    </div>
+    <!-- end: #footer -->
+  </div>
+</div>
+<!-- full skip link functionality in webkit browsers -->
+<%= javascript_include_tag 'yaml/yaml-focusfix.js' %>
 </body>
 </html>

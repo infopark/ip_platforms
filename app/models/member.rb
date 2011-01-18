@@ -10,6 +10,7 @@ class Member < ActiveRecord::Base
   has_and_belongs_to_many(:series)
   has_many(:calendars)
   has_many(:conferences, :foreign_key => :creator_id)
+  has_many(:notifications)
 
   def self.create_default_admin
     Member.create(:username => "root", :admin => true)

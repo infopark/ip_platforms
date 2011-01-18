@@ -6,5 +6,6 @@ IpPlatforms::Application.routes.draw do
   resources :members
   resources :series
   root(:to => 'home#index', :as => :home)
+  match('/my_cap' => 'home#profile')
 
 end
