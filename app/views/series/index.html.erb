@@ -1,8 +1,11 @@
 <h1>Listing series</h1>
 
+<% if is_admin? %>
+  <%= link_to 'New Serie', new_serie_path %>
+<% end %>
+
 <table>
   <tr>
-    <th>Version</th>
     <th>Name</th>
     <th></th>
     <th></th>
@@ -11,15 +14,11 @@
 
 <% @series.each do |serie| %>
   <tr>
-    <td><%= serie.version %></td>
     <td><%= serie.name %></td>
-    <td><%= link_to 'Show', serie %></td>
-    <td><%= link_to 'Edit', edit_serie_path(serie) %></td>
-    <td><%= link_to 'Destroy', serie, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if is_admin? %>
+      <td><%= link_to 'Edit', edit_serie_path(serie) %></td>
+      <td><%= link_to 'Destroy', serie, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Serie', new_serie_path %>

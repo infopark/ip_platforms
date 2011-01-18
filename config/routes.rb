@@ -21,7 +21,7 @@ IpPlatforms::Application.routes.draw do
     get "invite", :on => :member
   end
   resources(:members)
-  resources(:series)
+  resources(:series, :except => :show)
   root(:to => 'home#index', :as => :home)
 
 end

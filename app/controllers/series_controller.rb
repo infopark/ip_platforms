@@ -10,17 +10,6 @@ class SeriesController < ApplicationController
     end
   end
 
-  # GET /series/1
-  # GET /series/1.xml
-  def show
-    @serie = Serie.find(params[:id])
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @serie }
-    end
-  end
-
   # GET /series/new
   # GET /series/new.xml
   def new
@@ -44,7 +33,7 @@ class SeriesController < ApplicationController
 
     respond_to do |format|
       if @serie.save
-        format.html { redirect_to(@serie, :notice => 'Serie was successfully created.') }
+        format.html { redirect_to(series_path, :notice => 'Serie was successfully created.') }
         format.xml  { render :xml => @serie, :status => :created, :location => @serie }
       else
         format.html { render :action => "new" }
@@ -60,7 +49,7 @@ class SeriesController < ApplicationController
 
     respond_to do |format|
       if @serie.update_attributes(params[:serie])
-        format.html { redirect_to(@serie, :notice => 'Serie was successfully updated.') }
+        format.html { redirect_to(series_path, :notice => 'Serie was successfully updated.') }
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
