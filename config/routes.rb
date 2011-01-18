@@ -2,12 +2,10 @@ IpPlatforms::Application.routes.draw do
 
   get "factorydefaults" => "seed#factorydefaults"
   get "reset" => "seed#reset"
-  match('/add_friend_request/:id' => 'members#add_friend_request',
-        :as => :add_friend_request)
-  match('/accept_friend_request/:id' => 'members#accept_friend_request',
-        :as => :accept_friend_request)
-  match('/decline_friend_request/:id' => 'members#decline_friend_request',
-        :as => :decline_friend_request)
+  match('/defriend/:id' => 'members#defriend', :as => :defriend)
+  match('/add_rcd/:id' => 'members#add_rcd', :as => :add_rcd)
+  match('/accept_rcd/:id' => 'members#accept_rcd', :as => :accept_rcd)
+  match('/decline_rcd/:id' => 'members#decline_rcd', :as => :decline_rcd)
   match('/members/:id/edit_password' => 'members#edit_password',
         :as => :edit_password)
   match('/revoke_friend_request/:id' => 'members#revoke_friend_request',

@@ -33,10 +33,14 @@ module MembersHelper
     @member == @current_user
   end
 
-  def show_details?
+  def is_friend?(user)
+    @current_user.friends.exists?(user)
+  end
+
+  def show_details?(user=@user)
     return false if !logged_in?
-    return true if @user && is_my_profile?
-    @current_user.friends.exists?(@user)
+    return true if user && is_my_profile?
+    is_friend?(user)
   end
 
 end

@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   append_before_filter :require_current_user, :except => :index
   append_before_filter :require_current_user_is_admin,
-                        :except => [:edit_password, :index]
+                        :only => [:edit, :new, :create, :update, :destroy]
 
   def index
     @q = params[:q]
@@ -102,9 +102,19 @@ class MembersController < ApplicationController
     flash.now[:error] = "Password edit failed: #{e}"
   end
 
-  def accept_friend_request
+  def defriend
     begin
-      @current_user.accept_friend_request(params[:id])
+      @current_user.defriend(params[:id])
+      flash[:notice] = 'Defriend request accepted'
+    rescue => e
+      flash[:error] = "Could not accept defriend request (#{e})"
+    end
+    redirect_to(@current_user)
+  end
+
+  def accept_rcd
+    begin
+      @current_user.accept_rcd(params[:id])
       flash[:notice] = 'Friend request accepted'
     rescue => e
       flash[:error] = "Could not accept friend request (#{e})"
@@ -112,9 +122,9 @@ class MembersController < ApplicationController
     redirect_to(@current_user)
   end
 
-  def add_friend_request
+  def add_rcd
     begin
-      @current_user.add_friend_request(params[:id])
+      @current_user.add_rcd(params[:id])
       flash[:notice] = 'Your friend request has been sent'
     rescue => e
       flash[:error] = "Could not send friend request (#{e})"
@@ -122,9 +132,9 @@ class MembersController < ApplicationController
     redirect_to(@current_user)
   end
 
-  def decline_friend_request
+  def decline_rcd
     begin
-      @current_user.decline_friend_request(params[:id])
+      @current_user.decline_rcd(params[:id])
       flash[:notice] = 'Friend request declined'
     rescue => e
       flash[:error] = "Could not decline friend request (#{e})"

@@ -85,7 +85,15 @@ class Member < ActiveRecord::Base
     save!
   end
 
-  def add_friend_request(requestee_id)
+  def defriend(friend_id)
+    transaction do
+      friend = Member.find(friend_id)
+      friend.friends.delete(self)
+      self.friends.delete(friend)
+    end
+  end
+
+  def add_rcd(requestee_id)
     requestee = Member.find(requestee_id)
     raise 'You cannot be friend with yourself' if requestee == self
     requestee.friend_requests_received << self
@@ -96,12 +104,12 @@ class Member < ActiveRecord::Base
     requestee.friend_requests_received.delete(self)
   end
 
-  def decline_friend_request(requester_id)
+  def decline_rcd(requester_id)
     requester = Member.find(requester_id)
     friend_requests_received.delete(requester)
   end
 
-  def accept_friend_request(requester_id)
+  def accept_rcd(requester_id)
     transaction do
       friend = Member.find(requester_id)
       friend_requests_received.delete(friend)

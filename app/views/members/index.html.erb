@@ -9,25 +9,23 @@
   <% end %>
 </div>
 
-<table>
+<table class="fullwidth">
   <tr>
     <th>Username</th>
     <th>Fullname</th>
     <th>Email</th>
     <th>Town</th>
     <th>Country</th>
-    <th>Admin</th>
     <th>Action</th>
   </tr>
 
 <% @members.each do |member| %>
   <tr>
     <td><%= link_to member.username, member %></td>
-    <td><%= member.fullname %></td>
-    <td><%= member.email %></td>
+    <td><%= member.fullname if show_details?(member) %></td>
+    <td><%= member.email if show_details?(member) %></td>
     <td><%= member.town %></td>
     <td><%= member.country %></td>
-    <td><%= member.admin %></td>
     <td style="white-space: nowrap;">
       <% if is_admin? %>
         <%= link_to 'Edit', edit_member_path(member) %>
@@ -35,8 +33,8 @@
         <%= link_to 'Delete', member,
         :confirm => 'Are you sure?', :method => :delete %>
       <% end %>
-      <% if member != @current_user %>
-        <%= link_to 'Friend request', add_friend_request_path(member) %>
+      <% if member != @current_user && !is_friend?(member) %>
+        <%= link_to 'Friend request', add_rcd_path(member) %>
       <% end %>
     </td>
   </tr>
