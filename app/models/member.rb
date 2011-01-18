@@ -11,4 +11,7 @@ class Member < ActiveRecord::Base
   has_many(:calendars)
   has_many(:conferences, :foreign_key => :creator_id)
 
+  def self.create_default_admin
+    Member.create(:username => "root", :admin => true)
+  end
 end
