@@ -74,7 +74,7 @@
         <ul>
           <% @friend_requests_sent.each do |r| %>
             <li><%= link_to r.username, member_path(r) %> didn't yet reply
-                <%= link_to 'Revoke', revoke_friend_request_path(r) %>
+                <%= link_to 'Revoke', revoke_rcd_path(r) %>
             </li>
           <% end %>
         </ul>
@@ -92,8 +92,8 @@
           <% @friend_requests_received.each do |r| %>
             <li><%= link_to(r.username, member_path(r)) %>
                 wants to be your friend
-                <%= link_to 'Accept', accept_friend_request_path(r) %>
-                <%= link_to 'Decline', decline_friend_request_path(r) %>
+                <%= link_to 'Accept', accept_rcd_path(r) %>
+                <%= link_to 'Decline', decline_rcd_path(r) %>
             </li>
           <% end %>
         </ul>

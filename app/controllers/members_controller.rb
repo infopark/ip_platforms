@@ -142,9 +142,9 @@ class MembersController < ApplicationController
     redirect_to(@current_user)
   end
 
-  def revoke_friend_request
+  def revoke_rcd
     begin
-      @current_user.revoke_friend_request(params[:id])
+      @current_user.revoke_rcd(params[:id])
       flash[:notice] = 'My friend request has been revoked'
     rescue => e
       flash[:error] = "Could not revoke friend my request (#{e})"

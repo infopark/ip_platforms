@@ -6,10 +6,9 @@ IpPlatforms::Application.routes.draw do
   match('/add_rcd/:id' => 'members#add_rcd', :as => :add_rcd)
   match('/accept_rcd/:id' => 'members#accept_rcd', :as => :accept_rcd)
   match('/decline_rcd/:id' => 'members#decline_rcd', :as => :decline_rcd)
+  match('/revoke_rcd/:id' => 'members#revoke_rcd', :as => :revoke_rcd)
   match('/members/:id/edit_password' => 'members#edit_password',
         :as => :edit_password)
-  match('/revoke_friend_request/:id' => 'members#revoke_friend_request',
-        :as => :revoke_friend_request)
   resource(:login_session, :only => [:create, :destroy, :new])
   resources(:calendars)
   resources(:categories)
