@@ -17,10 +17,10 @@ class ConferencesController < ApplicationController
     @location = params[:location]
     @conferences =
       if params[:submit] == 'Extended Search'
+        Conference.extended_search(@qq, @current_user)
+      else
         Conference.search(@q, @category_ids, @start_at, @end_at,
           @current_user, @location)
-      else
-        Conference.extended_search(@qq, @current_user)
       end
     respond_to do |format|
       format.html # index.html.erb
