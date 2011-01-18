@@ -1,8 +1,11 @@
 <h1>Listing categories</h1>
 
+<% if is_admin? %>
+  <%= link_to 'New Category', new_category_path %>
+<% end %>
+
 <table>
   <tr>
-    <th>Version</th>
     <th>Name</th>
     <th>Parent</th>
     <th></th>
@@ -12,16 +15,16 @@
 
 <% @categories.each do |category| %>
   <tr>
-    <td><%= category.version %></td>
     <td><%= category.name %></td>
-    <td><%= category.parent_id %></td>
-    <td><%= link_to 'Show', category %></td>
-    <td><%= link_to 'Edit', edit_category_path(category) %></td>
-    <td><%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if category.parent %>
+      <td><b><%= category.parent.name %></b></td>
+    <% else %>
+      <td><i>No Parent</i></td>
+    <% end %>
+    <% if is_admin? %>
+      <td><%= link_to 'Edit', edit_category_path(category) %></td>
+      <td><%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Category', new_category_path %>

@@ -14,7 +14,7 @@ IpPlatforms::Application.routes.draw do
         :as => :revoke_friend_request)
   resource(:login_session, :only => [:create, :destroy, :new])
   resources(:calendars)
-  resources(:categories)
+  resources(:categories, :except => :show)
   resources(:conferences) do
     get "signout", :on => :member
     get "signup", :on => :member
