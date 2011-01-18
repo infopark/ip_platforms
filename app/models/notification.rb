@@ -8,7 +8,7 @@ class Notification < ActiveRecord::Base
   attr_accessible(:content)
 
   validates(:member_id, :presence => true)
-  validates(:content, :presence => true, :length => { :maximum => 50 })
+  validates(:content, :presence => true, :length => { :maximum => 500 })
 
   attr_readonly(:member_id)
   attr_readonly(:content)

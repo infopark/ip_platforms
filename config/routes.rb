@@ -17,7 +17,9 @@ IpPlatforms::Application.routes.draw do
   resources(:calendars)
   resources(:categories)
   resources(:conferences) do
+    get "signout", :on => :member
     get "signup", :on => :member
+    get "invite", :on => :member
   end
   resources(:members)
   resources(:series)

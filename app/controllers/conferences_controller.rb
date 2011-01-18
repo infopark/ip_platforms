@@ -93,6 +93,32 @@ class ConferencesController < ApplicationController
     end
   end
 
+  def signout
+    respond_to do |format|
+      @conference.participants.delete(@current_user)
+      @conference.save
+      format.html { redirect_to(@conference, :notice => "You've been signed out from this conference!") }
+    end
+  end
+
+  def invite
+    respond_to do |format|
+      friend = Member.find(params[:friend_id])
+      if friend.friends.include?(@current_user)
+        format.html do
+          flash[:notice] = "User #{friend.username} has been invited to this conference!"
+          notification = Notification.new(
+            :content => "Invited to <a href='#{conference_path(@conference)}'>#{@conference.name}</a>" \
+              " by <a href='#{profile_path(@current_user)}'>#{@current_user.fullname}</a>"
+          )
+          notification.member = friend
+          notification.save!
+          redirect_to(@conference)
+        end
+      end
+    end
+  end
+
   private
 
   def find_conference
