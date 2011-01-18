@@ -5,9 +5,10 @@ gem('capistrano')
 gem('geokit')
 gem('json')
 gem('mysql2')
+gem('rack-test')
 
 group :development, :test do
   gem('annotate')
-  gem("rspec", "2.4.0")
-  gem("rspec-rails", "2.4.1")
+  gem('rspec', '2.4.0')
+  gem('rspec-rails', '2.4.1')
 end

@@ -4,11 +4,14 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title><%= page_title %></title>
 
-<%= stylesheet_link_tag :all, :cache => :default_styles %>
-<%= stylesheet_link_tag 'yaml/css/ip_platforms.css',
-    'yaml/css/patches/patch_ip_platforms.css',
-    'yaml/css/screen/ip_platforms_custom.css',
-    :media => nil, :cache => true %>
+<%= stylesheet_link_tag 'yaml/core/base.css',
+    'yaml/navigation/nav_shinybuttons.css',
+    'screen/basemod.css',
+    'screen/content.css',
+    'yaml/print/print_003_draft.css',
+    'patches/patch_ip_platforms.css',
+    'screen/ip_platforms_custom.css',
+    :cache => true %>
 <%= javascript_include_tag :defaults %>
 <%= csrf_meta_tag %>
 </head>
@@ -43,9 +46,7 @@
           <li><%= link_to 'Conference Series', series_path %></li>
           <li><%= link_to 'Categories', categories_path %></li>
           <li><%= link_to 'Calendars', calendars_path %></li>
-          <% if is_admin? %>
-            <li><%= link_to 'Users', members_path %></li>
-          <% end %>
+          <li><%= link_to 'Users', members_path %></li>
         </ul>
       </div>
     </div>

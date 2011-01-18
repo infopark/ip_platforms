@@ -2,6 +2,8 @@ IpPlatforms::Application.routes.draw do
 
   get "factorydefaults" => "seed#factorydefaults"
   get "reset" => "seed#reset"
+  match('/add_friend_request/:id' => 'profile#add_friend_request',
+        :as => :add_friend_request)
   match('/accept_friend_request/:id' => 'profile#accept_friend_request',
         :as => :accept_friend_request)
   match('/decline_friend_request/:id' => 'profile#decline_friend_request',

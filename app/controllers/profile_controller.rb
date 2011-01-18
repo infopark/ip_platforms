@@ -25,6 +25,16 @@ class ProfileController < ApplicationController
     redirect_to(profile_path)
   end
 
+  def add_friend_request
+    begin
+      @current_user.add_friend_request(params[:id])
+      flash[:notice] = 'Your friend request has been sent'
+    rescue => e
+      flash[:error] = "Could not send friend request (#{e})"
+    end
+    redirect_to(profile_path)
+  end
+
   def decline_friend_request
     begin
       @current_user.decline_friend_request(params[:id])
