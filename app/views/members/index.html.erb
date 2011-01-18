@@ -1,5 +1,14 @@
 <h1>Listing members</h1>
 
+<div>
+  <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
+    <%= member_state_select_tag(@state) %>
+    <%= member_location_select_tag(@location) %>
+    <%= text_field_tag(:q, @q, :size => 15) %>
+    <%= submit_tag('Search') %>
+  <% end %>
+</div>
+
 <table>
   <tr>
     <th>Username</th>

@@ -110,4 +110,43 @@ class Member < ActiveRecord::Base
     end
   end
 
+  def search_members(q, state, location)
+    r = Member
+    unless q.blank?
+      if state == 'noFriends' || friends.empty?
+        r = r.where(['username LIKE ?', "%#{q}%"])
+      else
+        s = friends.map(&:id).join(',')
+        r = r.where(["(username LIKE ? OR fullname LIKE ? AND id IN (#{s}))",
+            "%#{q}%", "%#{q}%"])
+      end
+    end
+    case state
+    when 'noFriends'
+      unless friends.empty?
+        r = r.where("id NOT IN (#{friends.map(&:id).join(',')})")
+      end
+    when 'noRCD'
+      unless friend_requests_sent.empty?
+        r = r.where("id NOT IN (#{friend_requests_sent.map(&:id).join(',')})")
+      end
+    end
+    case location
+    when 'myTown'
+      unless town.blank?
+        r = r.where(:town => town)
+      end
+    when 'myCountry'
+      unless country.blank?
+        r = r.where(:country => country)
+      end
+    when '5', '10', '20', '50', '100', '200', '500', '1000', '2000', '5000'
+      unless has_gps_data?
+        r = r.where(["SQRT(POW(ABS(?-lat),2)+POW(ABS(?-lng),2)) < ?",
+            lat, lng, location.to_f/100])
+      end
+    end
+    r.all
+  end
+
 end
