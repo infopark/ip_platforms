@@ -4,18 +4,10 @@
 
 <table>
   <tr>
-    <th>Version</th>
     <th>Name</th>
-    <th>Creator</th>
-    <th>Series</th>
     <th>Startdate</th>
     <th>Enddate</th>
-    <th>Description</th>
     <th>Location</th>
-    <th>Gps</th>
-    <th>Venue</th>
-    <th>Accomodation</th>
-    <th>Howtofind</th>
     <th></th>
     <th></th>
     <th></th>
@@ -23,21 +15,17 @@
 
 <% @conferences.each do |conference| %>
   <tr>
-    <td><%= conference.version %></td>
     <td><%= conference.name %></td>
-    <td><%= conference.creator_id %></td>
-    <td><%= conference.serie_id %></td>
     <td><%= conference.startdate %></td>
     <td><%= conference.enddate %></td>
-    <td><%= conference.description %></td>
     <td><%= conference.location %></td>
-    <td><%= conference.gps %></td>
-    <td><%= conference.venue %></td>
-    <td><%= conference.accomodation %></td>
-    <td><%= conference.howtofind %></td>
-    <td><%= link_to 'Show', conference %></td>
-    <td><%= link_to 'Edit', edit_conference_path(conference) %></td>
-    <td><%= link_to 'Destroy', conference, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% if logged_in? %>
+      <td><%= link_to 'Show', conference %></td>
+      <% if conference.creator == @current_user %>
+        <td><%= link_to 'Edit', edit_conference_path(conference) %></td>
+        <td><%= link_to 'Destroy', conference, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    <% end %>
   </tr>
 <% end %>
 </table>
