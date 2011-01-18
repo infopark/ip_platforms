@@ -11,21 +11,10 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :version %><br />
-    <%= f.text_field :version %>
-  </div>
+  <br /><h3>Required Information</h3>
   <div class="field">
     <%= f.label :name %><br />
     <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :creator_id %><br />
-    <%= f.text_field :creator_id %>
-  </div>
-  <div class="field">
-    <%= f.label :serie_id %><br />
-    <%= f.text_field :serie_id %>
   </div>
   <div class="field">
     <%= f.label :startdate %><br />
@@ -36,13 +25,19 @@
     <%= f.date_select :enddate %>
   </div>
   <div class="field">
+    <%= f.label :categories %><br />
+    <%= f.collection_select :category_ids, @categories, :id, :name, {:selected => @conference.category_ids}, {:multiple => true} %>
+  </div>
+  <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_field :description %>
+    <%= f.text_area :description %>
   </div>
   <div class="field">
     <%= f.label :location %><br />
     <%= f.text_field :location %>
   </div>
+
+  <br /><h3>Optional Information</h3>
   <div class="field">
     <%= f.label :gps %><br />
     <%= f.text_field :gps %>

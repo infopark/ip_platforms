@@ -1,4 +1,6 @@
 class ConferencesController < ApplicationController
+  before_filter :require_current_user, :except => [:index, :show]
+
   # GET /conferences
   # GET /conferences.xml
   def index
@@ -25,7 +27,7 @@ class ConferencesController < ApplicationController
   # GET /conferences/new.xml
   def new
     @conference = Conference.new
-
+    @categories = Category.order.all
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @conference }
@@ -41,6 +43,9 @@ class ConferencesController < ApplicationController
   # POST /conferences.xml
   def create
     @conference = Conference.new(params[:conference])
+    @conference.creator = @current_user
+    @conference.categories = Category.find(params[:conference][:category_ids] || [])
+    @categories = Category.all
 
     respond_to do |format|
       if @conference.save
