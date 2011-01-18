@@ -31,12 +31,12 @@
     <td style="white-space: nowrap;">
       <% if is_admin? %>
         <%= link_to 'Edit', edit_member_path(member) %>
-        | <%= link_to 'Password', edit_password_path(member) %>
-        | <%= link_to 'Delete', member,
+        <%= link_to 'Password', edit_password_path(member) %>
+        <%= link_to 'Delete', member,
         :confirm => 'Are you sure?', :method => :delete %>
       <% end %>
       <% if member != @current_user %>
-        | <%= link_to 'Friend request', add_friend_request_path(member) %>
+        <%= link_to 'Friend request', add_friend_request_path(member) %>
       <% end %>
     </td>
   </tr>

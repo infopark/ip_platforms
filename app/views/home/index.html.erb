@@ -1,5 +1,5 @@
-<h1>
-  <%= t(:hello) %>
-</h1>
+<h2>Welcome to the Infopark CaP Conference System</h2>
 
-See <%= link_to 'your profile', profile_path %>
+<% if logged_in? %>
+<h3>See <%= link_to 'your profile', member_path(@current_user) %></h3>
+<% end %>

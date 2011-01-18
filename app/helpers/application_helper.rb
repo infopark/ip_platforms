@@ -6,6 +6,8 @@ module ApplicationHelper
 
   def login_logout_link
     if logged_in?
+      link_to('My profile',
+              member_path(@current_user)) << " | " <<
       link_to("Logout #{@current_user.username}",
               login_session_path, :method => :delete)
     else

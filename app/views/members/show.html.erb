@@ -1,41 +1,122 @@
-<p id="notice"><%= notice %></p>
+<h2>Member status page</h2>
 
-<p>
-<p>
-  <b>Username:</b>
-  <%= @member.username %>
-</p>
+<div class="box">
+  <h3>About <%= @member.username %></h3>
+  <% if @member.blank? %>
+    ERROR: No user information available. Who are you?
+  <% else %>
+    <ul class="profile_list <% if show_details? %>float_left<% end %>">
+      <li>Username: <%= @member.username %></li>
+      <li>Full Name: <%= @member.fullname %></li>
+      <li>Email: <%= @member.email %></li>
+      <li>Town: <%= @member.town %></li>
+      <li>Country: <%= @member.country %></li>
+      <li>GPS: <%= @member.gps %></li>
+      <li>Admin: <%= @member.admin %></li>
+      <% if is_my_profile? %>
+        <li><%= link_to 'Change password', edit_password_path(@member)%></li>
+      <% end %>
+    </ul>
 
-<p>
-  <b>Fullname:</b>
-  <%= @member.fullname %>
-</p>
+    <div>
+    <% if show_details? %>
+      <iframe width="400" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/?z=9&amp;ll=<%= @member.lat %>,<%= @member.lng %>&amp;output=embed"></iframe>
+    <% end %>
+    </div>
 
-<p>
-  <b>Email:</b>
-  <%= @member.email %>
-</p>
+  <% end %>
+</div>
 
-<p>
-  <b>Town:</b>
-  <%= @member.town %>
-</p>
+<% if is_my_profile? %>
 
-<p>
-  <b>Country:</b>
-  <%= @member.country %>
-</p>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcl box">
+      <h3>Your Notifications</h3>
+      <% if @notifications.blank? %>
+        You don't have any notifications
+      <% else %>
+        <ul>
+          <% @notifications.each do |n| %>
+            <li><%= l(n.created_at, :format => :long) %>:
+                <%= n.content %></li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
 
-<p>
-  <b>Gps:</b>
-  <%= @member.gps %>
-</p>
+  <div class="c50r">
+    <div class="subcr box">
+      <h3>Your Friends</h3>
+      <% if @friends.blank? %>
+        You don't have any friends
+      <% else %>
+        <ul>
+          <% @friends.each do |f| %>
+            <li><%= link_to f.fullname, member_path(f) %>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<p>
-  <b>Admin:</b>
-  <%= @member.admin %>
-</p>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcl box">
+      <h3>Friend Requests Sent</h3>
+      <% if @friend_requests_sent.blank? %>
+        No friend requests originated by you
+      <% else %>
+        <ul>
+          <% @friend_requests_sent.each do |r| %>
+            <li><%= link_to r.username, member_path(r) %> didn't yet reply
+                <%= link_to 'Revoke', revoke_friend_request_path(r) %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
 
+  <div class="c50r">
+    <div class="subcr box">
+      <h3>Friend Requests Received</h3>
+      <% if @friend_requests_received.blank? %>
+        No open friend requests for you
+      <% else %>
+        <ul>
+          <% @friend_requests_received.each do |r| %>
+            <li><%= link_to(r.username, member_path(r)) %>
+                wants to be your friend
+                <%= link_to 'Accept', accept_friend_request_path(r) %>
+                <%= link_to 'Decline', decline_friend_request_path(r) %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+  </div>
+</div>
 
+<div class="box">
+  <h3>Your Calendars</h3>
+  <% if @calendars.blank? %>
+    You don't have any calendars
+  <% else %>
+    <ul>
+      <% @calendars.each do |c| %>
+        <li><%= c.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
+
+<% end %>
+
+<% if is_admin? %>
 <%= link_to 'Edit', edit_member_path(@member) %> |
+<% end %>
+
 <%= link_to 'Back', members_path %>

@@ -39,9 +39,6 @@
       <div class="hlist">
         <ul>
           <li><%= link_to 'Home', :home %></li>
-          <% if logged_in? %>
-            <li><%= link_to 'My CaP', profile_path %></li>
-          <% end %>
           <li><%= link_to 'Conferences', conferences_path %></li>
           <li><%= link_to 'Conference Series', series_path %></li>
           <li><%= link_to 'Categories', categories_path %></li>

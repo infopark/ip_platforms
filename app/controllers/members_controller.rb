@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  append_before_filter :require_current_user
+  append_before_filter :require_current_user, :except => :index
   append_before_filter :require_current_user_is_admin,
                         :except => [:edit_password, :index]
 
@@ -17,6 +17,11 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
+    @notifications = @member.notifications
+    @friends = @member.friends
+    @friend_requests_sent = @member.friend_requests_sent
+    @friend_requests_received = @member.friend_requests_received
+    @calendars = @member.calendars
 
     respond_to do |format|
       format.html
@@ -91,14 +96,51 @@ class MembersController < ApplicationController
       @member.change_password!(params[:new_password],
                                params[:new_password_confirm])
       flash[:notice] = 'Password edit successful'
-      if @member == @current_user
-        redirect_to(profile_path)
-      else
-        redirect_to(@member)
-      end
+      redirect_to(@member)
     end
   rescue => e
     flash.now[:error] = "Password edit failed: #{e}"
   end
+
+  def accept_friend_request
+    begin
+      @current_user.accept_friend_request(params[:id])
+      flash[:notice] = 'Friend request accepted'
+    rescue => e
+      flash[:error] = "Could not accept friend request (#{e})"
+    end
+    redirect_to(@current_user)
+  end
+
+  def add_friend_request
+    begin
+      @current_user.add_friend_request(params[:id])
+      flash[:notice] = 'Your friend request has been sent'
+    rescue => e
+      flash[:error] = "Could not send friend request (#{e})"
+    end
+    redirect_to(@current_user)
+  end
+
+  def decline_friend_request
+    begin
+      @current_user.decline_friend_request(params[:id])
+      flash[:notice] = 'Friend request declined'
+    rescue => e
+      flash[:error] = "Could not decline friend request (#{e})"
+    end
+    redirect_to(@current_user)
+  end
+
+  def revoke_friend_request
+    begin
+      @current_user.revoke_friend_request(params[:id])
+      flash[:notice] = 'My friend request has been revoked'
+    rescue => e
+      flash[:error] = "Could not revoke friend my request (#{e})"
+    end
+    redirect_to(@current_user)
+  end
+
 
 end

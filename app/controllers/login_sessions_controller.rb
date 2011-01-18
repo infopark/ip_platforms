@@ -9,7 +9,7 @@ class LoginSessionsController < ApplicationController
     pw = params[:login_session][:password]
     if @user = Member.authenticate(params[:login_session][:login], pw)
       session[:user_id] = @user.username
-      redirect_to(session[:return_to] || profile_path)
+      redirect_to(session[:return_to] || member_path(@user))
       session[:return_to] = nil
     else
       flash.now[:error] = 'Invalid login.'
