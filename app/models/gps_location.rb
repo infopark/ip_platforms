@@ -18,12 +18,14 @@ module GpsLocation
 
   def set_lat_lng_from_gps_after_validation
     if !gps.blank? && errors[:gps].empty?
-      m = "#{gps}".match(%r{([\d\.]+) ?([NnSs]) ?,? ?([\d+\.]+) ?([EeWw])})
-      self.lat = p[1]
-      self.lng = p[3]
-      self.lat = -lat if ['s', 'S'].include?(p[2])
-      self.lng = -lng if ['w', 'W'].include?(p[2])
+      if m = "#{gps}".match(%r{([\d\.]+) ?([NnSs]) ?,? ?([\d+\.]+) ?([EeWw])})
+        self.lat = m[1]
+        self.lng = m[3]
+        self.lat = -lat if ['s', 'S'].include?(m[2])
+        self.lng = -lng if ['w', 'W'].include?(m[2])
+      end
     end
+    true
   end
 
 end

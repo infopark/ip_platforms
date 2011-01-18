@@ -32,7 +32,7 @@
   "email" : "edsger.dijkstra@example.com",
   "town" : "Eindhoven",
   "country" : "Netherlands",
-  "gps" : "51.26N,5.29O"
+  "gps" : "51.26N,5.29E"
 },
 {
   "username" : "lpage",
@@ -77,7 +77,7 @@
   "email" : "konrad.zuse@example.com",
   "town" : "Berlin",
   "country" : "Germany",
-  "gps" : "52.29N,13.22O"
+  "gps" : "52.29N,13.22E"
 },
 {
   "username" : "swozniak",

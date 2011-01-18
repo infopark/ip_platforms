@@ -1,6 +1,7 @@
 require "json"
 
 class Seed
+
   def self.reset
     Calendar.delete_all
     Category.delete_all
@@ -23,7 +24,7 @@ class Seed
   private
 
   def self.load_json_data
-    data = JSON.parse(File.read(File.join(Rails.root, %w(lib factorydefaults.json))))
+    data = JSON.parse(Rails.root.join('lib', 'factorydefaults.json').read)
     @members, @categories, @series, @conferences = data
   end
 
@@ -88,4 +89,5 @@ class Seed
       conference.save!
     end
   end
+
 end
