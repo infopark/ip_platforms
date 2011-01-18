@@ -12,7 +12,47 @@ class Member < ActiveRecord::Base
   has_many(:conferences, :foreign_key => :creator_id)
   has_many(:notifications)
 
-  def self.create_default_admin
-    Member.create(:username => "root", :admin => true)
+  def self.reset_or_create_default_admin!
+    admin = Member.find_or_create_by_username('admin')
+    admin.password = 'admin'
+    admin.admin = true
+    admin.save!
   end
+
+  def self.authenticate(username, password)
+    member = find_by_username(username)
+    (member && member.check_password(password)) ? member : nil
+  end
+
+  def check_password(password)
+    return false if password.blank? || password_hash.blank?
+    password_hash == Digest::SHA256.hexdigest("#{password}#{password_salt}")
+  end
+
+  def password_set?
+    !password_hash.blank?
+  end
+
+  def password=(password)
+    if password.blank?
+      raise 'new password cannot be blank'
+    end
+    salt = [Array.new(6){rand(256).chr}.join].pack('m').chomp
+    hash = Digest::SHA256.hexdigest(password + salt)
+    self.password_salt, self.password_hash = salt, hash
+  end
+
+  def change_password!(new_password, new_password_confirmation)
+    unless new_password == new_password_confirmation
+      raise 'new password confirmation does not match'
+    end
+    self.password = new_password
+    save!
+  end
+
+  def clear_password!
+    self.password_salt, self.password_hash = nil, nil
+    save!
+  end
+
 end
