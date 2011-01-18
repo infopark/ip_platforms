@@ -33,7 +33,8 @@
         <%= link_to 'Delete', member,
         :confirm => 'Are you sure?', :method => :delete %>
       <% end %>
-      <% if member != @current_user && !is_friend?(member) %>
+      <% if member != @current_user &&
+        !is_friend?(member) && !is_pending_friend?(member)%>
         <%= link_to 'Friend request', add_rcd_path(member) %>
       <% end %>
     </td>

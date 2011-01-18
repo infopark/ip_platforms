@@ -37,6 +37,11 @@ module MembersHelper
     @current_user.friends.exists?(user)
   end
 
+  def is_pending_friend?(user)
+    @current_user.friend_requests_received.exists?(user) ||
+    user.friend_requests_received.exists?(@current_user)
+  end
+
   def show_details?(user=@user)
     return false if !logged_in?
     return true if user && is_my_profile?
