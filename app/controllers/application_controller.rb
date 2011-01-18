@@ -30,16 +30,15 @@ class ApplicationController < ActionController::Base
   end
 
   def require_current_user
-    unless logged_in?
-      session[:return_to] = request.fullpath
-      flash[:error] = 'You need to login before you can access this page.'
-      redirect_to(new_login_session_path)
-      false
-    end
+    return true if logged_in?
+    session[:return_to] = request.fullpath
+    flash[:error] = 'You need to login before you can access this page.'
+    redirect_to(new_login_session_path)
+    false
   end
 
   def logged_in?
-    !session[:user_id].blank?
+    !@current_user.blank?
   end
 
 end
