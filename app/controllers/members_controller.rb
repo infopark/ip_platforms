@@ -1,7 +1,11 @@
 class MembersController < ApplicationController
-  append_before_filter :require_current_user, :except => :index
+  append_before_filter :require_current_user,
+                        :except => [:index, :show, :new, :create]
   append_before_filter :require_current_user_is_admin,
                         :only => [:destroy, :toggle_admin]
+
+  helper_method :show_details?, :is_my_profile?,
+                :is_friend?, :is_pending_friend?
 
   def index
     @q = params[:q]
@@ -17,11 +21,13 @@ class MembersController < ApplicationController
 
   def show
     @member = Member.find(params[:id])
-    @notifications = @member.notifications
-    @friends = @member.friends
-    @friend_requests_sent = @member.friend_requests_sent
-    @friend_requests_received = @member.friend_requests_received
-    @calendars = @member.calendars
+    if show_details?
+      @notifications = @member.notifications
+      @friends = @member.friends
+      @friend_requests_sent = @member.friend_requests_sent
+      @friend_requests_received = @member.friend_requests_received
+      @calendars = @member.calendars
+    end
 
     respond_to do |format|
       format.html
@@ -45,10 +51,18 @@ class MembersController < ApplicationController
 
   def create
     @member = Member.new(params[:member])
+    @member.password = params[:password]
 
     respond_to do |format|
       if @member.save
-        format.html { redirect_to(@member, :notice => 'Member was successfully created.') }
+        format.html {
+          if logged_in?
+            redirect_to(@member, :notice => 'Member was successfully created.')
+          else
+            redirect_to(new_login_session_path,
+                        :notice => 'You may now log in')
+          end
+        }
         format.xml  { render :xml => @member, :status => :created, :location => @member }
       else
         format.html { render :action => "new" }
@@ -173,5 +187,24 @@ class MembersController < ApplicationController
     end
   end
 
+  def show_details?(user=@user)
+    return false if !logged_in?
+    return true if user && is_my_profile?
+    return true if is_admin?
+    is_friend?(user)
+  end
+
+  def is_my_profile?
+    @member == @current_user
+  end
+
+  def is_friend?(user)
+    @current_user.friends.exists?(user)
+  end
+
+  def is_pending_friend?(user)
+    @current_user.friend_requests_received.exists?(user) ||
+    user.friend_requests_received.exists?(@current_user)
+  end
 
 end

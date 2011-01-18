@@ -32,6 +32,7 @@ class Member < ActiveRecord::Base
 
   attr_readonly(:username)
 
+  validates_uniqueness_of(:username)
   validates(:username, :presence => true, :length => { :maximum => 50 })
   validates(:fullname, :length => { :maximum => 100 })
   validates(:email, :length => { :maximum => 250 })
