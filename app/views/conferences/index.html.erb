@@ -2,15 +2,22 @@
 
 <div>
   <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
-    <%= select_tag('categories[]',
+    <%= select_tag('category_ids[]',
             options_from_collection_for_select(Category.all, 'id', 'name',
-                @categories),
+                @category_ids),
             :multiple => true, :size => 6) %>
     <%= conference_location_select_tag(@location) %>
     <%= text_field_tag(:start_at, @start_at, :size => 10) %>
     <%= text_field_tag(:end_at, @end_at, :size => 10) %>
     <%= text_field_tag(:q, @q, :size => 15) %>
     <%= submit_tag('Search') %>
+  <% end %>
+</div>
+
+<div>
+  <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
+    <%= text_field_tag(:qq, @qq, :size => 60) %>
+    <%= submit_tag('Extended Search') %>
   <% end %>
 </div>
 
