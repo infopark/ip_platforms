@@ -1,7 +1,7 @@
 class ConferencesController < ApplicationController
   before_filter :require_current_user, :except => [:index]
   before_filter :find_conference, :except => [:index, :new, :create]
-  before_filter :require_creator, :only => [:edit, :update, :destroy]
+  before_filter :require_creator_or_admin, :only => [:edit, :update, :destroy]
 
   # GET /conferences
   # GET /conferences.xml
@@ -71,8 +71,27 @@ class ConferencesController < ApplicationController
     @categories = Category.all
     @series = @current_user.series
     respond_to do |format|
+      category_ids = params[:conference][:category_ids]
+      old_categories = @conference.categories.dup
+      if not category_ids.present? or category_ids == [""]
+        if old_categories.any?
+          @notify_creator = true
+        end
+        category_ids = []
+      end
+      @conference.categories = Category.find(category_ids)
       if @conference.update_attributes(params[:conference])
-        format.html { redirect_to(@conference, :notice => 'Conference was successfully updated.') }
+        format.html do
+          if @notify_creator
+            notification = Notification.new
+            notification.member = @conference.creator
+            notification.content = <<-EOS
+              You're conference "#{@conference.name}" has been removed from "#{old_categories.map(&:name).join(',')}"
+            EOS
+            notification.save!
+          end
+          redirect_to(@conference, :notice => 'Conference was successfully updated.')
+        end
         format.xml  { head :ok }
       else
         format.html { render :action => "edit" }
@@ -131,7 +150,8 @@ class ConferencesController < ApplicationController
     @conference = Conference.find(params[:id])
   end
 
-  def require_creator
+  def require_creator_or_admin
+    return true if is_admin?
     unless @conference.creator == @current_user
       session[:return_to] = request.fullpath
       flash[:error] = 'You need to be the creator of the conference to be able to change it'

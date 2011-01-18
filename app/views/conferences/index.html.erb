@@ -33,8 +33,10 @@
     <td><%= conference.enddate %></td>
     <td><%= conference.location %></td>
     <% if logged_in? %>
-      <% if conference.creator == @current_user %>
+      <% if conference.creator == @current_user or is_admin? %>
         <td><%= link_to 'Edit', edit_conference_path(conference) %></td>
+      <% end %>
+      <% if conference.creator == @current_user %>
         <td><%= link_to 'Destroy', conference, :confirm => 'Are you sure?', :method => :delete %></td>
       <% end %>
     <% end %>

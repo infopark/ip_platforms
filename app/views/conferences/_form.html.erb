@@ -32,7 +32,7 @@
   <% end %>
   <div class="field">
     <%= f.label :categories %><br />
-    <%= f.collection_select :category_ids, @categories, :id, :name, {:selected => @conference.category_ids}, {:multiple => true} %>
+    <%= f.collection_select :category_ids, @categories, :id, :name, {:selected => @conference.category_ids, :include_blank => "[none]"}, {:multiple => true} %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
