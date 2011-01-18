@@ -4,8 +4,8 @@ class CreateMembers < ActiveRecord::Migration
     create_table :members do |t|
       t.integer :version
       t.string :username, :limit => 50, :null => false
-      t.string :password_hash, :limit => 12
-      t.string :password_salt, :limit => 64
+      t.string :password_hash, :limit => 64
+      t.string :password_salt, :limit => 12
       t.string :fullname, :limit => 100
       t.string :email, :limit => 250
       t.string :town, :limit => 100

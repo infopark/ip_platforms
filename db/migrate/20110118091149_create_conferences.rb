@@ -8,7 +8,7 @@ class CreateConferences < ActiveRecord::Migration
       t.integer :serie_id
       t.date :startdate, :null => false
       t.date :enddate, :null => false
-      t.string :description, :limit => 250, :null => false
+      t.string :description, :limit => 2000, :null => false
       t.string :location, :limit => 250
       t.decimal :lat, :precision => 15, :scale => 10
       t.decimal :lng, :precision => 15, :scale => 10

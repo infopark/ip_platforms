@@ -78,8 +78,8 @@ class Seed
       creator = Member.where(:username => creator_hash["username"]).first
       conference.creator = creator
       if series_hash.present?
-        series = Serie.where(:name => series_hash["name"]).first
-        # FIXME serie setzen
+        serie = Serie.where(:name => series_hash["name"]).first
+        conference.serie = serie
       end
       category_hashes.each do |category_hash|
         category = Category.where(:name => category_hash["name"]).first
