@@ -6,7 +6,13 @@ class ConferencesController < ApplicationController
   # GET /conferences
   # GET /conferences.xml
   def index
-    @conferences = Conference.all
+    @q = params[:q]
+    @categories = params[:categories]
+    @start_at = params[:start_at]
+    @end_at = params[:end_at]
+    @location = params[:location]
+    @conferences = Conference.search(@q, @categories, @start_at, @end_at,
+        @current_user, @location)
 
     respond_to do |format|
       format.html # index.html.erb

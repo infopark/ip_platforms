@@ -131,8 +131,8 @@ class Member < ActiveRecord::Base
     end
   end
 
-  def search_members(q, state, location)
-    r = Member
+  def self.search(q, state, member, location)
+    r = self
     unless q.blank?
       if state == 'noFriends' || friends.empty?
         r = r.where(['username LIKE ?', "%#{q}%"])
@@ -142,29 +142,32 @@ class Member < ActiveRecord::Base
             "%#{q}%", "%#{q}%"])
       end
     end
-    case state
-    when 'noFriends'
-      unless friends.empty?
-        r = r.where("id NOT IN (#{friends.map(&:id).join(',')})")
+    if member
+      case state
+      when 'noFriends'
+        unless member.friends.empty?
+          r = r.where("id NOT IN (#{member.friends.map(&:id).join(',')})")
+        end
+      when 'noRCD'
+        unless member.friend_requests_sent.empty?
+          s = member.friend_requests_sent.map(&:id).join(',')
+          r = r.where("id NOT IN (#{s})")
+        end
       end
-    when 'noRCD'
-      unless friend_requests_sent.empty?
-        r = r.where("id NOT IN (#{friend_requests_sent.map(&:id).join(',')})")
-      end
-    end
-    case location
-    when 'myTown'
-      unless town.blank?
-        r = r.where(:town => town)
-      end
-    when 'myCountry'
-      unless country.blank?
-        r = r.where(:country => country)
-      end
-    when '5', '10', '20', '50', '100', '200', '500', '1000', '2000', '5000'
-      unless has_gps_data?
-        r = r.where(["SQRT(POW(ABS(?-lat),2)+POW(ABS(?-lng),2)) < ?",
-            lat, lng, location.to_f/100])
+      case location
+      when 'myTown'
+        unless member.town.blank?
+          r = r.where(:town => member.town)
+        end
+      when 'myCountry'
+        unless member.country.blank?
+          r = r.where(:country => member.country)
+        end
+      when '5', '10', '20', '50', '100', '200', '500', '1000', '2000', '5000'
+        unless member.has_gps_data?
+          r = r.where(["SQRT(POW(ABS(?-lat),2)+POW(ABS(?-lng),2)) < ?",
+              member.lat, member.lng, location.to_f/100])
+        end
       end
     end
     r.all
