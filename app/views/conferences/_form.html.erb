@@ -24,6 +24,12 @@
     <%= f.label :enddate %><br />
     <%= f.date_select :enddate %>
   </div>
+  <% if @series.present? or @conference.serie %>
+    <div class="field">
+      <%= f.label :serie %><br />
+      <%= f.select :serie_id, options_from_collection_for_select(@series, :id, :name, @conference.serie_id) %>
+    </div>
+  <% end %>
   <div class="field">
     <%= f.label :categories %><br />
     <%= f.collection_select :category_ids, @categories, :id, :name, {:selected => @conference.category_ids}, {:multiple => true} %>

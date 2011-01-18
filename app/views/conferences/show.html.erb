@@ -1,8 +1,10 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <b>Version:</b>
-  <%= @conference.version %>
+  <b>Series:</b>
+  <% if @conference.serie %>
+    <%= @conference.serie.name %>
+  <% end %>
 </p>
 
 <p>
@@ -10,14 +12,18 @@
   <%= @conference.name %>
 </p>
 
-<p>
-  <b>Creator:</b>
-  <%= @conference.creator_id %>
-</p>
+<% if @conference.categories.any? %>
+  <b>Categories:</b>
+  <p>
+    <% @conference.categories.each do |category| %>
+      <%= category.name %>&nbsp;
+    <% end %>
+  </p>
+<% end %>
 
 <p>
-  <b>Series:</b>
-  <%= @conference.serie_id %>
+  <b>Description:</b>
+  <%= @conference.description %>
 </p>
 
 <p>
@@ -31,8 +37,8 @@
 </p>
 
 <p>
-  <b>Description:</b>
-  <%= @conference.description %>
+  <b>Creator:</b>
+  <%= @conference.creator.username %> (<%= @conference.creator.email %>)
 </p>
 
 <p>
@@ -60,6 +66,26 @@
   <%= @conference.howtofind %>
 </p>
 
+<% if @conference.participants.any? %>
+  <p>
+    <b>Participants:</b>
+    <ul>
+      <% @conference.participants.each do |participant| %>
+        <li>
+          <%= participant.username %>,
+          (<%= participant.fullname %>, eMail: <%= participant.email %>)
+        </li>
+      <% end %>
+    </ul>
+  </p>
+<% end %>
 
-<%= link_to 'Edit', edit_conference_path(@conference) %> |
+<% if @conference.creator == @current_user %>
+  <%= link_to 'Edit', edit_conference_path(@conference) %> |
+<% end %>
+
+<% unless @conference.participants.include?(@current_user) %>
+  <%= link_to 'Sign up', signup_conference_path(@conference) %> |
+<% end %>
+
 <%= link_to 'Back', conferences_path %>

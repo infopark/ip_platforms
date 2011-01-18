@@ -1,5 +1,7 @@
 class ConferencesController < ApplicationController
-  before_filter :require_current_user, :except => [:index, :show]
+  before_filter :require_current_user, :except => [:index]
+  before_filter :find_conference, :except => [:index, :new, :create]
+  before_filter :require_creator, :only => [:edit, :update, :destroy]
 
   # GET /conferences
   # GET /conferences.xml
@@ -15,8 +17,6 @@ class ConferencesController < ApplicationController
   # GET /conferences/1
   # GET /conferences/1.xml
   def show
-    @conference = Conference.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conference }
@@ -28,24 +28,25 @@ class ConferencesController < ApplicationController
   def new
     @conference = Conference.new
     @categories = Category.order.all
+    @series = @current_user.series
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @conference }
     end
   end
 
-  # GET /conferences/1/edit
   def edit
-    @conference = Conference.find(params[:id])
+    @categories = Category.order.all
+    @series = @current_user.series
   end
 
-  # POST /conferences
-  # POST /conferences.xml
   def create
     @conference = Conference.new(params[:conference])
     @conference.creator = @current_user
     @conference.categories = Category.find(params[:conference][:category_ids] || [])
+    @conference.serie = Serie.find(params[:conference][:serie_id]) if params[:conference][:serie_id]
     @categories = Category.all
+    @series = @current_user.series
 
     respond_to do |format|
       if @conference.save
@@ -61,8 +62,8 @@ class ConferencesController < ApplicationController
   # PUT /conferences/1
   # PUT /conferences/1.xml
   def update
-    @conference = Conference.find(params[:id])
-
+    @categories = Category.all
+    @series = @current_user.series
     respond_to do |format|
       if @conference.update_attributes(params[:conference])
         format.html { redirect_to(@conference, :notice => 'Conference was successfully updated.') }
@@ -77,12 +78,33 @@ class ConferencesController < ApplicationController
   # DELETE /conferences/1
   # DELETE /conferences/1.xml
   def destroy
-    @conference = Conference.find(params[:id])
     @conference.destroy
-
     respond_to do |format|
       format.html { redirect_to(conferences_url) }
       format.xml  { head :ok }
+    end
+  end
+
+  def signup
+    respond_to do |format|
+      @conference.participants << @current_user
+      @conference.save
+      format.html { redirect_to(@conference, :notice => "You've been assigned to this conference!") }
+    end
+  end
+
+  private
+
+  def find_conference
+    @conference = Conference.find(params[:id])
+  end
+
+  def require_creator
+    unless @conference.creator == @current_user
+      session[:return_to] = request.fullpath
+      flash[:error] = 'You need to be the creator of the conference to be able to change it'
+      redirect_to :back
+      false
     end
   end
 end
