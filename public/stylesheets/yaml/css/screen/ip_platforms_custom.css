@@ -37,6 +37,7 @@
     border:1px solid #d4d4d4;
     background: #fffddc;
   }
+
   div.flash-error {
     margin:0 0 15px 0;
     padding:1em;
@@ -45,20 +46,24 @@
     background: #efefef;
     color:#be381d;
   }
-  div.error_explanation {
+
+  div#error_explanation {
     margin:0 0 15px 0;
     padding:1em;
     border:1px solid #be381d;
     background: #fff;
     color:#be381d;
   }
-  div.error_explanation h2 {
+
+  div#error_explanation h2 {
     margin:0 0 15px 0;
     padding:2px 0 2px 30px;
     background: #fff;
     color:#be381d;
   }
-  div.error_explanation p, div.error_explanation ul {
+
+  div#error_explanation p,
+  div#error_explanation ul {
     margin:0 0 10px 0;
     padding:2px 0 2px 30px;
     color:#be381d;
