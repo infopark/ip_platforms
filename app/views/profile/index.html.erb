@@ -1,21 +1,21 @@
-<h2>Your status page</h2>
+<h2>Status page</h2>
 
 <div class="box">
-  <h3>About you</h3>
-  <% if @current_user.blank? %>
+  <h3>About <%= @user.username %></h3>
+  <% if @user.blank? %>
     ERROR: No user information available. Who are you?
   <% else %>
     <ul>
-      <li>Username: <%= @current_user.username %></li>
-      <li>Full Name: <%= @current_user.fullname %></li>
-      <li>Email: <%= @current_user.email %></li>
-      <li>Town: <%= @current_user.town %></li>
-      <li>Country: <%= @current_user.country %></li>
-      <li>GPS: <%= @current_user.gps %></li>
-      <li>Admin: <%= @current_user.admin %></li>
-      <li>Admin: <%= @current_user.admin %></li>
-      <li><%= link_to 'Change password',
-        edit_password_path(@current_user)%></li>
+      <li>Username: <%= @user.username %></li>
+      <li>Full Name: <%= @user.fullname %></li>
+      <li>Email: <%= @user.email %></li>
+      <li>Town: <%= @user.town %></li>
+      <li>Country: <%= @user.country %></li>
+      <li>GPS: <%= @user.gps %></li>
+      <li>Admin: <%= @user.admin %></li>
+      <% if @user == @current_user %>
+        <li><%= link_to 'Change password', edit_password_path(@user)%></li>
+      <% end %>
     </ul>
   <% end %>
 </div>
