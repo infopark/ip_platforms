@@ -135,10 +135,10 @@ class Member < ActiveRecord::Base
   def self.search(q, state, member, location)
     r = self
     unless q.blank?
-      if state == 'noFriends' || friends.empty?
+      if member.nil? || state == 'noFriends' || member.friends.empty?
         r = r.where(['username LIKE ?', "%#{q}%"])
       else
-        s = friends.map(&:id).join(',')
+        s = member.friends.map(&:id).join(',')
         r = r.where(["(username LIKE ? OR fullname LIKE ? AND id IN (#{s}))",
             "%#{q}%", "%#{q}%"])
       end
