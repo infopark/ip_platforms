@@ -92,8 +92,8 @@
     <ul>
       <% @current_user.friends.each do |friend| %>
         <li>
-          <%= link_to friend.username, invite_conference_path(@conference, :friend_id => friend.id), :confirm => "Are you sure you wannt to invite this member?" %>
-          (<%= friend.fullname %>, eMail: <%= friend.email %>)
+          <%= link_to "#{friend.fullname} (#{friend})", member_path(friend) %>
+          <%= link_to "Invite", invite_conference_path(@conference, :friend_id => friend.id), :confirm => "Are you sure you wannt to invite this member?" %>
         </li>
       <% end %>
     </ul>
