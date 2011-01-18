@@ -49,4 +49,12 @@ class Conference < ActiveRecord::Base
     enddate = startdate if enddate.blank?
   end
 
+  def self.search(q, categories, start_at, end_at, member, location)
+    r = Conference
+    if c = text_filter_conditions(q, :name, :description)
+      r = r.where(c)
+    end
+    r.all
+  end
+
 end
