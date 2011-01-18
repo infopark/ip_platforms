@@ -39,7 +39,7 @@
         <ul>
           <% @notifications.each do |n| %>
             <li><%= l(n.created_at, :format => :long) %>:
-                <%= n.content %></li>
+                <%= raw(n.content) %></li>
           <% end %>
         </ul>
       <% end %>
