@@ -1,0 +1,41 @@
+<h1>Listing members</h1>
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Username</th>
+    <th>Password hash</th>
+    <th>Password salt</th>
+    <th>Fullname</th>
+    <th>Email</th>
+    <th>Town</th>
+    <th>Country</th>
+    <th>Gps</th>
+    <th>Admin</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @members.each do |member| %>
+  <tr>
+    <td><%= member.version %></td>
+    <td><%= member.username %></td>
+    <td><%= member.password_hash %></td>
+    <td><%= member.password_salt %></td>
+    <td><%= member.fullname %></td>
+    <td><%= member.email %></td>
+    <td><%= member.town %></td>
+    <td><%= member.country %></td>
+    <td><%= member.gps %></td>
+    <td><%= member.admin %></td>
+    <td><%= link_to 'Show', member %></td>
+    <td><%= link_to 'Edit', edit_member_path(member) %></td>
+    <td><%= link_to 'Destroy', member, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Member', new_member_path %>

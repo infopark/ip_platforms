@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Version:</b>
+  <%= @serie.version %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @serie.name %>
+</p>
+
+
+<%= link_to 'Edit', edit_serie_path(@serie) %> |
+<%= link_to 'Back', series_path %>
