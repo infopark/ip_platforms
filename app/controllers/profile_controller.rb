@@ -1,5 +1,6 @@
 class ProfileController < ApplicationController
 
+  # TODO: Make profile page available for everyone
   def index
     require_current_user or return false
     @notifications = @current_user.notifications

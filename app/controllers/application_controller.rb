@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :before_filter_set_current_user
 
-  helper_method :logged_in?
+  helper_method :logged_in?, :is_admin?
 
   private
 
@@ -39,6 +39,10 @@ class ApplicationController < ActionController::Base
 
   def logged_in?
     !@current_user.blank?
+  end
+
+  def is_admin?
+    logged_in? && @current_user.admin?
   end
 
 end

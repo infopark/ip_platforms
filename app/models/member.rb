@@ -35,6 +35,10 @@ class Member < ActiveRecord::Base
     admin = Member.find_or_create_by_username('admin')
     admin.password = 'admin'
     admin.admin = true
+    admin.fullname = 'Herr Admin'
+    admin.email = 'root@localhost'
+    admin.town = 'Berlin'
+    admin.country = 'Germany'
     admin.save!
   end
 

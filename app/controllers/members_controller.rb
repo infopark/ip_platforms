@@ -1,44 +1,37 @@
 class MembersController < ApplicationController
-  # GET /members
-  # GET /members.xml
+  # TODO: Only show page für andere members, other requires login
+
   def index
     @members = Member.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render :xml => @members }
     end
   end
 
-  # GET /members/1
-  # GET /members/1.xml
   def show
     @member = Member.find(params[:id])
 
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render :xml => @member }
     end
   end
 
-  # GET /members/new
-  # GET /members/new.xml
   def new
     @member = Member.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render :xml => @member }
     end
   end
 
-  # GET /members/1/edit
   def edit
     @member = Member.find(params[:id])
   end
 
-  # POST /members
-  # POST /members.xml
   def create
     @member = Member.new(params[:member])
 
@@ -53,8 +46,6 @@ class MembersController < ApplicationController
     end
   end
 
-  # PUT /members/1
-  # PUT /members/1.xml
   def update
     @member = Member.find(params[:id])
 
@@ -69,8 +60,6 @@ class MembersController < ApplicationController
     end
   end
 
-  # DELETE /members/1
-  # DELETE /members/1.xml
   def destroy
     @member = Member.find(params[:id])
     @member.destroy
@@ -80,4 +69,34 @@ class MembersController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+  def edit_password
+    @member = Member.find(params[:id])
+    if @member != @current_user and !is_admin?
+      flash[:error] = 'Cannot change password for other users'
+      redirect_to(home_path)
+      return false
+    end
+    if request.post?
+      raise 'password is blank' if params[:new_password].blank?
+      if params[:new_password] != params[:new_password_confirm]
+        raise 'password does not match confirmation'
+      end
+      if is_admin?
+        @member.password=params[:new_password]
+        @member.save!
+      else
+        @member.change_password!(params[:old_password], params[:new_password])
+      end
+      flash[:notice] = 'Password edit successful'
+      if @member == @current_user
+        redirect_to(profile_path)
+      else
+        redirect_to(@member)
+      end
+    end
+  rescue => e
+    flash.now[:error] = "Password edit failed: #{e}"
+  end
+
 end

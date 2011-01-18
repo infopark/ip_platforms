@@ -13,6 +13,9 @@
       <li>Country: <%= @current_user.country %></li>
       <li>GPS: <%= @current_user.gps %></li>
       <li>Admin: <%= @current_user.admin %></li>
+      <li>Admin: <%= @current_user.admin %></li>
+      <li><%= link_to 'Change password',
+        edit_password_path(@current_user)%></li>
     </ul>
   <% end %>
 </div>
