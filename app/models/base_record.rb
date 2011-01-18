@@ -20,6 +20,29 @@ module BaseRecord
       end
     end
 
+    def text_filter_conditions(filter_text, *name_columns)
+      unless filter_text.blank?
+        where = []
+        name_columns.flatten.each do |column|
+          where << sanitize_sql(["LOWER(#{table_name}.#{column}) like LOWER(?)",
+                                 "%#{filter_text}%"])
+        end
+        where.empty? ? nil : "(#{where.join(' or ')})"
+      else
+        nil
+      end
+    end
+
+    def multiword_text_filter_conditions(filter_text, *name_columns)
+      words = filter_text.to_s.split(/\s+/).reject(&:blank?)
+      if words.empty?
+        nil
+      else
+        where = words.map {|w| text_filter_conditions(w, *name_columns)}.compact
+        where.empty? ? nil : "(#{where.join(' and ')})"
+      end
+    end
+
   end
 
   def fields_to_strip

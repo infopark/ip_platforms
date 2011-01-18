@@ -7,7 +7,7 @@ class MembersController < ApplicationController
     @q = params[:q]
     @state = params[:state]
     @location = params[:location]
-    @members = @current_user.search_members(@q, @state, @location)
+    @members = Member.search(@q, @state, @current_user, @location)
 
     respond_to do |format|
       format.html
