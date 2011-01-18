@@ -12,6 +12,25 @@ class Member < ActiveRecord::Base
   has_many(:conferences, :foreign_key => :creator_id)
   has_many(:notifications)
 
+  attr_accessor(:gps)
+
+  attr_accessible(:username)
+  attr_accessible(:fullname)
+  attr_accessible(:email)
+  attr_accessible(:town)
+  attr_accessible(:country)
+
+  attr_readonly(:username)
+
+  validates(:username, :presence => true, :length => { :maximum => 50 })
+  validates(:fullname, :length => { :maximum => 100 })
+  validates(:email, :length => { :maximum => 250 })
+  validates(:town, :length => { :maximum => 100 })
+  validates(:country, :length => { :maximum => 100 })
+  validates(:gps, :format => {
+    :with => %r{\d+(\.\d+)? ?[NnSs] ?,? ?\d+(\.\d+)? ?[EeWw]},
+  }, :allow_nil => true)
+
   def self.reset_or_create_default_admin!
     admin = Member.find_or_create_by_username('admin')
     admin.password = 'admin'

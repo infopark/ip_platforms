@@ -7,4 +7,9 @@ class Category < ActiveRecord::Base
   has_many(:children, :class_name => 'Category', :foreign_key => :parent_id,
           :dependent => :nullify)
 
+  attr_accessible(:parent_id)
+  attr_accessible(:name)
+
+  validates(:name, :presence => true, :length => { :maximum => 50 })
+
 end

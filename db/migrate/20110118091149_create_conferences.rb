@@ -3,17 +3,18 @@ class CreateConferences < ActiveRecord::Migration
   def self.up
     create_table :conferences do |t|
       t.integer :version
-      t.string :name
+      t.string :name, :limit => 100, :null => false
       t.integer :creator_id
-      t.integer :series_id
-      t.date :startdate
-      t.date :enddate
-      t.string :description
-      t.string :location
-      t.string :gps
-      t.string :venue
-      t.string :accomodation
-      t.string :howtofind
+      t.integer :serie_id
+      t.date :startdate, :null => false
+      t.date :enddate, :null => false
+      t.string :description, :limit => 250, :null => false
+      t.string :location, :limit => 250
+      t.decimal :lat, :precision => 15, :scale => 10
+      t.decimal :lng, :precision => 15, :scale => 10
+      t.string :venue, :limit => 2000
+      t.string :accomodation, :limit => 2000
+      t.string :howtofind, :limit => 2000
 
       t.timestamps
     end

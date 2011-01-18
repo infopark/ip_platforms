@@ -3,7 +3,7 @@ class CreateSeries < ActiveRecord::Migration
   def self.up
     create_table :series do |t|
       t.integer :version
-      t.string :name
+      t.string :name, :limit => 80, :null => false
 
       t.timestamps
     end
