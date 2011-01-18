@@ -1,30 +1,9 @@
 <h1>Listing categories</h1>
 
 <% if is_admin? %>
-  <%= link_to 'New Category', new_category_path %>
+  <p><%= link_to 'New Category', new_category_path %></p>
 <% end %>
 
-<table>
-  <tr>
-    <th>Name</th>
-    <th>Parent</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @categories.each do |category| %>
-  <tr>
-    <td><%= category.name %></td>
-    <% if category.parent %>
-      <td><b><%= category.parent.name %></b></td>
-    <% else %>
-      <td><i>No Parent</i></td>
-    <% end %>
-    <% if is_admin? %>
-      <td><%= link_to 'Edit', edit_category_path(category) %></td>
-      <td><%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %></td>
-    <% end %>
-  </tr>
-<% end %>
-</table>
+<ul>
+  <%= render :partial => "categories/category", :collection => @categories.reject { |c| c.parent } %>
+</ul>
