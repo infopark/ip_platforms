@@ -6,7 +6,7 @@ describe "conferences/show.html.erb" do
       :version => 1,
       :name => "Name",
       :creator_id => 1,
-      :series_id => 1,
+      :serie_id => 1,
       :description => "Description",
       :location => "Location",
       :gps => "Gps",

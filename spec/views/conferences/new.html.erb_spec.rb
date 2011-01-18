@@ -6,7 +6,7 @@ describe "conferences/new.html.erb" do
       :version => 1,
       :name => "MyString",
       :creator_id => 1,
-      :series_id => 1,
+      :serie_id => 1,
       :description => "MyString",
       :location => "MyString",
       :gps => "MyString",
@@ -24,7 +24,7 @@ describe "conferences/new.html.erb" do
       assert_select "input#conference_version", :name => "conference[version]"
       assert_select "input#conference_name", :name => "conference[name]"
       assert_select "input#conference_creator_id", :name => "conference[creator_id]"
-      assert_select "input#conference_series_id", :name => "conference[series_id]"
+      assert_select "input#conference_serie_id", :name => "conference[serie_id]"
       assert_select "input#conference_description", :name => "conference[description]"
       assert_select "input#conference_location", :name => "conference[location]"
       assert_select "input#conference_gps", :name => "conference[gps]"
