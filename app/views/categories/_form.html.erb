@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :parent_id %><br />
-    <%= f.select :parent_id, options_from_collection_for_select(@categories, :id, :name, @category.parent_id) %>
+    <%= f.select :parent_id, options_from_collection_for_select(@categories, :id, :name, @category.parent_id), {:include_blank => "[top level]"} %>
   </div>
   <div class="actions">
     <%= f.submit %>

@@ -81,7 +81,7 @@ class CategoriesController < ApplicationController
   private
 
   def load_potential_parents
-    @categories = Category.all
+    @categories = Category.order(:name).all
     @categories.delete(@category)
     @categories -= @category.children
   end
