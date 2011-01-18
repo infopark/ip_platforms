@@ -22,7 +22,7 @@ module GpsLocation
         self.lat = m[1]
         self.lng = m[3]
         self.lat = -lat if ['s', 'S'].include?(m[2])
-        self.lng = -lng if ['w', 'W'].include?(m[2])
+        self.lng = -lng if ['w', 'W'].include?(m[4])
       end
     end
     true
