@@ -1,0 +1,13 @@
+<div id='flash'>
+  <% if self.flash[:notice] %>
+    <div class="flash-notice"><%= self.flash[:notice] %></div>
+  <% end %>
+
+  <% if self.flash[:message] %>
+    <div class="flash-notice"><%= self.flash[:message] %></div>
+  <% end %>
+
+  <% if self.flash[:error] %>
+    <div class="flash-error"><%= self.flash[:error] %></div>
+  <% end %>
+</div>

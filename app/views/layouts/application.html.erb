@@ -24,7 +24,7 @@
   <div class="page">
     <div id="header" role="banner">
       <div id="topnav" role="contentinfo">
-        <span><a href="#">Login</a></span>
+        <span><%= login_logout_link %></span>
       </div>
       <%= image_tag 'iplogo.png', :class => :float_right,
           :width => 40, :height => 40 %>
@@ -36,13 +36,12 @@
       <div class="hlist">
         <ul>
           <li><%= link_to 'Home', :home %></li>
-          <li><%= link_to 'My CaP', :controller => :home,
-                                    :action => :profile %></li>
-          <li><%= link_to 'Conferences', :calendars %></li>
-          <li><%= link_to 'Conference Series', :series %></li>
-          <li><%= link_to 'Categories', :categories %></li>
-          <li><%= link_to 'Calendars', :calendars %></li>
-          <li><%= link_to 'Users', :members %></li>
+          <li><%= link_to 'My CaP', profile_path %></li>
+          <li><%= link_to 'Conferences', conferences_path %></li>
+          <li><%= link_to 'Conference Series', series_path %></li>
+          <li><%= link_to 'Categories', categories_path %></li>
+          <li><%= link_to 'Calendars', calendars_path %></li>
+          <li><%= link_to 'Users', members_path %></li>
         </ul>
       </div>
     </div>
@@ -52,7 +51,8 @@
       <!-- begin: #col3 static column -->
       <div id="col3" role="main">
         <div id="col3_content" class="clearfix">
-          <p><%= yield %></p>
+          <%= render(:partial => 'layouts/flash') %>
+          <%= yield %>
         </div>
         <div id="ie_clearing">&nbsp;</div>
         <!-- End: IE Column Clearing -->

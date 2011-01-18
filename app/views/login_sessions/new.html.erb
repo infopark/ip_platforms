@@ -1,0 +1,20 @@
+<%= form_for(
+    :entry,
+    :url => login_session_path,
+    :html => {
+        :method => :post,
+        :class => 'auto_focus_form' }) do %>
+
+  <div class="login">
+    <label for="login_session_login">Login</label>
+    <%= text_field('login_session', 'login', :size => 20) %>
+  </div>
+
+  <div class="password">
+    <label for="login_session_password">Password</label>
+    <%= password_field('login_session', 'password', :size => 20) %>
+  </div>
+
+  <%= submit_tag('Login') %>
+
+<% end %>
