@@ -4,7 +4,10 @@ class MembersController < ApplicationController
                         :except => [:edit_password, :index]
 
   def index
-    @members = Member.all
+    @q = params[:q]
+    @state = params[:state]
+    @location = params[:location]
+    @members = @current_user.search_members(@q, @state, @location)
 
     respond_to do |format|
       format.html

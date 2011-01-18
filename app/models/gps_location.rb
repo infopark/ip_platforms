@@ -28,4 +28,8 @@ module GpsLocation
     true
   end
 
+  def has_gps_data?
+    !lat.blank? && !lng.blank?
+  end
+
 end
