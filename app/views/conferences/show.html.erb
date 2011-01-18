@@ -72,8 +72,10 @@
     <ul>
       <% @conference.participants.each do |participant| %>
         <li>
-          <%= participant.username %>,
-          (<%= participant.fullname %>, eMail: <%= participant.email %>)
+          <%= participant.username %>
+          <% if @conference.creator == @current_user or @current_user.friends.include?(participant) %>
+            (<%= participant.fullname %>, eMail: <%= participant.email %>)
+          <% end %>
         </li>
       <% end %>
     </ul>
