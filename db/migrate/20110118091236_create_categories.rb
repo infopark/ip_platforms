@@ -1,4 +1,5 @@
 class CreateCategories < ActiveRecord::Migration
+
   def self.up
     create_table :categories do |t|
       t.integer :version
@@ -10,6 +11,7 @@ class CreateCategories < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :categories
+    raise ActiveRecord::IrreversibleMigration
   end
+
 end

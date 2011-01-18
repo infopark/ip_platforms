@@ -1,11 +1,9 @@
-class CreateCalendars < ActiveRecord::Migration
+class Friends < ActiveRecord::Migration
 
   def self.up
-    create_table :calendars do |t|
+    create_table :friends, :id => false do |t|
       t.integer :member_id
-      t.string :name
-
-      t.timestamps
+      t.integer :friend_id
     end
   end
 

@@ -1,4 +1,5 @@
 class CreateConferences < ActiveRecord::Migration
+
   def self.up
     create_table :conferences do |t|
       t.integer :version
@@ -19,6 +20,7 @@ class CreateConferences < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :conferences
+    raise ActiveRecord::IrreversibleMigration
   end
+
 end

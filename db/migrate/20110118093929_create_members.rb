@@ -1,4 +1,5 @@
 class CreateMembers < ActiveRecord::Migration
+
   def self.up
     create_table :members do |t|
       t.integer :version
@@ -17,6 +18,7 @@ class CreateMembers < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :members
+    raise ActiveRecord::IrreversibleMigration
   end
+
 end

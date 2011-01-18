@@ -1,4 +1,5 @@
 class CreateSeries < ActiveRecord::Migration
+
   def self.up
     create_table :series do |t|
       t.integer :version
@@ -9,6 +10,7 @@ class CreateSeries < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :series
+    raise ActiveRecord::IrreversibleMigration
   end
+
 end
