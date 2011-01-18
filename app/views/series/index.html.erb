@@ -1,0 +1,25 @@
+<h1>Listing series</h1>
+
+<table>
+  <tr>
+    <th>Version</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @series.each do |serie| %>
+  <tr>
+    <td><%= serie.version %></td>
+    <td><%= serie.name %></td>
+    <td><%= link_to 'Show', serie %></td>
+    <td><%= link_to 'Edit', edit_serie_path(serie) %></td>
+    <td><%= link_to 'Destroy', serie, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Serie', new_serie_path %>
