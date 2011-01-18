@@ -5,21 +5,22 @@
   <% if @member.blank? %>
     ERROR: No user information available. Who are you?
   <% else %>
-    <ul class="profile_list <% if show_details? %>float_left<% end %>">
+    <ul class="profile_list <% if show_details?(@member) %>float_left<% end %>">
       <li>Username: <%= @member.username %></li>
-      <li>Full Name: <%= @member.fullname %></li>
-      <li>Email: <%= @member.email %></li>
       <li>Town: <%= @member.town %></li>
       <li>Country: <%= @member.country %></li>
-      <li>GPS: <%= @member.gps %></li>
-      <li>Admin: <%= @member.admin %></li>
+
+      <% if show_details?(@member) %>
+        <li>Full Name: <%= @member.fullname %></li>
+        <li>Email: <%= @member.email %></li>
+      <% end %>
       <% if is_my_profile? %>
         <li><%= link_to 'Change password', edit_password_path(@member)%></li>
       <% end %>
     </ul>
 
     <div>
-    <% if show_details? %>
+    <% if show_details?(@member) %>
       <iframe width="400" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/?z=9&amp;ll=<%= @member.lat %>,<%= @member.lng %>&amp;output=embed"></iframe>
     <% end %>
     </div>
@@ -55,6 +56,7 @@
         <ul>
           <% @friends.each do |f| %>
             <li><%= link_to f.fullname, member_path(f) %>
+                <%= link_to 'Defriend', defriend_path(f) %></li>
           <% end %>
         </ul>
       <% end %>
@@ -72,7 +74,7 @@
         <ul>
           <% @friend_requests_sent.each do |r| %>
             <li><%= link_to r.username, member_path(r) %> didn't yet reply
-                <%= link_to 'Revoke', revoke_friend_request_path(r) %>
+                <%= link_to 'Revoke', revoke_rcd_path(r) %>
             </li>
           <% end %>
         </ul>
@@ -90,8 +92,8 @@
           <% @friend_requests_received.each do |r| %>
             <li><%= link_to(r.username, member_path(r)) %>
                 wants to be your friend
-                <%= link_to 'Accept', accept_friend_request_path(r) %>
-                <%= link_to 'Decline', decline_friend_request_path(r) %>
+                <%= link_to 'Accept', accept_rcd_path(r) %>
+                <%= link_to 'Decline', decline_rcd_path(r) %>
             </li>
           <% end %>
         </ul>

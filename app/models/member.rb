@@ -22,7 +22,7 @@ class Member < ActiveRecord::Base
   has_and_belongs_to_many(:series)
   has_many(:calendars)
   has_many(:conferences, :foreign_key => :creator_id)
-  has_many(:notifications)
+  has_many(:notifications, :order => 'created_at DESC')
 
   attr_accessible(:username)
   attr_accessible(:fullname)
@@ -37,6 +37,10 @@ class Member < ActiveRecord::Base
   validates(:email, :length => { :maximum => 250 })
   validates(:town, :length => { :maximum => 100 })
   validates(:country, :length => { :maximum => 100 })
+
+  def to_s
+    username || super
+  end
 
   def self.reset_or_create_default_admin!
     admin = Member.find_or_create_by_username('admin')
@@ -85,28 +89,45 @@ class Member < ActiveRecord::Base
     save!
   end
 
-  def add_friend_request(requestee_id)
+  def defriend(friend_id)
+    transaction do
+      friend = Member.find(friend_id)
+      friend.friends.delete(self)
+      self.friends.delete(friend)
+      self.notifications.create(:content => "You defriended #{friend}")
+    end
+  end
+
+  def add_rcd(requestee_id)
     requestee = Member.find(requestee_id)
     raise 'You cannot be friend with yourself' if requestee == self
     requestee.friend_requests_received << self
+    self.notifications.create(:content =>
+                            "You want to be friends with #{requestee}")
   end
 
-  def revoke_friend_request(requestee_id)
+  def revoke_rcd(requestee_id)
     requestee = Member.find(requestee_id)
     requestee.friend_requests_received.delete(self)
+    self.notifications.create(:content =>
+                    "You revoked your friend request for #{requestee}")
   end
 
-  def decline_friend_request(requester_id)
+  def decline_rcd(requester_id)
     requester = Member.find(requester_id)
     friend_requests_received.delete(requester)
+    self.notifications.create(:content =>
+                "You declined a friendship request from #{requester}")
   end
 
-  def accept_friend_request(requester_id)
+  def accept_rcd(requester_id)
     transaction do
-      friend = Member.find(requester_id)
-      friend_requests_received.delete(friend)
-      friend.friends << self
-      self.friends << friend
+      new_friend = Member.find(requester_id)
+      self.friend_requests_received.delete(new_friend)
+      new_friend.friends << self
+      self.friends << new_friend
+      self.notifications.create(:content =>
+                  "You accepted a friendship request from #{new_friend}")
     end
   end
 
