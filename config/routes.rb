@@ -1,5 +1,8 @@
 IpPlatforms::Application.routes.draw do
 
+  get "reset" => "seed#reset"
+  get "factorydefaults" => "seed#factorydefaults"
+
   resources :calendars
   resources :categories
   resources :conferences
