@@ -85,4 +85,23 @@ class Member < ActiveRecord::Base
     save!
   end
 
+  def revoke_friend_request(requestee_id)
+    requestee = Member.find(requestee_id)
+    friend_requests_received.delete(requestee)
+  end
+
+  def decline_friend_request(requester_id)
+    requester = Member.find(requester_id)
+    friend_requests_received.delete(requester)
+  end
+
+  def accept_friend_request(requester_id)
+    transaction do
+      friend = Member.find(requester_id)
+      friend_requests_received.delete(friend)
+      friend.friends << self
+      self.friends << friend
+    end
+  end
+
 end

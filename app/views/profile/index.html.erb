@@ -5,7 +5,7 @@
   <% if @user.blank? %>
     ERROR: No user information available. Who are you?
   <% else %>
-    <ul>
+    <ul class="profile_list <% if show_details? %>float_left<% end %>">
       <li>Username: <%= @user.username %></li>
       <li>Full Name: <%= @user.fullname %></li>
       <li>Email: <%= @user.email %></li>
@@ -13,19 +13,28 @@
       <li>Country: <%= @user.country %></li>
       <li>GPS: <%= @user.gps %></li>
       <li>Admin: <%= @user.admin %></li>
-      <% if @user == @current_user %>
+      <% if is_my_profile? %>
         <li><%= link_to 'Change password', edit_password_path(@user)%></li>
       <% end %>
     </ul>
+
+    <div>
+    <% if show_details? %>
+      <iframe width="400" height="300" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.de/?z=9&amp;ll=<%= @user.lat %>,<%= @user.lng %>&amp;output=embed"></iframe>
+    <% end %>
+    </div>
+
   <% end %>
 </div>
+
+<% if is_my_profile? %>
 
 <div class="subcolumns">
   <div class="c50l">
     <div class="subcl box">
       <h3>Your Notifications</h3>
       <% if @notifications.blank? %>
-        You currently don't have any notifications
+        You don't have any notifications
       <% else %>
         <ul>
           <% @notifications.each do |n| %>
@@ -39,13 +48,13 @@
 
   <div class="c50r">
     <div class="subcr box">
-      <h3>Your Calendars</h3>
-      <% if @calendars.blank? %>
-        You currently don't have any calendars
+      <h3>Your Friends</h3>
+      <% if @friends.blank? %>
+        You don't have any friends
       <% else %>
         <ul>
-          <% @calendars.each do |c| %>
-            <li><%= c.name %></li>
+          <% @friends.each do |f| %>
+            <li><%= link_to f.fullname, profile_path(f) %>
           <% end %>
         </ul>
       <% end %>
@@ -58,11 +67,13 @@
     <div class="subcl box">
       <h3>Friend Requests Sent</h3>
       <% if @friend_requests_sent.blank? %>
-        No open friend requests originated by you
+        No friend requests originated by you
       <% else %>
         <ul>
           <% @friend_requests_sent.each do |r| %>
-            <li><%= r.username %></li>
+            <li><%= link_to r.username, profile_path(r) %> didn't yet reply
+                <%= link_to 'Revoke', revoke_friend_request_path(r) %>
+            </li>
           <% end %>
         </ul>
       <% end %>
@@ -77,7 +88,11 @@
       <% else %>
         <ul>
           <% @friend_requests_received.each do |r| %>
-            <li><%= r.username %></li>
+            <li><%= link_to(r.username, profile_path(r)) %>
+                wants to be your friend
+                <%= link_to 'Accept', accept_friend_request_path(r) %>
+                <%= link_to 'Decline', decline_friend_request_path(r) %>
+            </li>
           <% end %>
         </ul>
       <% end %>
@@ -85,5 +100,17 @@
   </div>
 </div>
 
+<div class="box">
+  <h3>Your Calendars</h3>
+  <% if @calendars.blank? %>
+    You don't have any calendars
+  <% else %>
+    <ul>
+      <% @calendars.each do |c| %>
+        <li><%= c.name %></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>
 
-
+<% end %>
