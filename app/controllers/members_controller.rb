@@ -1,7 +1,7 @@
 class MembersController < ApplicationController
   append_before_filter :require_current_user
   append_before_filter :require_current_user_is_admin,
-                        :except => 'edit_password'
+                        :except => [:edit_password, :index]
 
   def index
     @members = Member.all

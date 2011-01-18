@@ -7,27 +7,29 @@
     <th>Email</th>
     <th>Town</th>
     <th>Country</th>
-    <th>Gps</th>
     <th>Admin</th>
-    <th></th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th>Action</th>
   </tr>
 
 <% @members.each do |member| %>
   <tr>
-    <td><%= member.username %></td>
+    <td><%= link_to member.username, member %></td>
     <td><%= member.fullname %></td>
     <td><%= member.email %></td>
     <td><%= member.town %></td>
     <td><%= member.country %></td>
-    <td><%= member.gps %></td>
     <td><%= member.admin %></td>
-    <td><%= link_to 'Show', member %></td>
-    <td><%= link_to 'Edit', edit_member_path(member) %></td>
-    <td><%= link_to 'Password', edit_password_path(member) %></td>
-    <td><%= link_to 'Destroy', member, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td style="white-space: nowrap;">
+      <% if is_admin? %>
+        <%= link_to 'Edit', edit_member_path(member) %>
+        | <%= link_to 'Password', edit_password_path(member) %>
+        | <%= link_to 'Delete', member,
+        :confirm => 'Are you sure?', :method => :delete %>
+      <% end %>
+      <% if member != @current_user %>
+        | <%= link_to 'Friend request', add_friend_request_path(member) %>
+      <% end %>
+    </td>
   </tr>
 <% end %>
 </table>
