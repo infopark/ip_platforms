@@ -34,6 +34,7 @@ class CategoriesController < ApplicationController
   # POST /categories.xml
   def create
     @category = Category.new(params[:category])
+    load_potential_parents
 
     respond_to do |format|
       if @category.save
@@ -50,6 +51,7 @@ class CategoriesController < ApplicationController
   # PUT /categories/1.xml
   def update
     @category = Category.find(params[:id])
+    load_potential_parents
 
     respond_to do |format|
       if @category.update_attributes(params[:category])
