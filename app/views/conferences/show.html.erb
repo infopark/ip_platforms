@@ -106,7 +106,7 @@
     <% @calendars.reject { |c| not c.conferences.include?(@conference) }.each do |c| %>
       <%= link_to c.name, c %>
     <% end %>
-    <% available_calendars = @calendars.reject { |c| c.conferences.include?(@conference) } %>
+    <% available_calendars = @calendars.reject { |c| c.conferences.include?(@conference) or c.category } %>
     <% if available_calendars.any? %>
       <%= form_tag add_to_calendar_conference_path(@conference), :method => :get do %>
         <%= submit_tag "Add to calendar" %>
