@@ -43,6 +43,14 @@
     padding: 2px;
   }
 
+  input[type=submit] {
+    font-family:Consolas, "Lucida Console", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier;
+    border: 1px solid #999;
+    padding: 2px;
+    background: silver url(http://localhost:3000/stylesheets/yaml/navigation/images/shiny_buttons/background.png) repeat-x 100% 50%;
+    cursor: pointer;
+  }
+
   /* (en) base layout gets standard font size 12px */
   /* (de) Basis-Layout erhält Standardschriftgröße von 12 Pixeln */
   body {
