@@ -3,13 +3,9 @@ require 'spec_helper'
 describe Member do
 
   before do
-    @m = Member.create!(:username => 'test')
-  end
-
-  it 'should initially have no password set' do
-    @m.should_not be_password_set
-    @m.password_hash.should be_nil
-    @m.password_salt.should be_nil
+    @m = Member.new(:username => 'test')
+    @m.password = 'tttt'
+    @m.save!
   end
 
   it 'should set password' do
@@ -34,34 +30,14 @@ describe Member do
     @m.reload.check_password('testpw').should be_false
   end
 
-  it 'should NOT set empty password and raise' do
-    lambda do
-      @m.password = ''
-    end.should raise_error(StandardError, 'new password cannot be blank')
+  it 'should NOT set empty password' do
+    @m.password = ''
+    @m.should_not be_valid
   end
 
-  it 'should NOT set NIL password and raise' do
-    lambda do
-      @m.password = nil
-    end.should raise_error(StandardError, 'new password cannot be blank')
-  end
-
-  describe 'with password set' do
-    before do
-      @m.change_password!('testpw', 'testpw')
-    end
-
-    it 'should be password_set' do
-      @m.should be_password_set
-    end
-
-    it 'should clear password' do
-      @m.check_password('testpw').should be_true
-      @m.clear_password!
-      @m.password_hash.should be_nil
-      @m.password_salt.should be_nil
-      @m.check_password('testpw').should be_false
-    end
+  it 'should NOT set NIL password' do
+    @m.password = nil
+    @m.should_not be_valid
   end
 
 end

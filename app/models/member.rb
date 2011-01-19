@@ -51,6 +51,7 @@ class Member < ActiveRecord::Base
   validates(:email, :presence => true, :length => { :maximum => 250 })
   validates(:town, :presence => true, :length => { :maximum => 100 })
   validates(:country, :presence => true, :length => { :maximum => 100 })
+  validate(:validate_password_not_blank)
 
   def to_s
     username || super
@@ -82,10 +83,19 @@ class Member < ActiveRecord::Base
   end
 
   def password=(password)
-    raise 'new password cannot be blank' if password.blank?
-    salt = [Array.new(6){rand(256).chr}.join].pack('m').chomp
-    hash = Digest::SHA256.hexdigest(password + salt)
-    self.password_salt, self.password_hash = salt, hash
+    if password.blank?
+      self.password_salt = self.password_hash = nil
+    else
+      salt = [Array.new(6){rand(256).chr}.join].pack('m').chomp
+      hash = Digest::SHA256.hexdigest(password + salt)
+      self.password_salt, self.password_hash = salt, hash
+    end
+  end
+
+  def validate_password_not_blank
+    if password_hash.blank?
+      errors.add(:base, 'password can\'t be blank')
+    end
   end
 
   def change_password!(new_password, new_password_confirmation)
@@ -93,11 +103,6 @@ class Member < ActiveRecord::Base
       raise 'new password confirmation does not match'
     end
     self.password = new_password
-    save!
-  end
-
-  def clear_password!
-    self.password_salt, self.password_hash = nil, nil
     save!
   end
 
