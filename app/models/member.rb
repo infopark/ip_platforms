@@ -34,10 +34,10 @@ class Member < ActiveRecord::Base
 
   validates_uniqueness_of(:username)
   validates(:username, :presence => true, :length => { :maximum => 50 })
-  validates(:fullname, :length => { :maximum => 100 })
-  validates(:email, :length => { :maximum => 250 })
-  validates(:town, :length => { :maximum => 100 })
-  validates(:country, :length => { :maximum => 100 })
+  validates(:fullname, :presence => true, :length => { :maximum => 100 })
+  validates(:email, :presence => true, :length => { :maximum => 250 })
+  validates(:town, :presence => true, :length => { :maximum => 100 })
+  validates(:country, :presence => true, :length => { :maximum => 100 })
 
   def to_s
     username || super
@@ -69,9 +69,7 @@ class Member < ActiveRecord::Base
   end
 
   def password=(password)
-    if password.blank?
-      raise 'new password cannot be blank'
-    end
+    raise 'new password cannot be blank' if password.blank?
     salt = [Array.new(6){rand(256).chr}.join].pack('m').chomp
     hash = Digest::SHA256.hexdigest(password + salt)
     self.password_salt, self.password_hash = salt, hash
