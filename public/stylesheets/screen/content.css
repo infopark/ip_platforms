@@ -51,6 +51,11 @@
     color:#444;
   }
 
+  .page {
+    -moz-box-shadow: 0px 0px 3px #000;
+    -webkit-box-shadow: 0px 0px 3px #333;
+    box-shadow: 0px 0px 3px #000;}
+
   /*--- Headings | Überschriften ------------------------------------------------------------------------*/
 
   h1,h2,h3,h4,h5,h6 {
