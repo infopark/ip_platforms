@@ -155,6 +155,8 @@ class Member < ActiveRecord::Base
       self.friends << new_friend
       self.notifications.create(:content =>
                   "You accepted a friendship request from #{new_friend}")
+      new_friend.notifications.create(:content =>
+                  "You are now friends with #{self}")
     end
   end
 
