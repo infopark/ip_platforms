@@ -27,8 +27,8 @@ class MembersController < ApplicationController
       @friends = @member.friends
       @friend_requests_sent = @member.friend_requests_sent
       @friend_requests_received = @member.friend_requests_received
-      @calendars = @member.calendars
     end
+    @calendars = @member.calendars
 
     respond_to do |format|
       format.html
