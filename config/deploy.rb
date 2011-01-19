@@ -46,6 +46,11 @@ namespace :deploy do
     run "rm -rf #{shared_path}/cache/*"
   end
 
+  desc 'Resets the database'
+  task :reset_database do
+    run "sh -c 'cd #{current_path} && rake db:migrate:reset && rake db:seed'"
+  end
+
   task :compress_assets do
     yui_compressor = fetch(:yui_compressor,
               "java -jar script/yuicompressor-2.4.2.jar")
@@ -66,6 +71,7 @@ namespace :deploy do
            #{shared_path}/system/maintenance.html"
     end
   end
+
 
 end
 
