@@ -43,5 +43,4 @@ class Category < ActiveRecord::Base
     return true if max_recursion < 1
     other == self || ancestor_of?(other.parent, max_recursion - 1)
   end
-
 end
