@@ -39,6 +39,8 @@ class Conference < ActiveRecord::Base
 
   before_validation(:set_enddate_if_blank_before_validation)
 
+  after_save :notify_on_datechange
+
   def validate_enddate_before_startdate
     if startdate && enddate && startdate > enddate
       errors.add(:enddate, :must_not_be_earlier_than_startdate)
@@ -103,6 +105,24 @@ class Conference < ActiveRecord::Base
     end
     search(q.join(' '), category_ids.compact.map(&:id),
         start_at, end_at, member, location)
+  end
+
+  private
+
+  def notify_on_datechange
+    unless self.changes[:startdate].blank?
+      self.participants.each do |p|
+        p.notifications.create(:content => "The startdate of conference " +
+                               "#{self.name} has changed to #{self.startdate}")
+      end
+    end
+    unless self.changes[:enddate].blank?
+      self.participants.each do |p|
+        p.notifications.create(:content => "The enddate of conference " +
+                               "#{self.name} has changed to #{self.enddate}")
+      end
+    end
+    return true
   end
 
 end
