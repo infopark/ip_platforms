@@ -5,7 +5,9 @@
       <%= link_to 'Edit', edit_category_path(category) %> |
       <%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %> |
     <% end %>
-    <%= link_to 'Create Filter for default Calendar', create_calendar_category_path(category) %>
+    <% if logged_in? %>
+      <%= link_to 'Create Filter for default Calendar', create_calendar_category_path(category) %>
+    <% end %>
     <% if category.children.any? %>
       <ul>
         <%= render :partial => "categories/category", :collection => category.children %>
