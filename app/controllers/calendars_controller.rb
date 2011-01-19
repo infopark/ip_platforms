@@ -41,6 +41,7 @@ class CalendarsController < ApplicationController
   # POST /calendars.xml
   def create
     @calendar = Calendar.new(params[:calendar])
+    @calendar.member = @current_user
 
     respond_to do |format|
       if @calendar.save
@@ -57,6 +58,7 @@ class CalendarsController < ApplicationController
   # PUT /calendars/1.xml
   def update
     @calendar = Calendar.find(params[:id])
+    @calendar.member = @current_user
 
     respond_to do |format|
       if @calendar.update_attributes(params[:calendar])

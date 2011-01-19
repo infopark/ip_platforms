@@ -10,6 +10,7 @@ class Calendar < ActiveRecord::Base
 
   attr_readonly(:member_id)
 
+  validates(:name, :presence => true)
   validates(:name, :length => { :maximum => 50 })
 
 end

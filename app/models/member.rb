@@ -33,9 +33,16 @@ class Member < ActiveRecord::Base
   attr_readonly(:username)
 
   after_save(:create_default_calendar_if_none_exist)
+  after_destroy(:destroy_calendars)
 
   def create_default_calendar_if_none_exist
     calendars << Calendar.new(:name => "Default") unless calendars.any?
+  end
+
+  def destroy_calendars
+    calendars.each do |calendar|
+      calendar.destroy
+    end
   end
 
   validates_uniqueness_of(:username)
