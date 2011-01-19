@@ -44,6 +44,7 @@
         | <%= link_to 'Password', edit_password_path(member) %>
         | <%= link_to 'Delete', member,
           :confirm => 'Are you sure?', :method => :delete %>
+        &nbsp;<%= link_to "Series", series_member_path(member) %>
         <% if member != @current_user %>
           &nbsp;
           <%= link_to (member.admin? ? 'Revoke Admin' : 'Make admin'),

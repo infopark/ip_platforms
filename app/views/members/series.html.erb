@@ -1,0 +1,11 @@
+<h1>Listing Series of <%= link_to @member.username, @member %> (<%= @member.fullname %>)</h1>
+
+<% if @member.series.any? %>
+  <ul>
+    <% @member.series.each do |serie| %>
+      <li>
+        <%= link_to serie.name, serie %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

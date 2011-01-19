@@ -23,7 +23,13 @@ IpPlatforms::Application.routes.draw do
       get :ical
     end
   end
-  resources(:members)
+  resources(:members) do
+    member do
+      get :series
+      get :add_serie
+      get :remove_serie
+    end
+  end
   resources(:series)
   resource(:ws, :only => []) do
     collection do

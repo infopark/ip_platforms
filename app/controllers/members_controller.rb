@@ -177,6 +177,10 @@ class MembersController < ApplicationController
     redirect_to(@current_user)
   end
 
+  def series
+    @member = Member.find(params[:id])
+  end
+
   private
 
   def check_permissions
