@@ -37,6 +37,8 @@
   * @see: http://webkit.org/blog/67/strange-medium/
   */
 
+
+  form table {width: 100%;}
   textarea, pre, code, kbd, samp, var, tt, input[type=text] {
     font-family:Consolas, "Lucida Console", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier;
     border: 1px solid #999;
