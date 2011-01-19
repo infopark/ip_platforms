@@ -32,8 +32,13 @@
     <%= f.text_field :country %>
   </div>
   <div class="field">
-    <%= f.label :gps %><br />
+    <%= f.label :gps %>
+    <small>(Please manually convert + and - into N and E.
+      Example: 52.683459N,13.361435E)</small><br />
     <%= f.text_field :gps %>
+    <small>You may find out GPS coordinates by using
+    <a href="http://maps.google.com">Google Maps</a> - Search Address, click on 
+    "Link" and extract the ll-Parameters in the Form. </small>
   </div>
   <% if %w(new create).include?(controller.action_name) %>
     <div class="field">

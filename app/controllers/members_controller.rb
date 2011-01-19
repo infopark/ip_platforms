@@ -59,8 +59,8 @@ class MembersController < ApplicationController
           if logged_in?
             redirect_to(@member, :notice => 'Member was successfully created.')
           else
-            redirect_to(new_login_session_path,
-                        :notice => 'You may now log in')
+            session[:user_id] = @member.username
+            redirect_to(member_path(@member))
           end
         }
         format.xml  { render :xml => @member, :status => :created, :location => @member }
