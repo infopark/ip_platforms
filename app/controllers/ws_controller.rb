@@ -1,4 +1,5 @@
-class SeedController < ApplicationController
+class WsController < ApplicationController
+
   def reset
     respond_to do |format|
       format.xml do
@@ -16,4 +17,5 @@ class SeedController < ApplicationController
       end
     end
   end
+
 end
