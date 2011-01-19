@@ -28,9 +28,21 @@ var CAPHelper = {
     }
   },
 
+  addDatepicker: function() {
+    $.datepicker.setDefaults({
+      dateFormat: 'yy-mm-dd',
+      showAnim: 'show',
+      showOn: 'both',
+      buttonImage: '/images/date.png',
+      buttonImageOnly: true
+    });
+    $('input.datepicker').datepicker();
+  },
+
   documentReady: function() {
     this.autoFocus();
     this.geoLocation();
+    this.addDatepicker();
   }
 };
 
