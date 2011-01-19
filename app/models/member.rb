@@ -32,6 +32,12 @@ class Member < ActiveRecord::Base
 
   attr_readonly(:username)
 
+  after_save(:create_default_calendar_if_none_exist)
+
+  def create_default_calendar_if_none_exist
+    calendars << Calendar.new(:name => "Default") unless calendars.any?
+  end
+
   validates_uniqueness_of(:username)
   validates(:username, :presence => true, :length => { :maximum => 50 })
   validates(:fullname, :length => { :maximum => 100 })

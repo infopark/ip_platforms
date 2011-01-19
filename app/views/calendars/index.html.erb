@@ -1,8 +1,9 @@
 <h1>Listing calendars</h1>
 
+<p><%= link_to 'New Calendar', new_calendar_path %></p>
+
 <table>
   <tr>
-    <th>Member</th>
     <th>Name</th>
     <th></th>
     <th></th>
@@ -11,7 +12,6 @@
 
 <% @calendars.each do |calendar| %>
   <tr>
-    <td><%= calendar.member_id %></td>
     <td><%= calendar.name %></td>
     <td><%= link_to 'Show', calendar %></td>
     <td><%= link_to 'Edit', edit_calendar_path(calendar) %></td>
@@ -19,7 +19,3 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Calendar', new_calendar_path %>

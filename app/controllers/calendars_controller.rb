@@ -2,7 +2,7 @@ class CalendarsController < ApplicationController
   # GET /calendars
   # GET /calendars.xml
   def index
-    @calendars = Calendar.all
+    @calendars = Calendar.where(:member_id => @current_user.id)
 
     respond_to do |format|
       format.html # index.html.erb
