@@ -16,7 +16,7 @@ class ConferencesController < ApplicationController
     end
     @location = params[:location]
     @conferences =
-      if params[:submit] == 'Extended Search'
+      if params[:commit] == 'Extended Search'
         Conference.extended_search(@qq, @current_user)
       else
         Conference.search(@q, @category_ids, @start_at, @end_at,
