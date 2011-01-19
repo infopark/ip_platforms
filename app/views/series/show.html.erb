@@ -3,10 +3,12 @@
   <%= @serie.name %>
 </p>
 
-<p>
-  <b>Details-URL:</b>
-  <%= @serie.url %>
-</p>
+<% if @serie.url %>
+  <p>
+    <b>Details-URL:</b>
+    <%= @serie.url %>
+  </p>
+<% end %>
 
 <p>
   <b>Description:</b>
