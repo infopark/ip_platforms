@@ -12,11 +12,11 @@
 
 <% if @calendar.conferences.any? %>
   <p>
-    <b>Cconferences:</b>
+    <b>Conferences:</b>
     <ul>
       <% @calendar.conferences.each do |conference| %>
         <li>
-          <%= link_to conference.name, conference %>
+          <b><%= link_to conference.name, conference %></b>
           <% unless @calendar.category %>
             <%= link_to "Remove from calendar", remove_from_calendar_conference_path(conference,
                     :calendar_id => @calendar.id), :confirm => "Are you sure?" %>
