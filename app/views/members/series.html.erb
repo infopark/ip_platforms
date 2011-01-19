@@ -1,11 +1,14 @@
-<h1>Listing Series of <%= link_to @member.username, @member %> (<%= @member.fullname %>)</h1>
+<h1>Listing Series of <b><%= link_to @member.username, @member %></b> (<%= @member.fullname %>)</h1>
 
 <% if @member.series.any? %>
   <ul>
     <% @member.series.each do |serie| %>
       <li>
-        <%= link_to serie.name, serie %>
+        <b><%= link_to serie.name, serie %></b>
+        <%= link_to "Suspend", remove_serie_member_path(@member, :serie_id => serie.id) %>
       </li>
     <% end %>
   </ul>
+<% else %>
+  There are no Series this Member is the official Contact of.
 <% end %>

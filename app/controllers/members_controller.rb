@@ -181,6 +181,13 @@ class MembersController < ApplicationController
     @member = Member.find(params[:id])
   end
 
+  def remove_serie
+    member = Member.find(params[:id])
+    member.series.delete(Serie.find(params[:serie_id]))
+    member.save
+    redirect_to series_member_path(@member), :notice => "Member has been successfully disassigned from the serie!"
+  end
+
   private
 
   def check_permissions
