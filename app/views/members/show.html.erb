@@ -119,6 +119,17 @@
   </ul>
 </div>
 
+<div class="box">
+  <h3>Your Series</h3>
+  <ul>
+    <% @member.series.each do |serie| %>
+      <li>
+        <b><%= link_to serie.name, serie %></b>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
 <% end %>
 
 <% if is_my_profile? || is_admin? %>
