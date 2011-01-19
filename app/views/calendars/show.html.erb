@@ -3,6 +3,13 @@
   <%= @calendar.name %>
 </p>
 
+<% if @calendar.category %>
+  <p>
+    <b>Category:</b>
+    <%= @calendar.category.name %>
+  </p>
+<% end %>
+
 <p>
   <% if @calendar.conferences.any? %>
     <b>Added conferences:</b>
