@@ -132,10 +132,14 @@
   <% end %>
 
 <%= link_to 'Download as iCalendar file',
-  conference_path(@conference, :format => :ics) %> |
+  conference_path(@conference, :format => :ics) %>
+<%= link_to '/ with attendees',
+  conference_path(@conference, :with_attendees => true, :format => :ics) %> |
 
 <%= link_to 'Download as PDF',
-  conference_path(@conference, :format => :pdf) %> |
+  conference_path(@conference, :format => :pdf) %>
+<%= link_to '/ with attendees',
+  conference_path(@conference, :with_attendees => true, :format => :pdf) %> |
 
   <%= link_to 'Back', conferences_path %>
 </p>

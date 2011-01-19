@@ -108,7 +108,7 @@ class Conference < ActiveRecord::Base
         start_at, end_at, member, location)
   end
 
-  def ical(conference_url=nil)
+  def ical(conference_url=nil, attendees=[])
     cal = Calendar.new
     cal.custom_property("METHOD", "PUBLISH")
     event = Icalendar::Event.new
@@ -118,6 +118,7 @@ class Conference < ActiveRecord::Base
     event.location = self.venue
     event.organizer = self.creator.fullname
     event.description = self.description
+    attendees.each {|a| event.add_attendee a}
     if self.lat && self.lng
       event.geo = Icalendar::Geo.new("%.06f"%self.lat, "%.06f"%self.lng.to_s)
     end
