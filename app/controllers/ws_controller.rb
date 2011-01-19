@@ -1,20 +1,20 @@
-class WsController < ApplicationController
+class WsController < AbstractWsController
 
   def reset
-    respond_to do |format|
-      format.xml do
-        Seed.reset
-        head :no_content
-      end
+    if @current_user.admin?
+      Seed.reset
+      render_no_content
+    else
+      render_forbidden
     end
   end
 
   def factorydefaults
-    respond_to do |format|
-      format.xml do
-        Seed.factorydefaults
-        head :no_content
-      end
+    if @current_user.admin?
+      Seed.factorydefaults
+      render_no_content
+    else
+      render_forbidden
     end
   end
 

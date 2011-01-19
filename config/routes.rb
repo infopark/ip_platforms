@@ -36,8 +36,33 @@ IpPlatforms::Application.routes.draw do
       get :factorydefaults
       get :reset
     end
+    resources(:conferences,
+        :only => [:create, :show, :update],
+        :controller => :ws_conferences) do
+      resources(:attendees,
+          :only => [:create, :delete, :index],
+          :controller => :ws_conference_attendees)
+    end
+    resources(:members,
+        :only => [:create, :show, :update],
+        :controller => :ws_members) do
+      resources(:contacts,
+          :only => [:create, :index],
+          :controller => :ws_member_contacts)
+    end
+    resources(:categories,
+        :only => [:create, :index, :show],
+        :controller => :ws_categories)
+    resources(:series,
+        :only => [:create, :index, :show, :update],
+        :controller => :ws_series)
+    resources(:conferencesbycategory,
+        :only => [:show],
+        :controller => :ws_conferences_by_category)
+    resources(:search,
+        :only => [:show],
+        :controller => :ws_search)
   end
-
   root(:to => 'home#index', :as => :home)
 
 end
