@@ -78,6 +78,23 @@ class CategoriesController < ApplicationController
     end
   end
 
+  def create_calendar
+    @category = Category.find(params[:id])
+    calendar = Calendar.new
+    calendar.member = @current_user
+    calendar.category = @category
+    calendar.name = "Calendar for category \"#{@category.name}\""
+    respond_to do |format|
+      format.html do
+        if calendar.save
+          redirect_to calendar
+        else
+          redirect_to @category, :notice => "Couldn't create calendar!"
+        end
+      end
+    end
+  end
+
   private
 
   def load_potential_parents

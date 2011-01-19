@@ -10,7 +10,9 @@ IpPlatforms::Application.routes.draw do
         :as => :edit_password)
   resource(:login_session, :only => [:create, :destroy, :new])
   resources(:calendars)
-  resources(:categories, :except => :show)
+  resources(:categories, :except => :show) do
+    get :create_calendar, :on => :member
+  end
   resources(:conferences) do
     member do
       get :signout

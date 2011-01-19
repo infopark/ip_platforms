@@ -3,8 +3,9 @@
     <b><%= category.name %></b>
     <% if is_admin? %>
       <%= link_to 'Edit', edit_category_path(category) %> |
-      <%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %>
+      <%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %> |
     <% end %>
+    <%= link_to 'Create calendar', create_calendar_category_path(category) %>
     <% if category.children.any? %>
       <ul>
         <%= render :partial => "categories/category", :collection => category.children %>
