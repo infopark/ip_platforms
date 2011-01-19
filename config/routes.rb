@@ -1,7 +1,5 @@
 IpPlatforms::Application.routes.draw do
 
-  get "factorydefaults" => "seed#factorydefaults"
-  get "reset" => "seed#reset"
   match('/defriend/:id' => 'members#defriend', :as => :defriend)
   match('/add_rcd/:id' => 'members#add_rcd', :as => :add_rcd)
   match('/accept_rcd/:id' => 'members#accept_rcd', :as => :accept_rcd)
@@ -14,12 +12,21 @@ IpPlatforms::Application.routes.draw do
   resources(:calendars)
   resources(:categories, :except => :show)
   resources(:conferences) do
-    get "signout", :on => :member
-    get "signup", :on => :member
-    get "invite", :on => :member
+    member do
+      get :signout
+      get :signup
+      get :invite
+    end
   end
   resources(:members)
   resources(:series, :except => :show)
+  resource(:ws, :only => []) do
+    collection do
+      get :factorydefaults
+      get :reset
+    end
+  end
+
   root(:to => 'home#index', :as => :home)
 
 end
