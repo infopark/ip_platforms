@@ -12,28 +12,20 @@
 
 <% if @calendar.conferences.any? %>
   <p>
-    <b>Added conferences:</b>
+    <b>Cconferences:</b>
     <ul>
       <% @calendar.conferences.each do |conference| %>
         <li>
           <%= link_to conference.name, conference %>
-          <%= link_to "Remove from calendar", remove_from_calendar_conference_path(conference,
-                  :calendar_id => @calendar.id), :confirm => "Are you sure?" %>
+          <% unless @calendar.category %>
+            <%= link_to "Remove from calendar", remove_from_calendar_conference_path(conference,
+                    :calendar_id => @calendar.id), :confirm => "Are you sure?" %>
+          <% end %>
         </li>
       <% end %>
     </ul>
   </p>
 <% end %>
 
-<% if @calendar.category %>
-  <p>
-    <b>Conferences:</b>
-    <ul>
-      <% @calendar.conferences.each do |conference| %>
-      <% end %>
-    </ul>
-  </p>
-<% end %>
-
 <%= link_to 'Edit', edit_calendar_path(@calendar) %> |
-<%= link_to_profile 'Back' %>
+<%= link_to_profile 'My profile' %>
