@@ -11,7 +11,8 @@ class MembersController < ApplicationController
     @q = params[:q]
     @state = params[:state]
     @location = params[:location]
-    @members = Member.search(@q, @state, @current_user, @location)
+    @members = Member.search(@q, @state, @current_user, @location).
+        paginate(:page => params[:page], :per_page => 15)
 
     respond_to do |format|
       format.html
