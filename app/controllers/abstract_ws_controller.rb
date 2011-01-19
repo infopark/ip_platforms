@@ -166,6 +166,7 @@ class AbstractWsController < ApplicationController
           end
       end
     end
+    hash
   end
 
 end

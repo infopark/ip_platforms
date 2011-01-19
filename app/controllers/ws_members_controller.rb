@@ -2,6 +2,7 @@ class WsMembersController < AbstractWsController
 
   def create
     member = Member.new(params)
+    member.password = params[:password]
     if member.save
       render_member(member)
     else
