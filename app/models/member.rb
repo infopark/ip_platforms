@@ -161,12 +161,17 @@ class Member < ActiveRecord::Base
   def self.search(q, state, member, location)
     r = self
     unless q.blank?
-      if member.nil? || state == 'noFriends' || member.friends.empty?
-        r = r.where(['username LIKE ?', "%#{q}%"])
+      if member && member.admin?
+        c = multiword_text_filter_conditions(q, :username, :fullname, :email)
+        r = r.where(c)
       else
-        s = member.friends.map(&:id).join(',')
-        r = r.where(["(username LIKE ? OR fullname LIKE ? AND id IN (#{s}))",
-            "%#{q}%", "%#{q}%"])
+        if member.nil? || state == 'noFriends' || member.friends.empty?
+          r = r.where(['username LIKE ?', "%#{q}%"])
+        else
+          s = member.friends.map(&:id).join(',')
+          r = r.where(["(username LIKE ? OR fullname LIKE ? AND id IN (#{s}))",
+              "%#{q}%", "%#{q}%"])
+        end
       end
     end
     if member
