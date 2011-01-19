@@ -21,7 +21,9 @@ class ConferencesController < ApplicationController
           @current_user, @location)
       end
     respond_to do |format|
-      format.html
+      format.html do
+        @conferences = @conferences.paginate(:page => params[:page], :per_page => 15)
+      end
       format.xml  { render :xml => @conferences }
     end
   end
