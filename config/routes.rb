@@ -17,6 +17,7 @@ IpPlatforms::Application.routes.draw do
       get :signup
       get :invite
       get :add_to_calendar
+      get :remove_from_calendar
     end
   end
   resources(:members)

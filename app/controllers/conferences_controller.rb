@@ -111,6 +111,20 @@ class ConferencesController < ApplicationController
     end
   end
 
+  def remove_from_calendar
+    @calendar = Calendar.find(params[:calendar_id])
+    @calendar.conferences.delete(@conference)
+    respond_to do |format|
+      format.html do
+        if @calendar.save
+          redirect_to @calendar, :notice => "Conference has been successfully removed from calendar!"
+        else
+          redirect_to @calendar, :notice => "Conference couldn't be removed from the calendar!"
+        end
+      end
+    end
+  end
+
   # DELETE /conferences/1
   # DELETE /conferences/1.xml
   def destroy

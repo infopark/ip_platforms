@@ -10,6 +10,7 @@
       <% @calendar.conferences.each do |conference| %>
         <li>
           <%= link_to conference.name, conference %>
+          <%= link_to "Remove", remove_from_calendar_conference_path(conference, :calendar_id => @calendar.id) %>
         </li>
       <% end %>
     </ul>
