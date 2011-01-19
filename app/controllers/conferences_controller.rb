@@ -31,6 +31,7 @@ class ConferencesController < ApplicationController
   # GET /conferences/1
   # GET /conferences/1.xml
   def show
+    @calendars = @current_user.calendars
     respond_to do |format|
       format.html # show.html.erb
       format.xml  { render :xml => @conference }
@@ -92,6 +93,20 @@ class ConferencesController < ApplicationController
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @conference.errors, :status => :unprocessable_entity }
+      end
+    end
+  end
+
+  def add_to_calendar
+    @calendar = @current_user.calendars.find(params[:calendar_id])
+    @calendar.conferences << @conference
+    respond_to do |format|
+      format.html do
+        if @calendar.save
+          redirect_to @conference, :notice => "Conference has been successfully added to calendar!"
+        else
+          redirect_to @conference, :notice => "Conference couldn't be added to the calendar!"
+        end
       end
     end
   end

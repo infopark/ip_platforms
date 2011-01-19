@@ -100,16 +100,36 @@
   </p>
 <% end %>
 
-<% if @conference.creator == @current_user or is_admin? %>
-  <%= link_to 'Edit', edit_conference_path(@conference) %> |
+<% if @calendars.any? %>
+  <p>
+    <b>In your calendars:</b>
+    <% @calendars.reject { |c| not c.conferences.include?(@conference) }.each do |c| %>
+      <%= link_to c.name, c %>
+    <% end %>
+    <% available_calendars = @calendars.reject { |c| c.conferences.include?(@conference) } %>
+    <% if available_calendars.any? %>
+      <%= form_tag add_to_calendar_conference_path(@conference), :method => :get do %>
+        <%= submit_tag "Add to calendar" %>
+        <%= select_tag :calendar_id, options_from_collection_for_select(available_calendars, :id, :name) %>
+      <% end %>
+    <% else %>
+      <p>No free calendars available</p>
+    <% end %>
+  </p>
 <% end %>
 
-<% if @conference.participants.include?(@current_user) %>
-  <%= link_to 'Revoke', signout_conference_path(@conference), :confirm => "Are you sure you wannt to revoke?" %> |
-<% else %>
-  <% unless @conference.creator == @current_user %>
-    <%= link_to 'Sign up', signup_conference_path(@conference), :confirm =>  "Are you sure you wannt to sign up?" %> |
+<p>
+  <% if @conference.creator == @current_user or is_admin? %>
+    <%= link_to 'Edit', edit_conference_path(@conference) %> |
   <% end %>
-<% end %>
 
-<%= link_to 'Back', conferences_path %>
+  <% if @conference.participants.include?(@current_user) %>
+    <%= link_to 'Revoke', signout_conference_path(@conference), :confirm => "Are you sure you wannt to revoke?" %> |
+  <% else %>
+    <% unless @conference.creator == @current_user %>
+      <%= link_to 'Sign up', signup_conference_path(@conference), :confirm =>  "Are you sure you wannt to sign up?" %> |
+    <% end %>
+  <% end %>
+
+  <%= link_to 'Back', conferences_path %>
+</p>

@@ -8,7 +8,7 @@
     <ul>
       <% @calendar.conferences.each do |conference| %>
         <li>
-          <%= conference.name %>
+          <%= link_to conference.name, conference %>
         </li>
       <% end %>
     </ul>
