@@ -25,7 +25,7 @@
   </div>
   <div class="field">
     <%= f.label :town %><br />
-    <%= f.text_field :town %>
+    <%= f.text_field :town, :id => :city %>
   </div>
   <div class="field">
     <%= f.label :country %><br />
@@ -35,7 +35,7 @@
     <%= f.label :gps %>
     <small>(Please manually convert + and - into N and E.
       Example: 52.683459N,13.361435E)</small><br />
-    <%= f.text_field :gps %>
+    <%= f.text_field :gps, :id => :geolocation %>
     <small>You may find out GPS coordinates by using
     <a href="http://maps.google.com">Google Maps</a> - Search Address, click on 
     "Link" and extract the ll-Parameters in the Form. </small>
