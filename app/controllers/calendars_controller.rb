@@ -80,7 +80,7 @@ class CalendarsController < ApplicationController
     @calendar.destroy
 
     respond_to do |format|
-      format.html { redirect_to(calendars_url) }
+      format.html { redirect_to(member_path(@current_user)) }
       format.xml  { head :ok }
     end
   end

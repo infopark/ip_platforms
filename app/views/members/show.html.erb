@@ -104,12 +104,17 @@
 
 <div class="box">
   <h3>Your Calendars</h3>
+  <p><%= link_to 'New Calendar', new_calendar_path %></p>
   <% if @calendars.blank? %>
     You don't have any calendars
   <% else %>
     <ul>
-      <% @calendars.each do |c| %>
-        <li><%= c.name %></li>
+      <% @calendars.each do |calendar| %>
+        <li>
+          <b><%= link_to calendar.name, calendar %></b>
+          <%= link_to 'Edit', edit_calendar_path(calendar) %>
+          <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
+        </li>
       <% end %>
     </ul>
   <% end %>

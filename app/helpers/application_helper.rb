@@ -17,4 +17,8 @@ module ApplicationHelper
     end
   end
 
+  def link_to_profile(title)
+    link_to title, member_path(@current_user)
+  end
+
 end
