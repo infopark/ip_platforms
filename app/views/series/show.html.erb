@@ -29,6 +29,7 @@
   </p>
 <% end %>
 
-<%= link_to 'Edit', edit_serie_path(@calendar) %> |
-<%= link_to 'Back', series_path %>
-
+<% if is_admin? %>
+  <%= link_to 'Edit', edit_serie_path(@calendar) %> |
+  <%= link_to 'Back', series_path %>
+<% end %>
