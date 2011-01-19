@@ -2,7 +2,7 @@ class MembersController < ApplicationController
   append_before_filter :require_current_user,
                         :except => [:index, :show, :new, :create]
   append_before_filter :require_current_user_is_admin,
-                        :only => [:destroy, :toggle_admin]
+                        :only => [:destroy, :toggle_admin, :series, :remove_serie, :add_serie]
 
   helper_method :show_details?, :is_my_profile?,
                 :is_friend?, :is_pending_friend?
@@ -179,6 +179,7 @@ class MembersController < ApplicationController
 
   def series
     @member = Member.find(params[:id])
+    @series = (Serie.all - @member.series)
   end
 
   def remove_serie
@@ -186,6 +187,13 @@ class MembersController < ApplicationController
     member.series.delete(Serie.find(params[:serie_id]))
     member.save
     redirect_to series_member_path(@member), :notice => "Member has been successfully disassigned from the serie!"
+  end
+
+  def add_serie
+    member = Member.find(params[:id])
+    member.series << Serie.find(params[:serie_id])
+    member.save
+    redirect_to series_member_path(@member), :notice => "Member has been successfully made the official contact of the serie!"
   end
 
   private
