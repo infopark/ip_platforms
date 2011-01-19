@@ -21,6 +21,8 @@ class AbstractWsController < ApplicationController
       render_not_found(exception.message)
     when ActionController::MethodNotAllowed
       render_forbidden(exception.message)
+    when ActiveRecord::StaleObjectError
+      render_stale_object(exception.message)
     else
       render_server_error(exception.message)
     end
@@ -32,6 +34,10 @@ class AbstractWsController < ApplicationController
 
   def render_server_error(message='server error')
     render_error(500, message)
+  end
+
+  def render_stale_object(message='conflict')
+    render_error(:conflict, message)
   end
 
   def render_not_found(message='not found')

@@ -22,6 +22,7 @@ class Conference < ActiveRecord::Base
   attr_accessible(:venue)
   attr_accessible(:serie_id)
   attr_accessible(:creator_id)
+  attr_accessible(:version)
 
   attr_readonly(:creator_id)
 

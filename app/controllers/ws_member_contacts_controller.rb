@@ -18,7 +18,7 @@ class WsMemberContactsController < AbstractWsController
           @current_user.revoke_rcd(member.id)
         end
       end
-      render_ok({})
+      render_no_content
     end
   end
 
@@ -26,8 +26,8 @@ class WsMemberContactsController < AbstractWsController
     member = find_member
     contacts = member.friends + member.friend_requests_sent +
         member.friend_requests_received
-    if member != @current_user
-      contacts.select! {|m| @current_user.friends.include?(m)}
+    if member != @current_user && !@current_user.admin?
+      contacts = contacts.select {|m| @current_user.friends.include?(m)}
     end
     if contacts.empty?
       render_no_content
@@ -53,7 +53,7 @@ class WsMemberContactsController < AbstractWsController
   private
 
   def find_member
-    Member.find_by_username!(params[:member_id])
+    Member.find_by_username!(params[:member_id].to_s)
   end
 
 end

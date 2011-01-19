@@ -27,6 +27,7 @@ class Member < ActiveRecord::Base
   attr_accessible(:email)
   attr_accessible(:town)
   attr_accessible(:country)
+  attr_accessible(:version)
 
   attr_readonly(:username)
 

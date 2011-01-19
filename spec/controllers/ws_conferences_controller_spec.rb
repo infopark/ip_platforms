@@ -95,7 +95,8 @@ describe WsConferencesController do
     end
 
     it 'should 409 if stale version' do
-      pending
+      put(:update, :id => @conference.id, :name => 'doofname', :version => -1)
+      response_should(409)
     end
   end
 
