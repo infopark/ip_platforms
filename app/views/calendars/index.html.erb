@@ -12,8 +12,7 @@
 
 <% @calendars.each do |calendar| %>
   <tr>
-    <td><%= calendar.name %></td>
-    <td><%= link_to 'Show', calendar %></td>
+    <td><%= link_to calendar.name, calendar %></td>
     <td><%= link_to 'Edit', edit_calendar_path(calendar) %></td>
     <td><%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
