@@ -52,7 +52,7 @@ class Conference < ActiveRecord::Base
     enddate = startdate if enddate.blank?
   end
 
-  def self.search(q, category_ids, start_at, end_at, member, location)
+  def self.search(q, category_ids, withsub, start_at, end_at, member, location)
     r = self
     if c = multiword_text_filter_conditions(q, :name, :description)
       r = r.where(c)
@@ -73,7 +73,11 @@ class Conference < ActiveRecord::Base
       end
     end
     unless category_ids.blank?
-      s = category_ids.map {|i| (i.to_i rescue 0)}.join(',')
+      category_ids = category_ids.map {|i| (i.to_i rescue 0)}
+      if withsub
+        category_ids = Category.expand_children(category_ids)
+      end
+      s = category_ids.to_a.join(',')
       r = r.where("id IN (SELECT conference_id FROM categories_conferences " \
           "WHERE category_id IN (#{s}))")
     end
@@ -86,6 +90,7 @@ class Conference < ActiveRecord::Base
     start_at = nil
     end_at = nil
     location = nil
+    withsub = false
     qq.to_s.split(/\s+/).each do |s|
       case s
       when /\Afrom:(.*)/
@@ -93,7 +98,7 @@ class Conference < ActiveRecord::Base
       when /\Auntil:(.*)/
         end_at = ($1.to_date rescue nil)
       when 'opt:withsub'
-        # ignore
+        withsub = true
       when 'reg:country'
         # ignore
       when /\Areg:(.*)/
@@ -104,7 +109,7 @@ class Conference < ActiveRecord::Base
         q << s
       end
     end
-    search(q.join(' '), category_ids.compact.map(&:id),
+    search(q.join(' '), category_ids.compact.map(&:id), withsub,
         start_at, end_at, member, location)
   end
 

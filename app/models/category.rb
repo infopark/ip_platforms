@@ -1,3 +1,5 @@
+require 'set'
+
 class Category < ActiveRecord::Base
 
   include BaseRecord
@@ -20,14 +22,13 @@ class Category < ActiveRecord::Base
       :format => { :with => /\A[-\w\d_]+\Z/ })
   validate :validate_parent_not_cyclic
 
-  def self_and_all_children
-    collection = [self]
-    if self.children.any?
-      children.each do |child|
-        collection += child.self_and_all_children
-      end
+  def self.expand_children(ids, max_depth=MAX_TREE_DEPTH)
+    return [] if ids.blank?
+    child_ids = where(:parent_id => ids).select(:id).all.map(&:id)
+    if max_depth > 0
+      child_ids = expand_children(child_ids, max_depth - 1)
     end
-    collection
+    Set.new(ids) + child_ids
   end
 
   private
@@ -44,4 +45,5 @@ class Category < ActiveRecord::Base
     return true if max_recursion < 1
     other == self || ancestor_of?(other.parent, max_recursion - 1)
   end
+
 end

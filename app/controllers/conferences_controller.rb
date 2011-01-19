@@ -9,6 +9,7 @@ class ConferencesController < ApplicationController
     @qq = params[:qq]
     @q = params[:q]
     @category_ids = params[:category_ids]
+    @withsub = params[:withsub]
     @start_at = (params[:start_at].to_date rescue nil) || Date.today
     @end_at = params[:end_at].to_date rescue nil
     if @end_at && @end_at < @start_at
@@ -19,8 +20,8 @@ class ConferencesController < ApplicationController
       if params[:commit] == 'Extended Search'
         Conference.extended_search(@qq, @current_user)
       else
-        Conference.search(@q, @category_ids, @start_at, @end_at,
-          @current_user, @location)
+        Conference.search(@q, @category_ids, @withsub,
+            @start_at, @end_at, @current_user, @location)
       end
     respond_to do |format|
       format.html do
