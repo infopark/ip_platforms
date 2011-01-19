@@ -16,6 +16,7 @@ class Category < ActiveRecord::Base
   attr_accessible(:name)
 
   validates(:name, :presence => true, :length => { :maximum => 50 },
+      :uniqueness => true,
       :format => { :with => /\A[-\w\d_]+\Z/ })
   validate :validate_parent_not_cyclic
 
