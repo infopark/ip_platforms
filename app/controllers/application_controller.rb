@@ -38,15 +38,13 @@ class ApplicationController < ActionController::Base
 
   def update_session_timeout
     expires_in = 60.minutes.from_now
-    if session[:expires_at].blank?
-      session[:expires_at] = expires_in
-    else
-      @time_left = (session[:expires_at].utc - Time.now.utc).to_i
-      unless @time_left > 0
-        session[:expires_at] = expires_in
-        expire_session
-      end
+    session[:expires_at] = expires_in if session[:expires_at].blank?
+    @time_left = (session[:expires_at].utc - Time.now.utc).to_i
+    unless @time_left > 0
+      expire_session
     end
+    session[:expires_at] = expires_in
+    return true
   end
 
   def require_current_user
