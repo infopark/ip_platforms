@@ -104,7 +104,8 @@
 
 <div class="box">
   <h3>Your Calendars</h3>
-  <p><%= link_to 'New Calendar', new_calendar_path %></p>
+  <p><%= link_to 'New Calendar', new_calendar_path %> |
+  <%= link_to 'New Calendar for category', categories_path %></p>
   <ul>
     <% @calendars.each do |calendar| %>
       <li>
