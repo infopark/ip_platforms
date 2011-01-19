@@ -113,7 +113,9 @@
         <li>
           <b><%= link_to calendar.name, calendar %></b>
           <%= link_to 'Edit', edit_calendar_path(calendar) %>
-          <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
+          <% unless calendar.is_default? %>
+            <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
+          <% end %>
         </li>
       <% end %>
     </ul>

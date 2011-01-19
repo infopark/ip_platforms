@@ -35,8 +35,18 @@ class Member < ActiveRecord::Base
   after_save(:create_default_calendar_if_none_exist)
   after_destroy(:destroy_calendars)
 
+  def default_calendar
+    calendars.where(:is_default => true).first
+  end
+
+  def create_default_calendar
+    calendar = Calendar.new(:name => "Your personal calendar")
+    calendar.is_default = true
+    calendars << calendar
+  end
+
   def create_default_calendar_if_none_exist
-    calendars << Calendar.new(:name => "Default") unless calendars.any?
+    create_default_calendar unless default_calendar
   end
 
   def destroy_calendars

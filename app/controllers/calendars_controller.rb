@@ -77,9 +77,8 @@ class CalendarsController < ApplicationController
   # DELETE /calendars/1.xml
   def destroy
     @calendar = Calendar.find(params[:id])
-    @calendar.destroy
-
     respond_to do |format|
+      @calendar.destroy if @calendar.is_default
       format.html { redirect_to(member_path(@current_user)) }
       format.xml  { head :ok }
     end
