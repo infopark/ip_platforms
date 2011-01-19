@@ -27,21 +27,21 @@ pdf.text "How to find: #{@conference.howtofind}" if @conference.howtofind
 pdf.move_down pdf.font.height * 1
 pdf.text "Accomodation: #{@conference.accomodation}" if @conference.accomodation
 
-if @conference.participants.any?
-  pdf.move_down pdf.font.height * 2
-  pdf.text "Participants:"
-  @conference.participants.each do |participant|
-    p = participant.username
-    if @conference.creator == @current_user or
-        @current_user.friends.include?(participant) or
-        @current_user == participant
-      if @current_user == participant
-        p += " (You)"
-      else
-        p += " (#{participant.fullname}, <#{participant.email}>)"
+if @with_attendees
+  if @conference.participants.any?
+    pdf.move_down pdf.font.height * 2
+    pdf.text "Participants:"
+    @conference.participants.each do |participant|
+      p = participant.username
+      if show_details?(@conference, participant)
+        if @current_user == participant
+          p += " (You)"
+        else
+          p += " (#{participant.fullname}, <#{participant.email}>)"
+        end
       end
+      pdf.text p, :indent_paragraphs => 40
     end
-    pdf.text p, :indent_paragraphs => 40
   end
 end
 

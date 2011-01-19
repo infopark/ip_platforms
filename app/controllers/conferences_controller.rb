@@ -3,6 +3,8 @@ class ConferencesController < ApplicationController
   before_filter :find_conference, :except => [:index, :new, :create]
   before_filter :require_creator_or_admin, :only => [:edit, :update, :destroy]
 
+  helper_method :show_details?
+
   def index
     @qq = params[:qq]
     @q = params[:q]
@@ -34,11 +36,22 @@ class ConferencesController < ApplicationController
       format.html
       format.xml  { render :xml => @conference }
       format.ics do
-        render :text => @conference.ical(url_for(@conference))
+        attendees= []
+        if params[:with_attendees]
+          @conference.participants.each do |p|
+            if show_details?(@conference, p)
+              attendees << "MAILTO:#{p.email}"
+            else
+              attendees << "CN=#{p.username}"
+            end
+          end
+        end
+        render :text => @conference.ical(url_for(@conference), attendees)
       end
       format.pdf {
         image_path = File.join(Rails.public_path, 'images')
         @my_url = url_for(@conference)
+        @with_attendees = params[:with_attendees]
         prawnto :prawn => {:page_layout => :portrait,
                            :page_size => 'A4',
                            :top_margin => 85,
@@ -191,4 +204,11 @@ class ConferencesController < ApplicationController
       false
     end
   end
+
+  def show_details?(conference, participant, current_user=@current_user)
+    conference.creator == current_user or
+      current_user.friends.include?(participant) or
+      current_user == participant
+  end
+
 end
