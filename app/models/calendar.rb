@@ -14,4 +14,17 @@ class Calendar < ActiveRecord::Base
   validates(:name, :presence => true)
   validates(:name, :length => { :maximum => 50 })
 
+  alias_method :conferences_orig, :conferences
+
+  def conferences
+    return conferences_for_category if category
+    conferences_orig
+  end
+
+  private
+
+  def conferences_for_category
+    member.default_calendar.conferences.reject { |c| not c.categories.include?(category) }
+  end
+
 end

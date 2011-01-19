@@ -10,8 +10,8 @@
   </p>
 <% end %>
 
-<p>
-  <% if @calendar.conferences.any? %>
+<% if @calendar.conferences.any? %>
+  <p>
     <b>Added conferences:</b>
     <ul>
       <% @calendar.conferences.each do |conference| %>
@@ -22,10 +22,18 @@
         </li>
       <% end %>
     </ul>
-  <% else %>
-    You've added no conferences yet.
-  <% end %>
-</p>
+  </p>
+<% end %>
+
+<% if @calendar.category %>
+  <p>
+    <b>Conferences:</b>
+    <ul>
+      <% @calendar.conferences.each do |conference| %>
+      <% end %>
+    </ul>
+  </p>
+<% end %>
 
 <%= link_to 'Edit', edit_calendar_path(@calendar) %> |
 <%= link_to_profile 'Back' %>
