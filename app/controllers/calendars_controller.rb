@@ -1,4 +1,6 @@
 class CalendarsController < ApplicationController
+  before_filter :require_current_user
+
   # GET /calendars
   # GET /calendars.xml
   def index
