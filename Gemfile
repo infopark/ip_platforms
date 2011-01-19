@@ -8,6 +8,7 @@ gem('mysql2')
 gem('rack-test')
 gem('icalendar')
 gem('prawn')
+gem('geokit')
 gem('will_paginate', '2.3.15')
 
 group :development, :test do
