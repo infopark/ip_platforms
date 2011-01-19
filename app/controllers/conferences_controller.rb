@@ -32,9 +32,13 @@ class ConferencesController < ApplicationController
   end
 
   def show
+    @my_url = url_for(@conference)
     @calendars = @current_user.calendars
     respond_to do |format|
       format.html
+      format.rss  {
+        render :rss => @conference
+      }
       format.xml  { render :xml => @conference }
       format.ics do
         attendees= []
@@ -47,11 +51,10 @@ class ConferencesController < ApplicationController
             end
           end
         end
-        render :text => @conference.ical(url_for(@conference), attendees)
+        render :text => @conference.ical(@my_url, attendees)
       end
       format.pdf {
         image_path = File.join(Rails.public_path, 'images')
-        @my_url = url_for(@conference)
         @with_attendees = params[:with_attendees]
         prawnto :prawn => {:page_layout => :portrait,
                            :page_size => 'A4',

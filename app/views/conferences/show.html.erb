@@ -1,4 +1,8 @@
-<p id="notice"><%= notice %></p>
+<% content_for :additional_header_tags do %>
+  <%= auto_discovery_link_tag(:rss,
+    conference_path(@conference, :format => :rss),
+    :title => "RSS Member Feed for #{@conference.name}") %>
+<% end %>
 
 <% if @conference.serie %>
   <p>

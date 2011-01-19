@@ -1,25 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-<title><%= page_title %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title><%= page_title %></title>
 
-<%= stylesheet_link_tag 'yaml/core/base.css',
-    'yaml/navigation/nav_shinybuttons.css',
-    'screen/basemod.css',
-    'screen/content.css',
-    'yaml/print/print_003_draft.css',
-    'patches/patch_ip_platforms.css',
-    'screen/ip_platforms_custom.css',
-    'yaml/core/iehacks.css',
-    'jquery.ui.datepicker.css',
-    :cache => true %>
-<%= javascript_include_tag 'jquery',
-    'jquery-ui-1.8.8.custom.min',
-    'rails',
-    'application',
-    :cache => true %>
-<%= csrf_meta_tag %>
+  <%= stylesheet_link_tag 'yaml/core/base.css',
+      'yaml/navigation/nav_shinybuttons.css',
+      'screen/basemod.css',
+      'screen/content.css',
+      'yaml/print/print_003_draft.css',
+      'patches/patch_ip_platforms.css',
+      'screen/ip_platforms_custom.css',
+      'yaml/core/iehacks.css',
+      'jquery.ui.datepicker.css',
+      :cache => true %>
+
+  <%= javascript_include_tag 'jquery',
+      'jquery-ui-1.8.8.custom.min',
+      'rails',
+      'application',
+      :cache => true %>
+
+  <%= csrf_meta_tag %>
+
+  <%= yield :additional_header_tags %>
 </head>
 
 <body class="hideboth">
