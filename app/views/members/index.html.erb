@@ -1,5 +1,11 @@
 <h1>Listing members</h1>
 
+<% if is_admin? %>
+  <p>
+    <%= link_to 'New Member', new_member_path %>
+  </p>
+<% end %>
+
 <div>
   <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
     <%= member_state_select_tag(@state) %>
@@ -55,7 +61,3 @@
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Member', new_member_path %>
