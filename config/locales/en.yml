@@ -1,2 +1,5 @@
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      messages:
+        must_not_be_earlier_than_startdate: must not be earlier than start date

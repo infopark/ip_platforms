@@ -18,11 +18,11 @@
   </div>
   <div class="field">
     <%= f.label :startdate %><br />
-    <%= f.date_select :startdate %>
+    <%= f.text_field :startdate, :class => :datepicker %>
   </div>
   <div class="field">
     <%= f.label :enddate %><br />
-    <%= f.date_select :enddate %>
+    <%= f.text_field :enddate, :class => :datepicker %>
   </div>
   <% if @series.present? %>
     <div class="field">
