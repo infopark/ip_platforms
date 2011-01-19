@@ -2,6 +2,7 @@ class Conference < ActiveRecord::Base
 
   include BaseRecord
   include GpsLocation
+  include Icalendar
 
   acts_as_mappable
 
@@ -105,6 +106,25 @@ class Conference < ActiveRecord::Base
     end
     search(q.join(' '), category_ids.compact.map(&:id),
         start_at, end_at, member, location)
+  end
+
+  def ical(conference_url=nil)
+    cal = Calendar.new
+    cal.custom_property("METHOD", "PUBLISH")
+    event = Icalendar::Event.new
+    event.start = self.startdate
+    event.end = self.enddate + 1.day
+    event.summary = self.name
+    event.location = self.venue
+    event.organizer = self.creator.fullname
+    event.description = self.description
+    if self.lat && self.lng
+      event.geo = Icalendar::Geo.new("%.06f"%self.lat, "%.06f"%self.lng.to_s)
+    end
+    event.url = conference_url if conference_url
+    cal.add event
+    cal.publish
+    cal.to_ical
   end
 
   private

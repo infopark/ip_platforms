@@ -16,6 +16,7 @@ IpPlatforms::Application.routes.draw do
       get :signout
       get :signup
       get :invite
+      get :ical
     end
   end
   resources(:members)
