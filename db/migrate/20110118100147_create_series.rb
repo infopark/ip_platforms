@@ -4,6 +4,8 @@ class CreateSeries < ActiveRecord::Migration
     create_table :series do |t|
       t.integer :version
       t.string :name, :limit => 80, :null => false
+      t.string :description, :limit => 2000
+      t.string :url, :limit => 250
 
       t.timestamps
     end
