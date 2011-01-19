@@ -6,6 +6,7 @@ gem('geokit')
 gem('json')
 gem('mysql2')
 gem('rack-test')
+gem('icalendar')
 
 group :development, :test do
   gem('annotate')
