@@ -7,7 +7,6 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>URL</th>
     <th></th>
     <th></th>
     <th></th>
@@ -16,7 +15,6 @@
 <% @series.each do |serie| %>
   <tr>
     <td><%= link_to serie.name, serie %></td>
-    <td><%= serie.url %></td>
     <% if is_admin? %>
       <td><%= link_to 'Edit', edit_serie_path(serie) %></td>
       <td><%= link_to 'Destroy', serie, :confirm => 'Are you sure?', :method => :delete %></td>
