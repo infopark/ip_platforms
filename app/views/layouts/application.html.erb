@@ -37,7 +37,11 @@
   <div class="page">
     <div id="header" role="banner">
       <div id="topnav" role="contentinfo">
-        <span><%= login_logout_link %></span>
+        <span><%= login_logout_link %></span><br />
+        <%= form_tag(conferences_path, {:method => :get}) do %>
+          <%= text_field_tag(:q, @q, :size => 15) %>
+          <%= submit_tag('QuickSearch') %>
+        <% end %>
       </div>
       <%= link_to (image_tag 'iplogo.png', :class => :float_left,
           :width => 45, :height => 45), home_path %>
