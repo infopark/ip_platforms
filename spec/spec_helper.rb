@@ -25,3 +25,7 @@ RSpec.configure do |config|
   # instead of true.
   config.use_transactional_fixtures = true
 end
+
+def auth_as_admin
+  request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
+end
