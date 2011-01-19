@@ -4,8 +4,6 @@ class Conference < ActiveRecord::Base
   include GpsLocation
   include Icalendar
 
-  acts_as_mappable
-
   set_locking_column(:version)
 
   belongs_to(:creator, :class_name => 'Member')

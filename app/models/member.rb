@@ -3,8 +3,6 @@ class Member < ActiveRecord::Base
   include BaseRecord
   include GpsLocation
 
-  acts_as_mappable
-
   set_locking_column(:version)
 
   has_and_belongs_to_many(:friend_requests_received, :class_name => 'Member',

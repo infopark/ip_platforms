@@ -1,6 +1,7 @@
 class ConferencesController < ApplicationController
   before_filter :require_current_user, :except => [:index]
-  before_filter :find_conference, :except => [:index, :new, :create]
+  before_filter :find_conference, :except => [:index, :new, :create,
+                                              :geocode_address]
   before_filter :require_creator_or_admin, :only => [:edit, :update, :destroy]
 
   helper_method :show_details?
@@ -129,6 +130,18 @@ class ConferencesController < ApplicationController
         format.html { render :action => "edit" }
         format.xml  { render :xml => @conference.errors, :status => :unprocessable_entity }
       end
+    end
+  end
+
+  def geocode_address
+    if request.xhr? && params[:q]
+      r = Geokit::Geocoders::GoogleGeocoder.geocode(params[:q])
+      latlng = ''
+      latlng += (r.lat > 0 ? "#{r.lat}N," : "#{-r.lat}S,") unless r.lat.blank?
+      latlng += (r.lng > 0 ? "#{r.lng}E" : "#{-r.lng}W") unless r.lng.blank?
+      render(:json => {:latlng => latlng})
+    else
+      render(:text => 'I like to be called right', :status => 403)
     end
   end
 

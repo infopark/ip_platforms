@@ -8,10 +8,10 @@ if defined? Geokit
   Geokit::Geocoders::proxy_user = nil
   Geokit::Geocoders::proxy_pass = nil
   Geokit::Geocoders::yahoo = false
-  Geokit::Geocoders::google = false # put api key here (later)
+  Geokit::Geocoders::google = 'ABQIAAAAgPYResB-xeyHxmDCgjO0lxQV8G4RNoBTn2MdTAz94FeqHhhEmBSzf6AOjS-GP-_hvbRuxrLLTYBDuQ'
   Geokit::Geocoders::geocoder_us = false
   Geokit::Geocoders::geocoder_ca = false
-  Geokit::Geocoders::provider_order = []
+  Geokit::Geocoders::provider_order = [:google]
   Geokit::Geocoders::ip_provider_order = []
 
 end

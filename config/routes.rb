@@ -14,13 +14,15 @@ IpPlatforms::Application.routes.draw do
     get :create_calendar, :on => :member
   end
   resources(:conferences) do
+    collection do
+      get :geocode_address
+    end
     member do
       get :signout
       get :signup
       get :invite
       get :add_to_calendar
       get :remove_from_calendar
-      get :ical
     end
   end
   resources(:members) do
