@@ -1,6 +1,8 @@
 <li>
   <p>
-    <b><%= category.name %></b>
+    <b><%= link_to category.name,
+      conferences_path(:category_ids => [category.id]) %></b>
+    &nbsp; &nbsp;
     <% if is_admin? %>
       <%= link_to 'Edit', edit_category_path(category) %> |
       <%= link_to 'Destroy', category, :confirm => 'Are you sure?', :method => :delete %> |
