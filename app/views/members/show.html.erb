@@ -123,13 +123,17 @@
 
 <div class="box">
   <h3>Your Series</h3>
-  <ul>
-    <% @member.series.each do |serie| %>
-      <li>
-        <b><%= link_to serie.name, serie %></b>
-      </li>
-    <% end %>
-  </ul>
+  <% if @series.present? %>
+    <ul>
+      <% @member.series.each do |serie| %>
+        <li>
+          <b><%= link_to serie.name, serie %></b>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    You aren't the official contact in any Serie
+  <% end %>
 </div>
 
 <% end %>
