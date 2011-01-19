@@ -31,6 +31,21 @@ class ConferencesController < ApplicationController
     respond_to do |format|
       format.html
       format.xml  { render :xml => @conference }
+      format.ics do
+        render :text => @conference.ical(url_for(@conference))
+      end
+      format.pdf {
+        image_path = File.join(Rails.public_path, 'images')
+        @my_url = url_for(@conference)
+        prawnto :prawn => {:page_layout => :portrait,
+                           :page_size => 'A4',
+                           :top_margin => 85,
+                           :left_margin => 85,
+                           :right_margin => 10,
+                           :bottom_margin => 10,
+                           :background => "#{image_path}/iplogo.png"}
+        render :layout => false
+      }
     end
   end
 
@@ -155,14 +170,6 @@ class ConferencesController < ApplicationController
           notification.save!
           redirect_to(@conference)
         end
-      end
-    end
-  end
-
-  def ical
-    respond_to do |format|
-      format.ics do
-        render :text => @conference.ical(url_for(@conference))
       end
     end
   end

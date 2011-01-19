@@ -7,6 +7,7 @@ gem('json')
 gem('mysql2')
 gem('rack-test')
 gem('icalendar')
+gem('prawn')
 
 group :development, :test do
   gem('annotate')
