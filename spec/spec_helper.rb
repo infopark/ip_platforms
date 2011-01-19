@@ -35,7 +35,7 @@ def auth_as_user
 end
 
 def response_should(status)
-  $stderr.puts response.body
+  #$stderr.puts response.body
   response.status.should == status
   yield(JSON.parse(response.body)) if block_given?
 end

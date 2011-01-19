@@ -171,8 +171,8 @@ class AbstractWsController < ApplicationController
             'no_contact'
           end
       end
+      hash
     end
-    hash
   end
 
 end

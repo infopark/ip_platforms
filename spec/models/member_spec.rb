@@ -3,7 +3,11 @@ require 'spec_helper'
 describe Member do
 
   before do
-    @m = Member.new(:username => 'test')
+    @m = Member.new(:username => 'test',
+        :fullname => 'full',
+        :email => 'email@example.org',
+        :town => 'Berlin',
+        :country => 'Germany')
     @m.password = 'tttt'
     @m.save!
   end
@@ -44,10 +48,18 @@ end
 
 describe 'given some members' do
   before do
-    @m1 = Member.new(:username => 'user1')
+    @m1 = Member.new(:username => 'user1',
+        :fullname => 'full',
+        :email => 'email@example.org',
+        :town => 'Berlin',
+        :country => 'Germany')
     @m1.password = 'pw1'
     @m1.save!
-    @m2 = Member.new(:username => 'user2')
+    @m2 = Member.new(:username => 'user2',
+        :fullname => 'full',
+        :email => 'email@example.org',
+        :town => 'Berlin',
+        :country => 'Germany')
     @m2.password = 'pw2'
     @m2.save!
   end

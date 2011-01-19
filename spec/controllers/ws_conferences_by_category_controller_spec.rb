@@ -10,24 +10,15 @@ describe WsConferencesByCategoryController do
     it "should give the conf list" do
       auth_as_admin
       get(:show, :id => Category.find_by_name('IT-Security'))
-      JSON.parse(response.body).should == [
-          {
-            "name"=>"26C3 - Here Be Dragons",
-            "details"=>"http://test.host/ws/conferences/1",
-          },
-          {
-            "name"=>"27C3 - We come in peace",
-            "details"=>"http://test.host/ws/conferences/2",
-          },
-          {
-            "name"=>"28C3 - ...",
-            "details"=>"http://test.host/ws/conferences/3",
-          },
-          {
-            "name"=>"Black Hat DC 2011",
-            "details"=>"http://test.host/ws/conferences/4",
-          },
-      ]
+      response_should(200) do |array|
+        array.size.should == 4
+        array.map {|h| h['name']}.should == [
+          "26C3 - Here Be Dragons",
+          "27C3 - We come in peace",
+          "28C3 - ...",
+          "Black Hat DC 2011",
+        ]
+      end
     end
 
     it "should fails without auth" do

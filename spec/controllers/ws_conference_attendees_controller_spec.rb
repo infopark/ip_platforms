@@ -2,11 +2,8 @@ require 'spec_helper'
 
 describe WsConferenceAttendeesController do
 
-  before(:all) do
-    Seed.factorydefaults
-  end
-
   before do
+    Seed.factorydefaults
     @conference = Conference.find_by_name('Black Hat DC 2011')
     auth_as_admin
   end
@@ -30,13 +27,13 @@ describe WsConferenceAttendeesController do
 
   describe "GET index" do
     it "should 200 if attendees" do
-      @conference.participants << Member.first
+      @conference.participants << Member.find_by_username('sjobs')
       get(:index, :conference_id => @conference.id)
       response_should(200) do |hash|
         hash.should == [
           {
-            "details"=>"http://test.host/ws/members/admin",
-            "username"=>"admin",
+            "details"=>"http://test.host/ws/members/sjobs",
+            "username"=>"sjobs",
           }
         ]
       end
