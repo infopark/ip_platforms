@@ -103,13 +103,22 @@ class ConferencesController < ApplicationController
     @series = @current_user.series
     respond_to do |format|
       category_ids = params[:conference][:category_ids]
+      old_categories = @conference.categories.dup
       if not category_ids.present? or category_ids == [""]
         category_ids = []
       end
       @conference.categories = Category.find(category_ids)
       if @conference.update_attributes(params[:conference])
         format.html do
-          redirect_to(@conference, :notice => 'Conference was successfully updated.')
+        deleted_categories = old_categories - @conference.categories
+          if deleted_categories
+            @conference.creator.notifications.create(:content => "Your " +
+                "conference '#{@conference.name}' has been removed from " +
+                deleted_categories.map(&:name).join(', '))
+          end
+
+          redirect_to(@conference,
+                      :notice => 'Conference was successfully updated.')
         end
         format.xml  { head :ok }
       else
