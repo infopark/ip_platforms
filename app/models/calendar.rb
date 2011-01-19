@@ -24,7 +24,9 @@ class Calendar < ActiveRecord::Base
   private
 
   def conferences_for_category
-    member.default_calendar.conferences.reject { |c| not c.categories.include?(category) }
+    member.default_calendar.conferences.reject do |conference|
+      ((category.self_and_all_children) & conference.categories).empty?
+    end
   end
 
 end

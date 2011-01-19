@@ -19,6 +19,16 @@ class Category < ActiveRecord::Base
       :format => { :with => /\A[-\w\d_]+\Z/ })
   validate :validate_parent_not_cyclic
 
+  def self_and_all_children
+    collection = [self]
+    if self.children.any?
+      children.each do |child|
+        collection += child.self_and_all_children
+      end
+    end
+    collection
+  end
+
   private
 
   def validate_parent_not_cyclic
