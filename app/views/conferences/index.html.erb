@@ -21,7 +21,9 @@
   <% end %>
 </div>
 
-<%= link_to 'New Conference', new_conference_path %>
+<% if logged_in? %>
+  <%= link_to 'New Conference', new_conference_path %>
+<% end %>
 
 <table>
   <tr>
