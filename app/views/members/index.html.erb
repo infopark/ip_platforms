@@ -6,14 +6,30 @@
   </p>
 <% end %>
 
-<p>
-  <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
-    <%= member_state_select_tag(@state) %>
-    <%= member_location_select_tag(@location) %>
-    <%= text_field_tag(:q, @q, :size => 15) %>
-    <%= submit_tag('Search') %>
-  <% end %>
-</p>
+<%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
+  <table>
+    <tr>
+      <th>State</th>
+      <th>Location</th>
+      <th></th>
+      <th></th>
+    </tr>
+    <tr>
+      <td>
+        <%= member_state_select_tag(@state) %>
+      </td>
+      <td>
+        <%= member_location_select_tag(@location) %>
+      </td>
+      <td>
+        <%= text_field_tag(:q, @q, :size => 15) %>
+      </td>
+      <td>
+        <%= submit_tag('Search') %>
+      </td>
+    </tr>
+  </table>
+<% end %>
 
 <table class="fullwidth">
   <tr>
