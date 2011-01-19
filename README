@@ -14,9 +14,8 @@ All requirements have been implemented, except:
   instead of username and full name
 - M119: The member adds a personal calendar showing conferences in his
   town/country.
-- M120:
-  Thememberaddsapersonalcalendarshowingconferenceswithina50/500/2000/5000kilome-
-  ter  radius  of  his location
+- M120: The member adds a personal calendar showing conferences within a
+  50/500/2000/5000 kilometer radius of his location
 - M121: The member suggests a new category
 - M125: The lists MAY125 be sortable by any of the attributes.
 - M140: The administrator creates the category from a user suggestion
