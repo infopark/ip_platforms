@@ -49,7 +49,7 @@
     font-family:Consolas, "Lucida Console", "Andale Mono", "Bitstream Vera Sans Mono", "Courier New", Courier;
     border: 1px solid #999;
     padding: 2px;
-    background: silver url(http://localhost:3000/stylesheets/yaml/navigation/images/shiny_buttons/background.png) repeat-x 100% 50%;
+    background: silver url(/images/background.png) repeat-x 100% 50%;
     cursor: pointer;
   }
 
