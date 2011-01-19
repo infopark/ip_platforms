@@ -1,6 +1,10 @@
 <h1>Listing conferences</h1>
 
-<div>
+<% if logged_in? %>
+<p><%= link_to 'New Conference', new_conference_path %></p>
+<% end %>
+
+<p>
   <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
     <%= select_tag('category_ids[]',
             options_from_collection_for_select(Category.all, 'id', 'name',
@@ -12,18 +16,14 @@
     <%= text_field_tag(:q, @q, :size => 15) %>
     <%= submit_tag('Search') %>
   <% end %>
-</div>
+</p>
 
-<div>
+<p>
   <%= form_tag({}, {:method => :get, :class => :auto_focus_form}) do %>
     <%= text_field_tag(:qq, @qq, :size => 60) %>
     <%= submit_tag('Extended Search') %>
   <% end %>
-</div>
-
-<% if logged_in? %>
-  <%= link_to 'New Conference', new_conference_path %>
-<% end %>
+</p>
 
 <table>
   <tr>
