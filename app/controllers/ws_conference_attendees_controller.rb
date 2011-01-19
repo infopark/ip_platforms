@@ -10,9 +10,9 @@ class WsConferenceAttendeesController < AbstractWsController
     end
   end
 
-  def delete
+  def destroy
     conference = find_conference
-    if params[:username] == @current_user.username
+    if params[:id] == @current_user.username
       conference.participants.delete(@current_user)
       render_no_content
     else
@@ -25,7 +25,7 @@ class WsConferenceAttendeesController < AbstractWsController
     if participants.empty?
       render_no_content
     else
-      render_ok(members.map {|member| member_hash(member, true)})
+      render_ok(participants.map {|member| member_hash(member, true)})
     end
   end
 

@@ -40,7 +40,7 @@ IpPlatforms::Application.routes.draw do
         :only => [:create, :show, :update],
         :controller => :ws_conferences) do
       resources(:attendees,
-          :only => [:create, :delete, :index],
+          :only => [:create, :destroy, :index],
           :controller => :ws_conference_attendees)
     end
     resources(:members,
