@@ -2,12 +2,11 @@ require 'spec_helper'
 
 describe WsConferencesController do
 
-  before(:all) do
-    Seed.factorydefaults
-  end
-
   before do
+    Seed.factorydefaults
+    @admin = Member.find_by_username('admin')
     @conference = Conference.find_by_name('Black Hat DC 2011')
+    @serie = Serie.find_by_name('ICSE')
     auth_as_admin
   end
 
@@ -27,41 +26,29 @@ describe WsConferencesController do
     end
 
     it 'should 403 if not series contact' do
-      pending
+      post(:create, :name => 'doof', :startdate => Date.today,
+          :enddate => Date.today,
+          :series => {:name => @serie.name},
+          :description => 'description')
+      response_should(403)
+    end
+
+    it 'should 200 if series contact' do
+      @serie.contacts << @admin
+      post(:create, :name => 'doof', :startdate => Date.today,
+          :enddate => Date.today,
+          :series => {:name => @serie.name},
+          :description => 'description')
+      response_should(200)
     end
   end
 
   describe "GET show" do
-    it "should give the conf list" do
+    it "should 200" do
       get(:show, :id => @conference.id)
       response_should(200) do |hash|
-        hash.should == {
-          "name"=>"Black Hat DC 2011",
-          "location"=>"2799 Jefferson Davis Hwy, Arlington, VA 22202, United States",
-          "enddate"=>"2011-01-19",
-          "creator"=> {
-            "details"=>"http://test.host/ws/members/mzuckerberg",
-            "username"=>"mzuckerberg"
-          },
-         "accomodation"=>nil,
-         "id"=>4,
-         "howtofind"=>nil,
-         "version"=>"0",
-         "venue"=>"Hyatt Regency Crystal Hotel",
-         "description"=>"The Black Hat Conference is a computer security conference that brings together a variety of people interested in information security. Representatives of federal agencies and corporations attend along with hackers. The Briefings take place regularly in Las Vegas, Barcelona (previously Amsterdam) and Tokyo. An event dedicated to the Federal Agencies is organized in Washington, D.C..",
-         "categories"=> [
-           {
-             "name"=>"Technology",
-             "details"=>"http://test.host/ws/categories/10"
-           },
-           {
-             "name"=>"IT-Security",
-             "details"=>"http://test.host/ws/categories/13"
-           }
-         ],
-         "startdate"=>"2011-01-16",
-         "gps"=>"38.52N,77.6W",
-        }
+        hash['name'].should == "Black Hat DC 2011"
+        hash["enddate"].should == "2011-01-19"
       end
     end
 
@@ -86,7 +73,16 @@ describe WsConferencesController do
     end
 
     it 'should 403 if not series contact' do
-      pending
+      put(:update, :id => @conference.id,
+          :series => {:name => @serie.name})
+      response_should(403)
+    end
+
+    it 'should 200 if series contact' do
+      @serie.contacts << @admin
+      put(:update, :id => @conference.id,
+          :series => {:name => @serie.name})
+      response_should(200)
     end
 
     it 'should 404 with wrong id' do
