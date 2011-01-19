@@ -29,3 +29,10 @@ end
 def auth_as_admin
   request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
 end
+
+def response_should(status)
+  $stderr.puts response.body
+  response.status.should == status
+  body = JSON.parse(response.body)
+  yield(body) if block_given?
+end
