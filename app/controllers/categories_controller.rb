@@ -83,7 +83,7 @@ class CategoriesController < ApplicationController
     calendar = Calendar.new
     calendar.member = @current_user
     calendar.category = @category
-    calendar.name = "Calendar for category \"#{@category.name}\""
+    calendar.name = "for Category \"#{@category.name}\""
     respond_to do |format|
       format.html do
         if calendar.save

@@ -105,13 +105,15 @@
 <div class="box">
   <h3>Your Calendars</h3>
   <p><%= link_to 'New Calendar', new_calendar_path %> |
-  <%= link_to 'New Calendar for category', categories_path %></p>
+  <%= link_to 'New Filter for default Calendar', categories_path %></p>
   <ul>
     <% @calendars.each do |calendar| %>
       <li>
-        <b><%= link_to calendar.name, calendar %></b>
-        <%= link_to 'Edit', edit_calendar_path(calendar) %>
-        <% unless calendar.is_default? %>
+      <b><%= calendar.category ? "Filter " : "Calendar " %><%= link_to calendar.name, calendar %></b>
+        <% if calendar.is_default? %>
+          (default) <%= link_to 'Edit', edit_calendar_path(calendar) %>
+        <% else %>
+          <%= link_to 'Edit', edit_calendar_path(calendar) %>
           | <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
         <% end %>
       </li>

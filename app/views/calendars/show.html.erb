@@ -1,7 +1,12 @@
-<p>
-  <b>Name:</b>
+<h2>
+<% if @calendar.category %>
+Filter
+<% else %>
+Calendar
+<% end %>
   <%= @calendar.name %>
-</p>
+  <% if @calendar.is_default? %>(default Calendar)<% end %>
+</h2>
 
 <% if @calendar.category %>
   <p>
