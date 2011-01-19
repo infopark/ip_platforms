@@ -6,6 +6,9 @@ pdf.text @conference.name, :size => 16, :style => :bold
 pdf.text "#{@conference.startdate} - #{@conference.enddate}"
 pdf.move_down pdf.font.height * 1
 
+pdf.text @conference.description, :style => :italic
+pdf.move_down pdf.font.height * 1
+
 if @conference.serie
   pdf.text "Series: #{@conference.serie.name}"
 end
