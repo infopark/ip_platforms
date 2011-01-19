@@ -1,33 +1,26 @@
 class SeriesController < ApplicationController
-  # GET /series
-  # GET /series.xml
   def index
     @series = Serie.all
 
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render :xml => @series }
     end
   end
 
-  # GET /series/new
-  # GET /series/new.xml
   def new
     @serie = Serie.new
 
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render :xml => @serie }
     end
   end
 
-  # GET /series/1/edit
   def edit
     @serie = Serie.find(params[:id])
   end
 
-  # POST /series
-  # POST /series.xml
   def create
     @serie = Serie.new(params[:serie])
 
@@ -42,8 +35,6 @@ class SeriesController < ApplicationController
     end
   end
 
-  # PUT /series/1
-  # PUT /series/1.xml
   def update
     @serie = Serie.find(params[:id])
 
@@ -58,8 +49,6 @@ class SeriesController < ApplicationController
     end
   end
 
-  # DELETE /series/1
-  # DELETE /series/1.xml
   def destroy
     @serie = Serie.find(params[:id])
     @serie.destroy
