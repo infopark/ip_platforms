@@ -1,20 +1,23 @@
 class WsCategoriesController < AbstractWsController
-
   def create
-    category = Category.new(params)
-    parent = Category.find_by_name(params[:parent][:name]) rescue nil
-    if parent
-      category.parent_id = parent.id
-    end
-    if category.save
-      render_category(category)
+    if is_admin?
+      category = Category.new(params)
+      parent = Category.find_by_name(params[:parent][:name]) rescue nil
+      if parent
+        category.parent_id = parent.id
+      end
+      if category.save
+        render_category(category)
+      else
+        render_bad_request(category.errors.full_messages.join(';'))
+      end
     else
-      render_bad_request(category.errors.full_messages.join(';'))
+      render_forbidden
     end
   end
 
   def index
-    categories = Category.where(:parent_id => nil).all
+    categories = Category.where(:parent_id => nil)
     if categories.empty?
       render_no_content
     else

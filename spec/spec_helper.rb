@@ -30,6 +30,10 @@ def auth_as_admin
   request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("admin:admin")
 end
 
+def auth_as_user
+  request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("bgates:kzr")
+end
+
 def response_should(status)
   $stderr.puts response.body
   response.status.should == status
