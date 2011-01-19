@@ -102,38 +102,44 @@
   </div>
 </div>
 
-<div class="box">
-  <h3>Your Calendars</h3>
-  <p><%= link_to 'New Calendar', new_calendar_path %> |
-  <%= link_to 'New Filter for default Calendar', categories_path %></p>
-  <ul>
-    <% @calendars.each do |calendar| %>
-      <li>
-      <b><%= calendar.category ? "Filter " : "Calendar " %><%= link_to calendar.name, calendar %></b>
-        <% if calendar.is_default? %>
-          (default) <%= link_to 'Edit', edit_calendar_path(calendar) %>
-        <% else %>
-          <%= link_to 'Edit', edit_calendar_path(calendar) %>
-          | <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
+<div class="subcolumns">
+  <div class="c50l">
+    <div class="subcl box">
+      <h3>Your Calendars</h3>
+      <p><%= link_to 'New Calendar', new_calendar_path %> |
+      <%= link_to 'New Filter for default Calendar', categories_path %></p>
+      <ul>
+        <% @calendars.each do |calendar| %>
+          <li>
+          <b><%= calendar.category ? "Filter " : "Calendar " %><%= link_to calendar.name, calendar %></b>
+            <% if calendar.is_default? %>
+              (default) <%= link_to 'Edit', edit_calendar_path(calendar) %>
+            <% else %>
+              <%= link_to 'Edit', edit_calendar_path(calendar) %>
+              | <%= link_to 'Destroy', calendar, :confirm => 'Are you sure?', :method => :delete %>
+            <% end %>
+          </li>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
-</div>
+      </ul>
+    </div>
+  </div>
 
-<div class="box">
-  <h3>Your Series</h3>
-  <% if @series.present? %>
-    <ul>
-      <% @member.series.each do |serie| %>
-        <li>
-          <b><%= link_to serie.name, serie %></b>
-        </li>
+  <div class="c50r">
+    <div class="subcr box">
+      <h3>Your Series</h3>
+      <% if @series.present? %>
+        <ul>
+          <% @member.series.each do |serie| %>
+            <li>
+              <b><%= link_to serie.name, serie %></b>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        You aren't the official contact in any Serie
       <% end %>
-    </ul>
-  <% else %>
-    You aren't the official contact in any Serie
-  <% end %>
+    </div>
+  </div>
 </div>
 
 <% end %>
