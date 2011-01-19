@@ -9,6 +9,24 @@ module GpsLocation
   end
 
   def gps
+    if @gps.blank?
+      @gps = [
+        unless lat.blank?
+          if lat > 0
+            "#{lat}N"
+          else
+            "#{-lat}S"
+          end
+        end,
+        unless lng.blank?
+          if lng > 0
+            "#{lng}E"
+          else
+            "#{-lng}W"
+          end
+        end,
+      ].flatten.join(',')
+    end
     @gps
   end
 
