@@ -3,8 +3,6 @@ class ConferencesController < ApplicationController
   before_filter :find_conference, :except => [:index, :new, :create]
   before_filter :require_creator_or_admin, :only => [:edit, :update, :destroy]
 
-  # GET /conferences
-  # GET /conferences.xml
   def index
     @qq = params[:qq]
     @q = params[:q]
@@ -23,29 +21,25 @@ class ConferencesController < ApplicationController
           @current_user, @location)
       end
     respond_to do |format|
-      format.html # index.html.erb
+      format.html
       format.xml  { render :xml => @conferences }
     end
   end
 
-  # GET /conferences/1
-  # GET /conferences/1.xml
   def show
     @calendars = @current_user.calendars
     respond_to do |format|
-      format.html # show.html.erb
+      format.html
       format.xml  { render :xml => @conference }
     end
   end
 
-  # GET /conferences/new
-  # GET /conferences/new.xml
   def new
     @conference = Conference.new
     @categories = Category.order.all
     @series = @current_user.series
     respond_to do |format|
-      format.html # new.html.erb
+      format.html
       format.xml  { render :xml => @conference }
     end
   end
@@ -74,8 +68,6 @@ class ConferencesController < ApplicationController
     end
   end
 
-  # PUT /conferences/1
-  # PUT /conferences/1.xml
   def update
     @categories = Category.all
     @series = @current_user.series
@@ -125,8 +117,6 @@ class ConferencesController < ApplicationController
     end
   end
 
-  # DELETE /conferences/1
-  # DELETE /conferences/1.xml
   def destroy
     @conference.destroy
     respond_to do |format|
@@ -165,6 +155,14 @@ class ConferencesController < ApplicationController
           notification.save!
           redirect_to(@conference)
         end
+      end
+    end
+  end
+
+  def ical
+    respond_to do |format|
+      format.ics do
+        render :text => @conference.ical(url_for(@conference))
       end
     end
   end

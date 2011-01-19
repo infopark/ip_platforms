@@ -20,6 +20,7 @@ IpPlatforms::Application.routes.draw do
       get :invite
       get :add_to_calendar
       get :remove_from_calendar
+      get :ical
     end
   end
   resources(:members)
