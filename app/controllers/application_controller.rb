@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   before_filter :before_filter_set_current_user
+  before_filter :update_session_timeout
 
   helper_method :logged_in?, :is_admin?
 
@@ -26,6 +27,25 @@ class ApplicationController < ActionController::Base
       render(:text => 'unauthenticated_access_denied',
              :status => :forbidden)
       false
+    end
+  end
+
+  def expire_session
+    reset_session
+    flash[:error] = 'Your session has expired. Please login again.'
+    redirect_to new_login_session_path
+  end
+
+  def update_session_timeout
+    expires_in = 60.minutes.from_now
+    if session[:expires_at].blank?
+      session[:expires_at] = expires_in
+    else
+      @time_left = (session[:expires_at].utc - Time.now.utc).to_i
+      unless @time_left > 0
+        session[:expires_at] = expires_in
+        expire_session
+      end
     end
   end
 

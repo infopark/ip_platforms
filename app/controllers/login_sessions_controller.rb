@@ -1,6 +1,7 @@
 class LoginSessionsController < ApplicationController
 
   skip_before_filter :before_filter_set_current_user
+  skip_before_filter :update_session_timeout, :only => :logout
 
   def new
   end
