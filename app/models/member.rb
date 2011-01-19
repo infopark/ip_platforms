@@ -72,7 +72,8 @@ class Member < ActiveRecord::Base
     admin.admin = true
     admin.fullname = 'Herr Admin'
     admin.email = 'root@localhost'
-    admin.town = 'Berlin'
+    admin.town = 'Nürnberg'
+    admin.gps = '49.45052N,11.08048E'
     admin.country = 'Germany'
     admin.save!
   end
@@ -154,6 +155,8 @@ class Member < ActiveRecord::Base
       self.friends << new_friend
       self.notifications.create(:content =>
                   "You accepted a friendship request from #{new_friend}")
+      new_friend.notifications.create(:content =>
+                  "You are now friends with #{self}")
     end
   end
 
