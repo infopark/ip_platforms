@@ -4,7 +4,7 @@
 </p>
 
 <p>
-  <b>URL:</b>
+  <b>Details-URL:</b>
   <%= @serie.url %>
 </p>
 
@@ -12,6 +12,20 @@
   <b>Description:</b>
   <%= @serie.description %>
 </p>
+
+<% if @serie.conferences.any? %>
+  <p>
+    <b>Conferences:</b>
+    <ul>
+      <% @serie.conferences.order(:startdate).each do |conference| %>
+        <li>
+          <b><%= link_to conference.name, conference %></b>
+          <%= conference.startdate %> - <%= conference.enddate %>
+        </li>
+      <% end %>
+    </ul>
+  </p>
+<% end %>
 
 <%= link_to 'Edit', edit_serie_path(@calendar) %> |
 <%= link_to 'Back', series_path %>
