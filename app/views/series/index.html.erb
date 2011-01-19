@@ -15,7 +15,7 @@
 
 <% @series.each do |serie| %>
   <tr>
-    <td><%= serie.name %></td>
+    <td><%= link_to serie.name, serie %></td>
     <td><%= serie.url %></td>
     <% if is_admin? %>
       <td><%= link_to 'Edit', edit_serie_path(serie) %></td>
@@ -25,4 +25,6 @@
 <% end %>
 </table>
 
-<%= link_to 'New Series', new_serie_path %>
+<% if is_admin? %>
+  <%= link_to 'New Series', new_serie_path %>
+<% end %>

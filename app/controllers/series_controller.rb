@@ -1,10 +1,20 @@
 class SeriesController < ApplicationController
+  before_filter :require_current_user_is_admin, :except => [:index, :show]
+
   def index
     @series = Serie.all
 
     respond_to do |format|
       format.html
       format.xml  { render :xml => @series }
+    end
+  end
+
+  def show
+    @serie = Serie.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.xml  { render :xml => @serie }
     end
   end
 

@@ -24,7 +24,7 @@ IpPlatforms::Application.routes.draw do
     end
   end
   resources(:members)
-  resources(:series, :except => :show)
+  resources(:series)
   resource(:ws, :only => []) do
     collection do
       get :factorydefaults

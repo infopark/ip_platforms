@@ -1,0 +1,18 @@
+<p>
+  <b>Name:</b>
+  <%= @serie.name %>
+</p>
+
+<p>
+  <b>URL:</b>
+  <%= @serie.url %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @serie.description %>
+</p>
+
+<%= link_to 'Edit', edit_serie_path(@calendar) %> |
+<%= link_to 'Back', series_path %>
+
