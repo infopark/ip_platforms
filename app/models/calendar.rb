@@ -24,8 +24,11 @@ class Calendar < ActiveRecord::Base
   private
 
   def conferences_for_category
+    category_ids = Category.expand_children([cagegory_id])
     member.default_calendar.conferences.reject do |conference|
-      ((category.self_and_all_children) & conference.categories).empty?
+      conference.category_ids.any? do |category_id|
+        category_ids.include?(cagegory_id)
+      end
     end
   end
 
