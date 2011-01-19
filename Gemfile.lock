@@ -60,6 +60,13 @@ GEM
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
     polyglot (0.3.1)
+    prawn (0.8.4)
+      prawn-core (>= 0.8.4, < 0.9)
+      prawn-layout (>= 0.8.4, < 0.9)
+      prawn-security (>= 0.8.4, < 0.9)
+    prawn-core (0.8.4)
+    prawn-layout (0.8.4)
+    prawn-security (0.8.4)
     rack (1.2.1)
     rack-mount (0.6.13)
       rack (>= 1.0.0)
@@ -107,6 +114,7 @@ DEPENDENCIES
   icalendar
   json
   mysql2
+  prawn
   rack-test
   rails (= 3.0.3)
   rspec (= 2.4.0)
