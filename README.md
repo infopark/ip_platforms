@@ -1,4 +1,10 @@
-=== Plat_Forms 2011 Summary, Infopark Ruby on Rails Team
+# Plat_Forms 2011: Infopark Ruby on Rails Team
+
+Find the task paper in the doc directory: platforms-task-2011.pdf
+
+More information about the Plat_Forms project are at http://www.plat-forms.org/
+
+### Plat_Forms 2011 Summary, Infopark Ruby on Rails Team
 
 All requirements have been implemented, except:
 
